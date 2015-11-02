@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{66D91AD6-E699-452F-921C-2A0D9B24A620}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>NAKGe</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\obj\32\NAKGe\Debug\</OutDir>
+    <IntDir>..\obj\32\NAKGe\Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\obj\32\NAKGe\Release\</OutDir>
+    <IntDir>..\obj\32\NAKGe\Release\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;NAKGE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>..\Support\$(TargetName)$(TargetExt)</OutputFile>
+      <ImportLibrary>..\obj\32\NAKGe\Debug\$(TargetName).lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;NAKGE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;NAKGE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>..\Support\$(TargetName)$(TargetExt)</OutputFile>
+      <ImportLibrary>..\obj\32\NAKGe\Release\$(TargetName).lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;NAKGE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NaGeArc.h" />
+    <ClInclude Include="NaGeAxisSystem.h" />
+    <ClInclude Include="NaGeBasicSurface.h" />
+    <ClInclude Include="NaGeBezierCurve.h" />
+    <ClInclude Include="NaGeBoundingBox.h" />
+    <ClInclude Include="NaGeBsp.h" />
+    <ClInclude Include="NaGeBSplineCurve.h" />
+    <ClInclude Include="NaGeCircle3D.h" />
+    <ClInclude Include="NaGeCone.h" />
+    <ClInclude Include="NaGeConic.h" />
+    <ClInclude Include="NaGeCurve.h" />
+    <ClInclude Include="NaGeCurve2D.h" />
+    <ClInclude Include="NaGeCylinder.h" />
+    <ClInclude Include="NaGeEllipse3D.h" />
+    <ClInclude Include="NaGeExtrudedSurface.h" />
+    <ClInclude Include="NaGeGeometry.h" />
+    <ClInclude Include="NaGeGeometry2D.h" />
+    <ClInclude Include="NaGeGeomException.h" />
+    <ClInclude Include="NaGeHelix.h" />
+    <ClInclude Include="NaGeHyperbola3D.h" />
+    <ClInclude Include="NaGeLine2D.h" />
+    <ClInclude Include="NaGeLine3D.h" />
+    <ClInclude Include="ListException.h" />
+    <ClInclude Include="ListIteratorOfListOfOneAxis.h" />
+    <ClInclude Include="ListIteratorOfListOfPoint3D.h" />
+    <ClInclude Include="ListIteratorOfListOfTriangle.h" />
+    <ClInclude Include="ListNodeOfOneAxis.h" />
+    <ClInclude Include="ListNodeOfPoint3D.h" />
+    <ClInclude Include="ListNodeOfTriangle.h" />
+    <ClInclude Include="ListOfOneAxis.h" />
+    <ClInclude Include="ListOfPoint3D.h" />
+    <ClInclude Include="ListOfTriangle.h" />
+    <ClInclude Include="NaGeMatrix22.h" />
+    <ClInclude Include="NaGeMatrix33.h" />
+    <ClInclude Include="NaGeMMath.h" />
+    <ClInclude Include="NaGeObjTexture.h" />
+    <ClInclude Include="NaGeOffsetCurve.h" />
+    <ClInclude Include="NaGeOffsetSurface.h" />
+    <ClInclude Include="NaGeOneAxis.h" />
+    <ClInclude Include="NaGeOneAxis2D.h" />
+    <ClInclude Include="NaGeParabola3D.h" />
+    <ClInclude Include="NaGePCurve.h" />
+    <ClInclude Include="NaGePipeSurface.h" />
+    <ClInclude Include="NaGePlane.h" />
+    <ClInclude Include="NaGePoint2D.h" />
+    <ClInclude Include="NaGePoint3D.h" />
+    <ClInclude Include="NaGeRevolvedSurface.h" />
+    <ClInclude Include="NaGeRuledSurface.h" />
+    <ClInclude Include="NaGeSphere.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="NaGeSurface.h" />
+    <ClInclude Include="NaGeSweptSurface.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="NaGeTorus.h" />
+    <ClInclude Include="NaGeTriangle.h" />
+    <ClInclude Include="NaGeVector2D.h" />
+    <ClInclude Include="NaGeVector3D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="NaGeArc.cpp" />
+    <ClCompile Include="NaGeAxisSystem.cpp" />
+    <ClCompile Include="NaGeBasicSurface.cpp" />
+    <ClCompile Include="NaGeBezierCurve.cpp" />
+    <ClCompile Include="NaGeBoundingBox.cpp" />
+    <ClCompile Include="NaGeBsp.cpp" />
+    <ClCompile Include="NaGeBSplineCurve.cpp" />
+    <ClCompile Include="NaGeCircle3D.cpp" />
+    <ClCompile Include="NaGeCone.cpp" />
+    <ClCompile Include="NaGeConic.cpp" />
+    <ClCompile Include="NaGeCurve.cpp" />
+    <ClCompile Include="NaGeCurve2D.cpp" />
+    <ClCompile Include="NaGeCylinder.cpp" />
+    <ClCompile Include="dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="NaGeEllipse3D.cpp" />
+    <ClCompile Include="NaGeExtrudedSurface.cpp" />
+    <ClCompile Include="NaGeGeometry.cpp" />
+    <ClCompile Include="NaGeGeometry2D.cpp" />
+    <ClCompile Include="NaGeGeomException.cpp" />
+    <ClCompile Include="NaGeHelix.cpp" />
+    <ClCompile Include="NaGeHyperbola3D.cpp" />
+    <ClCompile Include="NaGeLine2D.cpp" />
+    <ClCompile Include="NaGeLine3D.cpp" />
+    <ClCompile Include="ListException.cpp" />
+    <ClCompile Include="ListIteratorOfListOfOneAxis.cpp" />
+    <ClCompile Include="ListIteratorOfListOfPoint3D.cpp" />
+    <ClCompile Include="ListIteratorOfListOfTriangle.cpp" />
+    <ClCompile Include="ListNodeOfOneAxis.cpp" />
+    <ClCompile Include="ListNodeOfPoint3D.cpp" />
+    <ClCompile Include="ListNodeOfTriangle.cpp" />
+    <ClCompile Include="ListOfOneAxis.cpp" />
+    <ClCompile Include="ListOfPoint3D.cpp" />
+    <ClCompile Include="ListOfTriangle.cpp" />
+    <ClCompile Include="NaGeMatrix22.cpp" />
+    <ClCompile Include="NaGeMatrix33.cpp" />
+    <ClCompile Include="NaGeMMath.cpp" />
+    <ClCompile Include="NAKGe.cpp" />
+    <ClCompile Include="NaGeObjTexture.cpp" />
+    <ClCompile Include="NaGeOffsetCurve.cpp" />
+    <ClCompile Include="NaGeOffsetSurface.cpp" />
+    <ClCompile Include="NaGeOneAxis.cpp" />
+    <ClCompile Include="NaGeOneAxis2D.cpp" />
+    <ClCompile Include="NaGeParabola3D.cpp" />
+    <ClCompile Include="NaGePCurve.cpp" />
+    <ClCompile Include="NaGePipeSurface.cpp" />
+    <ClCompile Include="NaGePlane.cpp" />
+    <ClCompile Include="NaGePoint2D.cpp" />
+    <ClCompile Include="NaGePoint3D.cpp" />
+    <ClCompile Include="NaGeRevolvedSurface.cpp" />
+    <ClCompile Include="NaGeRuledSurface.cpp" />
+    <ClCompile Include="NaGeSphere.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="NaGeSurface.cpp" />
+    <ClCompile Include="NaGeSweptSurface.cpp" />
+    <ClCompile Include="NaGeTorus.cpp" />
+    <ClCompile Include="NaGeTriangle.cpp" />
+    <ClCompile Include="NaGeVector2D.cpp" />
+    <ClCompile Include="NaGeVector3D.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

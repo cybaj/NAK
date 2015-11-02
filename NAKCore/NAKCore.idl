@@ -1,0 +1,52 @@
+// NAKCore.idl : type library source for ActiveX Control project.
+
+// This file will be processed by the MIDL compiler tool to
+// produce the type library (NAKCore.tlb) that will become a resource in
+// NAKCore.ocx.
+
+#include <olectl.h>
+#include <idispids.h>
+
+[ uuid(AACB2826-E956-43E2-BAB1-06DCBA876EF8), version(1.0),
+  control ]
+library NAKCoreLib
+{
+	importlib(STDOLE_TLB);
+
+	//  Primary dispatch interface for CNAKCoreCtrl
+	[ 
+		uuid(6569F7A9-067F-43F1-8AC7-80B24D6B76DD)	
+	]
+	dispinterface _DNAKCore
+	{
+		properties:
+		methods:
+
+			[id(DISPID_ABOUTBOX)] void AboutBox();
+			[id(1)] LONG OpenObject(BSTR strFilename);
+	};
+
+	//  Event dispatch interface for CNAKCoreCtrl
+
+	[ 
+		uuid(D21F3221-0DFD-4EB7-88BC-9F57019C532F)	
+	]
+	dispinterface _DNAKCoreEvents
+	{
+		properties:
+			//  Event interface has no properties
+
+		methods:
+	};
+
+	//  Class information for CNAKCoreCtrl
+	[
+		uuid(B26510E5-118D-4BDD-A8CE-BE9EB3C109A3)
+	]
+	coclass NAKCore
+	{
+		[default] dispinterface _DNAKCore;
+		[default, source] dispinterface _DNAKCoreEvents;
+	};
+
+};
