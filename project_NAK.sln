@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "project_NAK", "project_NAK\project_NAK.vcxproj", "{E282626C-C479-46E2-93C6-1425B89F3A44}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NAKCore", "NAKCore\NAKCore.vcxproj", "{F8EB4E0A-A494-4C6F-9F6D-B70E7C929C3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NAKApp", "NAKApp\NAKApp.csproj", "{9E1BFC26-6377-4F65-AC31-01A12FD829DB}"
@@ -23,16 +21,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Debug|x64.ActiveCfg = Debug|x64
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Debug|x64.Build.0 = Debug|x64
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Debug|x86.ActiveCfg = Debug|Win32
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Debug|x86.Build.0 = Debug|Win32
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Release|Any CPU.ActiveCfg = Release|Win32
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Release|x64.ActiveCfg = Release|x64
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Release|x64.Build.0 = Release|x64
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Release|x86.ActiveCfg = Release|Win32
-		{E282626C-C479-46E2-93C6-1425B89F3A44}.Release|x86.Build.0 = Release|Win32
 		{F8EB4E0A-A494-4C6F-9F6D-B70E7C929C3D}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{F8EB4E0A-A494-4C6F-9F6D-B70E7C929C3D}.Debug|x64.ActiveCfg = Debug|x64
 		{F8EB4E0A-A494-4C6F-9F6D-B70E7C929C3D}.Debug|x64.Build.0 = Debug|x64
