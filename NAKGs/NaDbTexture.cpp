@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#include "ObjLoader.h"
+//#include "ObjLoader.h"
 #include "NaDbTexture.h"
 #include "NaGeMMath.h"
 //#include "TextureManager.h"
