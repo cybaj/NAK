@@ -99,7 +99,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>..\Support\$(TargetName)$(TargetExt)</OutputFile>
       <ImportLibrary>..\obj\32\NAKGs\Debug\$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>NAKGe.lib;opengl32.lib;glu32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NAKGe.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\obj\32\NAKGe\Debug;..\FreeImage\lib\32</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
