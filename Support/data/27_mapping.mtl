@@ -1,0 +1,9 @@
+newmtl blinn3SG
+illum 4
+Kd 0.700000 0.700000 0.700000
+Ka 0.300000 0.300000 0.300000
+Tf 0.0001
+Ks 0.50 0.50 0.50
+Ni 1.00
+map_Kd F27_UV_map.jpg
+map_bump bricks_normal_map.jpg
