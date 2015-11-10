@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(CNAKCoreCtrl, COleControl)
 	ON_WM_RBUTTONUP()
 //	ON_WM_MOVE()
 ON_WM_MOUSEMOVE()
+ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
 // Dispatch map
@@ -43,6 +44,10 @@ END_MESSAGE_MAP()
 BEGIN_DISPATCH_MAP(CNAKCoreCtrl, COleControl)
 	DISP_FUNCTION_ID(CNAKCoreCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
 	DISP_FUNCTION_ID(CNAKCoreCtrl, "OpenObject", dispidOpenObject, OpenObject, VT_I4, VTS_BSTR)
+	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectRed", dispidEffectRed, m_EffectRed, OnEffectRedChanged, VT_I2)
+	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectGreen", dispidEffectGreen, m_EffectGreen, OnEffectGreenChanged, VT_I2)
+	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectBlue", dispidEffectBlue, m_EffectBlue, OnEffectBlueChanged, VT_I2)
+	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "UVImage", dispidUVImage, m_UVImage, OnUVImageChanged, VT_BSTR)
 END_DISPATCH_MAP()
 
 // Event map
@@ -148,9 +153,10 @@ void CNAKCoreCtrl::OnDraw(
 	m_myView->Draw();
 
 	//GDI
-	pdc->SetBkMode(0);
+//	pdc->SetBkMode(0);
 	pdc->SetTextColor(RGB(0, 0, 0));
-	pdc->TextOut(  1, 1, m_view);
+	pdc->TextOut(1, 1, m_view);
+	pdc->TextOut(100, 1, m_coord);
 }
 
 // CNAKCoreCtrl::DoPropExchange - Persistence support
@@ -193,12 +199,23 @@ int CNAKCoreCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// TODO:  Add your specialized creation code here
 #ifdef _DEBUG
-	MessageBoxA(NULL, "Debugging Start!!!", "DEBUG", 0);
+//	MessageBoxA(NULL, "Debugging Start!!!", "DEBUG", 0);
 #endif
 	m_dContext = new NaGsDisplayContext(this);
 	m_myView = new NaGsView(this, m_dContext);
 
 	m_view.Format(_T("시작"));
+
+	//background 설정
+	//void SetBackgroundColor(GLfloat, GLfloat, GLfloat);
+
+	GLfloat red, green, blue;
+	m_myView->GetBackgroundColor(red, green, blue);
+
+	m_EffectRed = red * 255;
+	m_EffectGreen = green * 255;
+	m_EffectBlue = blue * 255;
+
 	return 0;
 }
 
@@ -293,6 +310,13 @@ void CNAKCoreCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!(nFlags & MK_SHIFT) && !(nFlags & MK_CONTROL) && !m_winZoom)
 	{
 		m_myView->Select(point.x, point.y);
+
+		NaGePoint3D C;
+		m_myView->ScreenToPoint(point.x, point.y, C);
+		m_coord.Format(_T("선택 위치 : X:%0.3lf Y:%0.3lf Z:%0.3lf"), C.GetX(), C.GetY(), C.GetZ());
+
+		m_myView->SelectTriangle(C);
+
 		InvalidateRect(NULL, FALSE);
 	}
 	if ((nFlags & MK_SHIFT) && !(nFlags & MK_CONTROL) && !m_winZoom)
@@ -370,14 +394,37 @@ void CNAKCoreCtrl::OnRButtonUp(UINT nFlags, CPoint point)
 	COleControl::OnRButtonUp(nFlags, point);
 }
 
+
+BOOL CNAKCoreCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	CPoint newPos = m_lDownPnt;
+	if (zDelta < 0)
+	{
+		newPos.x += 1.0;
+		m_myView->ZoomView(m_lDownPnt, newPos);
+		m_lDownPnt.x -= 1.0;
+		Invalidate(FALSE);
+	}
+	else
+	{
+		newPos.x -= 1.0;
+		m_myView->ZoomView(m_lDownPnt, newPos);
+		m_lDownPnt.x += 1.0;
+		Invalidate(FALSE);
+	}
+	return COleControl::OnMouseWheel(nFlags, zDelta, point);
+}
+
 void CNAKCoreCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
-	if (m_lbutdown )//&& (nFlags & MK_CONTROL))
-	{
-		m_myView->ZoomView(m_lDownPnt, point);
-		Invalidate(FALSE);
-	}
+
+//	if (m_lbutdown )//&& (nFlags & MK_CONTROL))
+//	{
+//		m_myView->ZoomView(m_lDownPnt, point);
+//		Invalidate(FALSE);
+//	}
 	if (m_mbutdown )//&& (nFlags & MK_CONTROL))
 	{
 		m_myView->PanView(m_mDownPnt, point);
@@ -402,7 +449,7 @@ void CNAKCoreCtrl::OnMouseMove(UINT nFlags, CPoint point)
 
 	NaGePoint3D C;
 	m_myView->ScreenToPoint(point.x, point.y, C);
-	m_coord.Format(_T("X %0.3lf  Y %0.3lf  Z%0.3lf"), C.GetX(), C.GetY(), C.GetZ());
+	m_coord.Format(_T("마우스 위치 : X:%0.3lf Y:%0.3lf Z:%0.3lf"), C.GetX(), C.GetY(), C.GetZ());
 
 	COleControl::OnMouseMove(nFlags, point);
 }
@@ -418,23 +465,67 @@ LONG CNAKCoreCtrl::OpenObject(LPCTSTR strFilename)
 
 	m_myView->EnableRC(TRUE);
 
-	NaGeObjTexture *us = new NaGeObjTexture();
-	NaDbTexture* S = new NaDbTexture(us, W2A(strFilename) );
-	m_dContext->Display(S);
+	std::string colorMap;
+	NaGeObjTexture us;
+	NaDbTexture* pTexture = new NaDbTexture(&us, W2A(strFilename) );
+	pTexture->GetColorMap(colorMap);
+	m_dContext->Display(pTexture);
 
-	const CListOfPoint3D* pts = S->GetPositionList();
+	m_UVImage = colorMap.c_str();
 
-	NaGeLine3D line(pts->First(), pts->Last());
-	NaDbCurve* gP = new NaDbCurve(&line);
-	m_dContext->Display(gP);
+	const CListOfPoint3D* pts = pTexture->GetPositionList();
+
+	//NaGeLine3D line(pts->First(), pts->Last());
+	//NaDbCurve* gP = new NaDbCurve(&line);
+	//m_dContext->Display(gP);
 
 	CString str;
-	NaGePoint3D pt = us->PointAtPara(0.5, 0.5);
-	str.Format(TEXT("pos : %f,%f,%f"), pt.GetX(), pt.GetY(), pt.GetZ());
-	NaDbText* myFont = new NaDbText(W2A(str), pt);
+	NaGePoint3D pt = us.PointAtPara(0.5, 0.5);
+	str.Format(TEXT("Center : %.3f,%.3f,%.3f"), pts->First().GetX(), pts->First().GetY(), pts->First().GetZ());
+	NaDbText* myFont = new NaDbText(W2A(str), pts->First());
 	m_dContext->Display(myFont);
 
 	m_myView->EnableRC(FALSE);
 
 	return 0;
+}
+
+
+void CNAKCoreCtrl::OnEffectRedChanged()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+	m_myView->SetBackgroundColor(this->m_EffectRed / 255.0, this->m_EffectGreen / 255.0, this->m_EffectBlue / 255.0);
+	SetModifiedFlag();
+}
+
+
+void CNAKCoreCtrl::OnEffectGreenChanged()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+	m_myView->SetBackgroundColor(this->m_EffectRed / 255.0, this->m_EffectGreen / 255.0, this->m_EffectBlue / 255.0);
+	SetModifiedFlag();
+}
+
+
+void CNAKCoreCtrl::OnEffectBlueChanged()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+	m_myView->SetBackgroundColor(this->m_EffectRed / 255.0, this->m_EffectGreen / 255.0, this->m_EffectBlue / 255.0);
+	SetModifiedFlag();
+}
+
+
+void CNAKCoreCtrl::OnUVImageChanged()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+
+	SetModifiedFlag();
 }

@@ -7,17 +7,29 @@
         mc:Ignorable="d"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         Title="MainWindow" Height="428" Width="606.6" Loaded="Window_Loaded">
-    <Grid>
+    <Window.Resources>
+        <Storyboard x:Key="OnMouseEnter1"/>
+    </Window.Resources>
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="72*"/>
-            <RowDefinition Height="61*"/>
+            <RowDefinition Height="299*"/>
+            <RowDefinition Height="99*"/>
         </Grid.RowDefinitions>
-        <Grid Margin="5,5,456,5.4" Grid.RowSpan="2">
-            <Button x:Name="button" Content="&amp;Open Object" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.495,0.424" ToolTip="obj 파일을 열기 합니다" Click="button_Click"/>
+        <Button x:Name="button" Content="Obj 파일열기" HorizontalAlignment="Left" Width="149" RenderTransformOrigin="0.495,0.424" ToolTip="obj 파일을 열기 합니다" Click="button_Click" d:LayoutOverrides="HorizontalAlignment" VerticalAlignment="Top"/>
+        <StackPanel Margin="5,51,0,102" HorizontalAlignment="Left" Width="138">
+            <Label x:Name="_red" Content="Red"/>
+            <Slider x:Name="_sliderRed" Height="18" RenderTransformOrigin="0.508,2.169" Maximum="255" ValueChanged="_sliderRed_ValueChanged"/>
+            <Label x:Name="_green" Content="Green"/>
+            <Slider x:Name="_sliderGreen" Maximum="255" ValueChanged="_sliderGreen_ValueChanged"/>
+            <Label x:Name="_blue" Content="Blue"/>
+            <Slider x:Name="_sliderBlue" Maximum="255" ValueChanged="_sliderBlue_ValueChanged"/>
+        </StackPanel>
+        <Border HorizontalAlignment="Left" Width="149" Grid.Row="1" >
+            <Image x:Name="_UVImage" Cursor="Hand" OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" MouseLeftButtonDown="_UVImage_MouseLeftButtonDown"/>
+        </Border>
+        <Grid Margin="149,0,0,0" Grid.RowSpan="2" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin">
+            <WindowsFormsHost x:Name="_hostMain" Margin="1"/>
         </Grid>
-        <GridSplitter x:Name="gridSplitter" HorizontalAlignment="Left" Height="378" Margin="149,10,0,0" VerticalAlignment="Top" Width="5" Grid.RowSpan="2"/>
-        <Grid Margin="159,10,10,10.4" Grid.RowSpan="2">
-            <WindowsFormsHost x:Name="_hostMain" Margin="10"/>
-        </Grid>
+        <Label x:Name="label" Content="Background color" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top" Width="149" Height="27"/>
     </Grid>
 </Window>

@@ -100,6 +100,8 @@ public:
     void copyBytesAlpha32Bit(BYTE *pDest) const;
     
     void setPixels(const BYTE *pPixels, int w, int h, int bytesPerPixel);
+	//!
+	void getPixel(int w, int h, DWORD& rgb);
 
     void flipHorizontal();
     void flipVertical();

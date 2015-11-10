@@ -51,8 +51,12 @@ public:
 	virtual void GetColor(GLubyte*) const;
 	void SetSurface(const NaGeSurface*);
 	virtual NaGeGeometry* Geometry() const;
-	const CListOfPoint3D* GetPositionList() { return pointList; }
-
+	CListOfPoint3D* GetPositionList() { return pointList; }
+	//get rgb code
+	void GetRGBfromVertex(NaGePoint3D& pt, unsigned long& rgb);
+	//color Map
+	void GetColorMap(string& fname) {fname = m_textureName;}
+	void GetBumpMap(string& fname) { fname = m_bumpName; }
 private:
 	void ComputePoints();
 	void ComputeWFPoints();
@@ -90,6 +94,8 @@ private:
 
 	std::string m_path;
 	ModelOBJ	m_model;
+	std::string m_textureName;
+	std::string m_bumpName;
 };
 
 #endif /* _GLTexture_H */

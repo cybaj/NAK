@@ -91,13 +91,13 @@ CListNodeOfNaDbObject* CListOfNaDbObject::Previous(const NaDbObject* O)
 	return it.CurrentPtr();
 }
 
-NaDbObject* CListOfNaDbObject::Remove(const NaDbObject* O)
+NaDbObject* CListOfNaDbObject::Remove(const NaDbObject* pObj)
 {
 	if (IsEmpty())
 		return 0;
-	NaDbObject* rO = 0;
-	CListNodeOfNaDbObject* tmp = 0;
-	if (O == First())
+	NaDbObject* rO = NULL;
+	CListNodeOfNaDbObject* tmp = NULL;
+	if (pObj == First())
 	{
 		tmp = firstPtr;
 		firstPtr = firstPtr->nextPtr;
@@ -105,7 +105,7 @@ NaDbObject* CListOfNaDbObject::Remove(const NaDbObject* O)
 	}
 	else
 	{
-		CListNodeOfNaDbObject* p = Previous(O);
+		CListNodeOfNaDbObject* p = Previous(pObj);
 		if (p->nextPtr != NULL)
 		{
 			tmp = p->nextPtr;
@@ -113,13 +113,13 @@ NaDbObject* CListOfNaDbObject::Remove(const NaDbObject* O)
 			rO = tmp->data;
 		}
 	}
-	tmp->data = 0;
-
 	//!
-	if (tmp->data && tmp->data->DelRef() == 1)
+	if (tmp->data && tmp->data->DelRef() == 0)
 	{
 		delete tmp->data;
-	}		
+	}
+	tmp->data = NULL;
+		
 	delete tmp;
 
 	return rO;

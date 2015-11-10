@@ -57,8 +57,8 @@ public:
 	bool IsOfType(const DbObjectType&) const;
 	int GetCount() const { return glObjCount; }
 
-	void AddRef() { m_nRef++; }
-	int DelRef() {return m_nRef--;}
+	void AddRef();
+	int DelRef();
 protected:
 	void ApplyMaterial();
 protected:

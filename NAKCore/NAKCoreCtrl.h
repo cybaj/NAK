@@ -50,6 +50,10 @@ private:
 
 public:
 	enum LineStyle {
+		dispidUVImage = 5,
+		dispidEffectBlue = 4,
+		dispidEffectGreen = 3,
+		dispidEffectRed = 2,
 		dispidOpenObject = 1L,
 		Solid, Dot, ShortDash, LongDash };
 	CPen*  m_Pen;
@@ -94,5 +98,15 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 protected:
 	LONG OpenObject(LPCTSTR strFilename);
+	void OnEffectRedChanged();
+	SHORT m_EffectRed;
+	void OnEffectGreenChanged();
+	SHORT m_EffectGreen;
+	void OnEffectBlueChanged();
+	SHORT m_EffectBlue;
+	void OnUVImageChanged();
+	CString m_UVImage;
+public:
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 };
 

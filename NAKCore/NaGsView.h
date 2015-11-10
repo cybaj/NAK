@@ -127,6 +127,8 @@ public:
 	void Select(const int& x, const int& y);
 	void MultiSelect(const int& x, const int& y);
 	void SweepSelect(const CRect& swRect);
+	//!»ï°¢Çü ¼±ÅÃ
+	void SelectTriangle(NaGePoint3D& pt);
 
 	int  ProcessSelection(const int& x, const int& y, const int& sensitivity = 5);
 	int  ProcessSweepSelection(const CRect& rect, unsigned long int* id);

@@ -30,9 +30,6 @@
     <ClInclude Include="model_obj.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="bitmap.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="NaDbObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -117,9 +114,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="model_obj.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="bitmap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="NaDbObject.cpp">

@@ -26,7 +26,7 @@ public:
 	NaGsDisplayContext();
 	NaGsDisplayContext(CWnd* pDoc);
 	virtual ~NaGsDisplayContext();
-	void Display(const NaDbObject*);
+	void Display(NaDbObject*);
 	void Erase(const NaDbObject*);
 	void DisplayAll();
 	void DisplaySelected();
@@ -51,6 +51,8 @@ public:
 	NaDbObject* CurrentSelected() const;
 	NaGeBoundingBox GetBoundingBox() const { return m_viewBox; }
 	void SetSensitivity(const int& s) { m_mouseSensitivity = s; }
+	//texture effect
+	void SelectTriangle(NaGsView* aView, NaGePoint3D& pt);
 private:
 	void AddToSelection( NaDbObject* pDbObj);
 	void RemoveSelection( NaDbObject* pDbObj);
@@ -63,6 +65,7 @@ private:
 	CWnd* m_ptrView;
 	NaGeBoundingBox m_viewBox;
 	int m_mouseSensitivity; //for selection;
+	DWORD m_selectRGBA;
 };
 
 #endif // !defined(AFX_GLDISPLAYCONTEXT_H__D04FD53F_4852_4D6C_957A_44E8AE0C54DB__INCLUDED_)

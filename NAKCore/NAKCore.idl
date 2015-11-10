@@ -20,7 +20,11 @@ library NAKCoreLib
 	dispinterface _DNAKCore
 	{
 		properties:
-		methods:
+			[id(2) , helpstring("텍스처의 Red 색상을 변경시킴")] SHORT EffectRed;
+			[id(3), helpstring("텍스쳐의 그린색상을 변경시킴")] SHORT EffectGreen;
+			[id(4), helpstring("텍스쳐의 블루색상을 변경시킴")] SHORT EffectBlue;
+			[id(5), helpstring("텍스쳐 UV 이미지")] BSTR UVImage;
+	methods:
 
 			[id(DISPID_ABOUTBOX)] void AboutBox();
 			[id(1)] LONG OpenObject(BSTR strFilename);

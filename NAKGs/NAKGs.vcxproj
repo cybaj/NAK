@@ -99,7 +99,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>..\Support\$(TargetName)$(TargetExt)</OutputFile>
       <ImportLibrary>..\obj\32\NAKGs\Debug\$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>NAKGe.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NAKGe.lib;opengl32.lib;glu32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\obj\32\NAKGe\Debug;..\FreeImage\lib\32</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
@@ -165,7 +165,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bitmap.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="ListIteratorOfListOfNaDbObjectId.h" />
     <ClInclude Include="ListNodeOfNaDbObjectId.h" />
@@ -195,7 +194,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bitmap.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

@@ -476,11 +476,11 @@ void NaDbSurface::DrawWired()
     DrawUIso();	//Edge
     for(i = fVPar+vstep; i < lVPar; i += vstep)
     {
-	isoRed = 205;
-	isoGreen = 205;
-	isoBlue = 255;
-	glEnable(GL_LINE_STIPPLE);
-	DrawUIso();
+		isoRed = 205;
+		isoGreen = 205;
+		isoBlue = 255;
+		glEnable(GL_LINE_STIPPLE);
+		DrawUIso();
     }
     isoRed = itsRed;
     isoGreen = itsGreen;
@@ -492,11 +492,11 @@ void NaDbSurface::DrawWired()
     DrawVIso();	//Edge
     for(i = fUPar+ustep; i <= lUPar; i += ustep)
     {	
-	isoRed = 205;
-	isoGreen = 205;
-	isoBlue = 255;
-	glEnable(GL_LINE_STIPPLE);
-	DrawVIso();
+		isoRed = 205;
+		isoGreen = 205;
+		isoBlue = 255;
+		glEnable(GL_LINE_STIPPLE);
+		DrawVIso();
     }
     isoRed = itsRed;
     isoGreen = itsGreen;
@@ -539,39 +539,39 @@ void NaDbSurface::DrawShaded()
     glFrontFace(GL_CW);
     for(j = fVPar; j < lVPar; j += jstep)
     {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glBegin(GL_TRIANGLE_STRIP);
-	for(i = fUPar; i < lUPar; i += istep)
-	{
-	    curP = myListIterP.Current();
-	    N = myListIterN.Current();
-	    glNormal3d(N.GetX(), N.GetY(), N.GetZ());
-	    glVertex3d(curP.GetX(), curP.GetY(), curP.GetZ());
-	    myListIterP.Next();
-	    myListIterN.Next();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glBegin(GL_TRIANGLE_STRIP);
+		for(i = fUPar; i < lUPar; i += istep)
+		{
+			curP = myListIterP.Current();
+			N = myListIterN.Current();
+			glNormal3d(N.GetX(), N.GetY(), N.GetZ());
+			glVertex3d(curP.GetX(), curP.GetY(), curP.GetZ());
+			myListIterP.Next();
+			myListIterN.Next();
 
-	    curP = myListIterP.Current();
-	    N = myListIterN.Current();
-	    glNormal3d(N.GetX(), N.GetY(), N.GetZ());
-	    glVertex3d(curP.GetX(), curP.GetY(), curP.GetZ());
-	    myListIterP.Next();
-	    myListIterN.Next();
-	}
-	curP = myListIterP.Current();
-	N = myListIterN.Current();
-	glNormal3d(N.GetX(), N.GetY(), N.GetZ());
-	glVertex3d(curP.GetX(), curP.GetY(), curP.GetZ());
-	myListIterP.Next();
-	myListIterN.Next();
+			curP = myListIterP.Current();
+			N = myListIterN.Current();
+			glNormal3d(N.GetX(), N.GetY(), N.GetZ());
+			glVertex3d(curP.GetX(), curP.GetY(), curP.GetZ());
+			myListIterP.Next();
+			myListIterN.Next();
+		}
+		curP = myListIterP.Current();
+		N = myListIterN.Current();
+		glNormal3d(N.GetX(), N.GetY(), N.GetZ());
+		glVertex3d(curP.GetX(), curP.GetY(), curP.GetZ());
+		myListIterP.Next();
+		myListIterN.Next();
 
-	curP = myListIterP.Current();
-	N = myListIterN.Current();
-	glNormal3d(N.GetX(), N.GetY(), N.GetZ());
-	glVertex3d(curP.GetX(), curP.GetY(), curP.GetZ());
-	myListIterP.Next();
-	myListIterN.Next();
+		curP = myListIterP.Current();
+		N = myListIterN.Current();
+		glNormal3d(N.GetX(), N.GetY(), N.GetZ());
+		glVertex3d(curP.GetX(), curP.GetY(), curP.GetZ());
+		myListIterP.Next();
+		myListIterN.Next();
 
-	glEnd();
+		glEnd();
     }
     glFrontFace(GL_CCW);
 }

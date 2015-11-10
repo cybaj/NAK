@@ -53,7 +53,17 @@ NaDbObject::NaDbObject()
     glObjCount++;
     MakeHidden(false);
     firstTime = true;
-	m_nRef = 1;
+	m_nRef = 0;
+}
+
+void NaDbObject::AddRef() 
+{
+	m_nRef++; 
+}
+
+int NaDbObject::DelRef() 
+{
+	return m_nRef--; 
 }
 
 NaDbObject::~NaDbObject()

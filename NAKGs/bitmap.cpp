@@ -542,6 +542,13 @@ void Bitmap::setPixels(const BYTE *pPixels, int w, int h, int bytesPerPixel)
     }
 }
 
+void Bitmap::getPixel(int x, int y, DWORD& rgba)
+{
+	int pixelPitch = pitch / sizeof(DWORD);
+	DWORD *pPixels = reinterpret_cast<DWORD*>(m_pBits);
+	rgba = pPixels[y * pixelPitch + x];
+}
+
 bool Bitmap::saveBitmap(LPCTSTR pszFilename) const
 {
     HANDLE hFile = CreateFile(pszFilename, GENERIC_WRITE, 0, 0, CREATE_ALWAYS,

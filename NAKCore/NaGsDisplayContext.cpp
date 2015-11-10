@@ -39,17 +39,19 @@ NaGsDisplayContext::~NaGsDisplayContext()
 		m_erase->Clear();
 	if(!m_select->IsEmpty())
 		m_select->Clear();
+
 	delete m_display;
 	delete m_erase;
 	delete m_select;
 }
 
-void NaGsDisplayContext::Display(const NaDbObject* aO)
+void NaGsDisplayContext::Display(NaDbObject* pObj)
 {
-	if(aO == NULL)
+	if(pObj == NULL)
 		return;
+
 	//속도 및 메모리 처리 향상 copy -> ref
-	NaDbObject* pDbObj = (NaDbObject*)aO;//->Copy();
+	NaDbObject* pDbObj = (NaDbObject*)pObj->Copy();
 	if(m_display->IsEmpty())
 		m_viewBox = pDbObj->GetBoundingBox();
 	else
@@ -181,11 +183,13 @@ void NaGsDisplayContext::Render(const GsDisplayMode& mode)
 {
 	if(IsEmpty())
 		return;
+
 	NaDbObject* pDbObj;
 
 	// Initialize the names stack
 	glInitNames();
 	glPushName(0);
+
 	CListIteratorOfListOfNaDbObject listIter(m_display);
 	for(listIter.Init(); listIter.More(); listIter.Next())
 	{
@@ -193,9 +197,12 @@ void NaGsDisplayContext::Render(const GsDisplayMode& mode)
 		if(pDbObj)
 		{
 			glLoadName(pDbObj->GetObjID());
+//!
+//pDbObj->SetColor(m_nRed, m_nGreen, m_nBlue);
 			pDbObj->Display(mode);
 		}
 	}
+
 	listIter.SetList(m_select);
 	for(listIter.Init(); listIter.More(); listIter.Next())
 	{
@@ -287,6 +294,22 @@ bool NaGsDisplayContext::SweepSelect(NaGsView* aView, const CRect& swRect)
 	}
 	delete [] id;
 	return res;
+}
+
+//선택한 포인트의 위치에 해당하는 삼각형 정보를 리턴한다.
+void NaGsDisplayContext::SelectTriangle(NaGsView* aView, NaGePoint3D& pt)
+{
+	NaDbObject* pDbObj = 0;
+	CListIteratorOfListOfNaDbObject listIter(m_display);
+	for (listIter.Init(); listIter.More(); listIter.Next())
+	{
+		pDbObj = listIter.Current();
+		if (pDbObj->GLObjType()==DbObjectType::GLTEXTURE)
+		{
+			m_selectRGBA = 0L;
+			((NaDbTexture*)pDbObj)->GetRGBfromVertex(pt, m_selectRGBA);
+		}
+	}
 }
 
 bool NaGsDisplayContext::IsEmpty() const

@@ -3,12 +3,10 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-//#include "ObjLoader.h"
 #include "NaDbTexture.h"
 #include "NaGeMMath.h"
-//#include "TextureManager.h"
+
 #include "NaDbApi.h"
-#include "bitmap.h"
 #include <atlconv.h>
 
 // GL_EXT_texture_filter_anisotropic
@@ -41,9 +39,10 @@ NaDbTexture::NaDbTexture(const NaGeSurface* s, const char* filename)
 	SMOOTH = 100;
 	CSMOOTH = 100;
 
-	itsShadeRed = 150;
-	itsShadeGreen = 150;
-	itsShadeBlue = 150;
+	//!특수 효과
+	itsShadeRed = 0;
+	itsShadeGreen = 0;
+	itsShadeBlue = 0;
 
 	itsRed = 200;
 	itsGreen = 225;
@@ -96,6 +95,69 @@ NaDbTexture::~NaDbTexture()
 	m_model.destroy();
 }
 
+//picking or selecting a triangle of a mesh
+// glReadPixels((int)winX, (int)winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &zCursor); 
+void NaDbTexture::GetRGBfromVertex(NaGePoint3D& pt, DWORD& rgba)
+{
+	BOOL bIsFind = FALSE;
+	const ModelOBJ::Mesh *pMesh = 0;
+	const ModelOBJ::Material *pMaterial = 0;
+	const ModelOBJ::Vertex *pVertices = 0;
+
+	pVertices = m_model.getVertexBuffer();
+	const int* pindex = m_model.getIndexBuffer();
+	int indexSize = m_model.getIndexSize();
+
+	double func[4], eps = 0.1;
+	ModelOBJ::Vertex v1, v2, v3;
+	NaGePoint3D p1, p2, p3;
+	for (int i = 0; i < m_model.getNumberOfMeshes(); ++i)
+	{
+		pMesh = &m_model.getMesh(i);
+		pMaterial = pMesh->pMaterial;
+		int sindex = pMesh->startIndex;
+		int tindex = pMesh->triangleCount;
+		for (int j = 0; j < tindex; j++)
+		{
+			v1 = pVertices[pindex[sindex + j * 3 + 0]];
+			v2 = pVertices[pindex[sindex + j * 3 + 1]];
+			v3 = pVertices[pindex[sindex + j * 3 + 2]];
+
+			//세점을 지나는 평면상에 점이 선택되었는지 확인함
+			p1.SetParam(v1.position[0], v1.position[1], v1.position[2]);
+			p2.SetParam(v2.position[0], v2.position[1], v2.position[2]);
+			p3.SetParam(v3.position[0], v3.position[1], v3.position[2]);
+			NaGePlane plane(p1, p2, p3);
+			plane.EquationAt(pt, func);
+			if (fabs(func[0]+ func[1]+ func[2]+ func[3]) < eps)
+			{
+				bpointList->Clear();
+				normalList->Clear();
+
+				bpointList->Append(NaGePoint3D(v1.position[0], v1.position[1], v1.position[2]));
+				bpointList->Append(NaGePoint3D(v2.position[0], v2.position[1], v2.position[2]));
+				bpointList->Append(NaGePoint3D(v3.position[0], v3.position[1], v3.position[2]));
+
+				normalList->Append(NaGePoint3D(v1.normal[0], v1.normal[1], v1.normal[2]));
+				normalList->Append(NaGePoint3D(v2.normal[0], v2.normal[1], v2.normal[2]));
+				normalList->Append(NaGePoint3D(v3.normal[0], v3.normal[1], v3.normal[2]));
+				break;
+			}
+		}
+	}
+
+	if (bIsFind)
+	{
+		float normal[3];
+		float texCoord[2];
+
+		memcpy(normal, v1.normal, sizeof(float[3]));
+		memcpy(texCoord, v1.texCoord, sizeof(float[2]));
+		
+		//GLuint texture = g_modelTextures[uvmapFile];
+	}
+}
+
 void NaDbTexture::DrawModelUsingFixedFuncPipeline()
 {
 	const ModelOBJ::Mesh *pMesh = 0;
@@ -103,16 +165,24 @@ void NaDbTexture::DrawModelUsingFixedFuncPipeline()
 	const ModelOBJ::Vertex *pVertices = 0;
 	ModelTextures::const_iterator iter;
 
+	NaDbMaterial mat;
 	for (int i = 0; i < m_model.getNumberOfMeshes(); ++i)
 	{
 		pMesh = &m_model.getMesh(i);
+
 		pMaterial = pMesh->pMaterial;
+		mat.SetAmbient(NaDbColor(pMaterial->ambient[0], pMaterial->ambient[1], pMaterial->ambient[2]));
+		mat.SetDiffuse(NaDbColor(pMaterial->diffuse[0], pMaterial->diffuse[1], pMaterial->diffuse[2]));
+		mat.SetSpecular(NaDbColor(pMaterial->specular[0], pMaterial->specular[1], pMaterial->specular[2]));
+		mat.SetShininessCoeff(pMaterial->shininess);
+		SetMaterial(mat);
+
 		pVertices = m_model.getVertexBuffer();
 
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, pMaterial->ambient);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, pMaterial->diffuse);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, pMaterial->specular);
-		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, pMaterial->shininess * 128.0f);
+		//glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, pMaterial->ambient);
+		//glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, pMaterial->diffuse);
+		//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, pMaterial->specular);
+		//glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, pMaterial->shininess * 128.0f);
 
 		if (g_enableTextures)
 		{
@@ -193,11 +263,9 @@ void NaDbTexture::DrawModelUsingProgrammablePipeline()
 		if (pMaterial->bumpMapFilename.empty())
 		{
 			// Per fragment Blinn-Phong code path.
-
 			glUseProgram(g_blinnPhongShader);
 
-			// Bind the color map texture.
-
+			// 칼라 맵 바이드.
 			texture = g_nullTexture;
 
 			if (g_enableTextures)
@@ -212,19 +280,16 @@ void NaDbTexture::DrawModelUsingProgrammablePipeline()
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texture);
 
-			// Update shader parameters.
-
+			// 쉐이더 파라메터 업데이트
 			glUniform1i(glGetUniformLocation(g_blinnPhongShader, "colorMap"), 0);
 			glUniform1f(glGetUniformLocation(g_blinnPhongShader, "materialAlpha"), pMaterial->alpha);
 		}
 		else
 		{
-			// Normal mapping code path.
-
+			// 노말매핑 
 			glUseProgram(g_normalMappingShader);
 
-			// Bind the normal map texture.
-
+			// 노말매핑 바이드
 			iter = g_modelTextures.find(pMaterial->bumpMapFilename);
 
 			if (iter != g_modelTextures.end())
@@ -234,8 +299,7 @@ void NaDbTexture::DrawModelUsingProgrammablePipeline()
 				glBindTexture(GL_TEXTURE_2D, iter->second);
 			}
 
-			// Bind the color map texture.
-
+			// 컬러맵 바이드
 			texture = g_nullTexture;
 
 			if (g_enableTextures)
@@ -243,54 +307,90 @@ void NaDbTexture::DrawModelUsingProgrammablePipeline()
 				iter = g_modelTextures.find(pMaterial->colorMapFilename);
 
 				if (iter != g_modelTextures.end())
+				{
 					texture = iter->second;
+
+					/*
+					//이미지 처리
+					//GLenum target, GLint level, GLenum format, GLenum type, GLvoid *pixels
+					GLint textureWidth, textureHeight;
+					glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &textureWidth);
+					glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &textureHeight);
+					GLubyte *pixels = (GLubyte *)malloc(textureWidth*textureHeight * 4);
+					glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_BYTE, pixels);
+					for (int y = 0; y < textureHeight; y++)
+						for (int x = 0; x < textureWidth; x++)
+						{
+							int startAddressOfPixel = ((y*textureWidth) + x) * 4;
+							pixels[startAddressOfPixel + 0] = isoRed;
+							pixels[startAddressOfPixel + 1] /= (isoGreen + 1);
+							pixels[startAddressOfPixel + 2] /= (isoBlue + 1);
+							pixels[startAddressOfPixel + 3];
+							//printf("pixel at %d %d has colour r=%d g=%d b=%d a=%d\n", x, y, buffer[startAddressOfPixel], buffer[startAddressOfPixel + 1], buffer[startAddressOfPixel + 2], startAddressOfPixel[startAddressOfPixel + 3]);
+						}
+					gluBuild2DMipmaps(GL_TEXTURE_2D, 4, textureWidth, textureHeight, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (GLvoid*)pixels);
+					free(pixels);
+					*/
+
+					/*
+					FIMEMORY* fmemory = FreeImage_OpenMemory((BYTE*)pixels);
+					free(pixels);
+					FIBITMAP* fdb = FreeImage_LoadFromMemory(FIF_UNKNOWN, fmemory);
+					if (fdb)
+					{
+						FREE_IMAGE_COLOR_CHANNEL channel = FICC_RED;
+						fdb = FreeImage_GetChannel(fdb, channel);
+						char* pixeles = (char*)FreeImage_GetBits(fdb);
+						//GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *pixels
+						GLsizei width = FreeImage_GetWidth(fdb);
+						GLsizei height = FreeImage_GetHeight(fdb);
+						GLint border = 0;
+						glTexImage2D(GL_TEXTURE_2D, 0, 0, width, height, border, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)pixeles);
+						FreeImage_Unload(fdb);
+					}
+					*/
+
+				}
 			}
 
 			glActiveTexture(GL_TEXTURE0);
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texture);
 
-			// Update shader parameters.
-
+			// 쉐이더 파라메터 업데이트
 			glUniform1i(glGetUniformLocation(g_normalMappingShader, "colorMap"), 0);
 			glUniform1i(glGetUniformLocation(g_normalMappingShader, "normalMap"), 1);
 			glUniform1f(glGetUniformLocation(g_normalMappingShader, "materialAlpha"), pMaterial->alpha);
 		}
 
 		// Render mesh.
-
 		if (m_model.hasPositions())
 		{
 			glEnableClientState(GL_VERTEX_ARRAY);
-			glVertexPointer(3, GL_FLOAT, m_model.getVertexSize(),
-				m_model.getVertexBuffer()->position);
+			glVertexPointer(3, GL_FLOAT, m_model.getVertexSize(),m_model.getVertexBuffer()->position);
 		}
 
 		if (m_model.hasTextureCoords())
 		{
 			glClientActiveTexture(GL_TEXTURE0);
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glTexCoordPointer(2, GL_FLOAT, m_model.getVertexSize(),
-				m_model.getVertexBuffer()->texCoord);
+			glTexCoordPointer(2, GL_FLOAT, m_model.getVertexSize(),m_model.getVertexBuffer()->texCoord);
 		}
 
 		if (m_model.hasNormals())
 		{
 			glEnableClientState(GL_NORMAL_ARRAY);
-			glNormalPointer(GL_FLOAT, m_model.getVertexSize(),
-				m_model.getVertexBuffer()->normal);
+			glNormalPointer(GL_FLOAT, m_model.getVertexSize(),m_model.getVertexBuffer()->normal);
 		}
 
 		if (m_model.hasTangents())
 		{
 			glClientActiveTexture(GL_TEXTURE1);
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glTexCoordPointer(4, GL_FLOAT, m_model.getVertexSize(),
-				m_model.getVertexBuffer()->tangent);
+			glTexCoordPointer(4, GL_FLOAT, m_model.getVertexSize(),	m_model.getVertexBuffer()->tangent);
 		}
 
-		glDrawElements(GL_TRIANGLES, pMesh->triangleCount * 3, GL_UNSIGNED_INT,
-			m_model.getIndexBuffer() + pMesh->startIndex);
+		glDrawElements(GL_TRIANGLES, pMesh->triangleCount * 3, GL_UNSIGNED_INT,	m_model.getIndexBuffer() + pMesh->startIndex);
 
 		if (m_model.hasTangents())
 		{
@@ -319,18 +419,31 @@ void NaDbTexture::DrawModelUsingProgrammablePipeline()
 GLuint NaDbTexture::LoadTexture(const char *pszFilename)
 {
 	GLuint id = 0;
-	Bitmap bitmap;
-	USES_CONVERSION;
-
-	if (bitmap.loadPicture(A2W(pszFilename)))
+	FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(pszFilename, 0);
+	FIBITMAP* imagen = FreeImage_Load(formato, pszFilename);
+	if (imagen)
 	{
-		// The Bitmap class loads images and orients them top-down.
-		// OpenGL expects bitmap images to be oriented bottom-up.
-		bitmap.flipVertical();
+		FIBITMAP* temp = imagen;
+		imagen = FreeImage_ConvertTo32Bits(imagen);
+		FreeImage_Unload(temp);
+
+		int w = FreeImage_GetWidth(imagen);
+		int h = FreeImage_GetHeight(imagen);
+		//GLubyte* textura = new GLubyte[4 * w*h];
+		char* pixeles = (char*)FreeImage_GetBits(imagen);
+
+		/*
+		//FreeImage loads in BGR format, so you need to swap some bytes(Or use GL_BGR).
+		for (int j = 0; j < w*h; j++)
+		{
+			textura[j * 4 + 0] = pixeles[j * 4 + 2];
+			textura[j * 4 + 1] = pixeles[j * 4 + 1];
+			textura[j * 4 + 2] = pixeles[j * 4 + 0];
+			textura[j * 4 + 3] = pixeles[j * 4 + 3];
+		}*/
 
 		glGenTextures(1, &id);
 		glBindTexture(GL_TEXTURE_2D, id);
-
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -341,10 +454,10 @@ GLuint NaDbTexture::LoadTexture(const char *pszFilename)
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, g_maxAnisotrophy);
 		}
 
-		gluBuild2DMipmaps(GL_TEXTURE_2D, 4, bitmap.width, bitmap.height,
-			GL_BGRA_EXT, GL_UNSIGNED_BYTE, bitmap.getPixels());
-	}
+		gluBuild2DMipmaps(GL_TEXTURE_2D, 4, w, h, GL_BGRA_EXT, GL_UNSIGNED_BYTE, (GLvoid*)pixeles);
 
+		FreeImage_Unload(imagen);
+	}
 	return id;
 }
 
@@ -374,7 +487,6 @@ void NaDbTexture::LoadModel(const char *pszFilename)
 		pMaterial = &m_model.getMaterial(i);
 
 		// Look for and load any diffuse color map textures.
-
 		if (pMaterial->colorMapFilename.empty())
 			continue;
 
@@ -389,12 +501,15 @@ void NaDbTexture::LoadModel(const char *pszFilename)
 			else
 				filename = pMaterial->colorMapFilename;
 
-			// Try loading the texture from the same directory as the OBJ file.
-			textureId = LoadTexture((m_model.getPath() + filename).c_str());
+			// Obj 파일과 동일한 경로에서 UV 이미지 파일을 로드시킨다.
+			m_textureName = m_model.getPath() + filename;
+			textureId = LoadTexture(m_textureName.c_str());
 		}
 
 		if (textureId)
+		{
 			g_modelTextures[pMaterial->colorMapFilename] = textureId;
+		}
 
 		// Look for and load any normal map textures.
 
@@ -413,7 +528,8 @@ void NaDbTexture::LoadModel(const char *pszFilename)
 				filename = pMaterial->bumpMapFilename;
 
 			// Try loading the texture from the same directory as the OBJ file.
-			textureId = LoadTexture((m_model.getPath() + filename).c_str());
+			m_bumpName = m_model.getPath() + filename;
+			textureId = LoadTexture(m_bumpName.c_str());
 		}
 
 		if (textureId)
@@ -433,7 +549,7 @@ void NaDbTexture::DefineDisplay()
     GLfloat bgcol[4];
     glGetFloatv(GL_COLOR_CLEAR_VALUE, bgcol);
 
-    GLfloat  specref[] =  { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat  specref[] =  { 1.0f, 1.0f, 1.0f, 1.0f };
     // Enable Depth Testing
     glEnable(GL_DEPTH_TEST);
 
@@ -446,14 +562,14 @@ void NaDbTexture::DefineDisplay()
     glEnable(GL_COLOR_MATERIAL);
 
     // Set Material properties to follow glColor values
-//    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-//    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,specref);
-//    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,128);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,specref);
+    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,128);
 
     glShadeModel(GL_SMOOTH);
 
-//    glEnable(GL_AUTO_NORMAL);
-//    glEnable(GL_NORMALIZE);
+    glEnable(GL_AUTO_NORMAL);
+    glEnable(GL_NORMALIZE);
 	
     if(displayMode == GLSHADED)
     {	
@@ -464,7 +580,7 @@ void NaDbTexture::DefineDisplay()
 		DrawShaded();	
 		glDisable(GL_LIGHTING);
 		glDisable(GL_COLOR_MATERIAL);
-		glColor3ub(25, 25, 25);
+		glColor3ub(125, 125, 125);
 		DrawEdges();
 		glDisable(GL_POLYGON_OFFSET_FILL);
 		glPopAttrib();
@@ -628,15 +744,18 @@ void NaDbTexture::ComputePoints()
     if(bpointList && (!bpointList->IsEmpty()))
 		bpointList->Clear();
 
-	int nSize = m_model.getVertexSize();
-	for (int k = 0; k < nSize; k++)
-	{
-		ModelOBJ::Vertex vec = m_model.getVertex(k);
-		pointList->Append(NaGePoint3D(vec.position[0], vec.position[1], vec.position[2]));
-		normalList->Append(NaGePoint3D(vec.normal[0], vec.normal[1], vec.normal[2]));
-	}
+	float x, y, z;
+	m_model.getCenter(x, y, z);
+	pointList->Append(NaGePoint3D(x,y,z));
 
-
+	//int nSize = m_model.getVertexSize();
+//	int nSize = m_model.getNumberOfVertices();
+//	for (int k = 0; k < nSize; k++)
+//	{
+//		ModelOBJ::Vertex vec = m_model.getVertex(k);
+//		pointList->Append(NaGePoint3D(vec.position[0], vec.position[1], vec.position[2]));
+//		normalList->Append(NaGePoint3D(vec.normal[0], vec.normal[1], vec.normal[2]));
+//	}
 }
 
 void NaDbTexture::ComputeWFPoints()
@@ -666,7 +785,38 @@ void NaDbTexture::DrawVIso()
 
 void NaDbTexture::DrawWired()
 {
+	const ModelOBJ::Mesh *pMesh = 0;
+	const ModelOBJ::Material *pMaterial = 0;
+	const ModelOBJ::Vertex *pVertices = 0;
 
+	glLineWidth(1.5);
+
+	pVertices = m_model.getVertexBuffer();
+	const int* pindex = m_model.getIndexBuffer();
+	int indexSize = m_model.getIndexSize();
+
+	for (int i = 0; i < m_model.getNumberOfMeshes(); ++i)
+	{
+		pMesh = &m_model.getMesh(i);
+		pMaterial = pMesh->pMaterial;
+		int sindex = pMesh->startIndex;
+		int tindex = pMesh->triangleCount;
+		for (int j = 0; j < tindex; j++)
+		{
+			glBegin(GL_LINE_STRIP);
+			ModelOBJ::Vertex v1 = pVertices[pindex[sindex + j * 3 + 0]];
+			glNormal3d(v1.normal[0], v1.normal[1], v1.normal[2]);
+			glVertex3d(v1.position[0], v1.position[1], v1.position[2]);
+			ModelOBJ::Vertex v2 = pVertices[pindex[sindex + j * 3 + 1]];
+			glNormal3d(v2.normal[0], v2.normal[1], v2.normal[2]);
+			glVertex3d(v2.position[0], v2.position[1], v2.position[2]);
+			ModelOBJ::Vertex v3 = pVertices[pindex[sindex + j * 3 + 2]];
+			glNormal3d(v3.normal[0], v3.normal[1], v3.normal[2]);
+			glVertex3d(v3.position[0], v3.position[1], v3.position[2]);
+			glEnd();
+		}
+	}
+	glLineWidth(1.0);
 }
 
 void NaDbTexture::DrawShaded()
@@ -677,9 +827,34 @@ void NaDbTexture::DrawShaded()
 		DrawModelUsingFixedFuncPipeline();
 }
 
+// 선택된 triangle 을 그린다.
 void NaDbTexture::DrawEdges()
 {
+	/*
+	NaGePoint3D curPt,curNr;
+	CListIteratorOfListOfPoint3D myListIterP(bpointList);
+	CListIteratorOfListOfPoint3D myListIterN(normalList);
+	myListIterP.Init();
+	myListIterN.Init();
 
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glColor4b(255, 0, 0, 0.5);
+	glLineWidth(4.0);
+	glBegin(GL_LINE_STRIP);
+
+	for (myListIterP.Init(); myListIterP.More();)
+	{
+		curPt = myListIterP.Current();
+		curNr = myListIterN.Current();
+		glNormal3d(curNr.GetX(), curNr.GetY(), curNr.GetZ());
+		glVertex3d(curPt.GetX(), curPt.GetY(), curPt.GetZ());
+		
+		myListIterP.Next();
+		myListIterN.Next();
+	}
+	glEnd();
+	glLineWidth(1.0);
+	*/
 }
 
 void NaDbTexture::InitDisplayList()

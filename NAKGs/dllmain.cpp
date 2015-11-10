@@ -321,6 +321,18 @@ void ExitGsModule()
 	}
 	g_modelTextures.clear();
 
+	if (g_blinnPhongShader)
+	{
+		glDeleteProgram(g_blinnPhongShader);
+		g_blinnPhongShader = 0;
+	}
+
+	if (g_normalMappingShader)
+	{
+		glDeleteProgram(g_normalMappingShader);
+		g_normalMappingShader = 0;
+	}
+
 	if (g_nullTexture)
 	{
 		glDeleteTextures(1, &g_nullTexture);

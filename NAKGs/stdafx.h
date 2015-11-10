@@ -14,6 +14,9 @@
 
 
 // TODO: reference additional headers your program requires here
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 #pragma warning (disable : 4627)
 #pragma warning (disable : 4244)
@@ -21,3 +24,4 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "FreeImage.h"

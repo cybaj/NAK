@@ -34,9 +34,9 @@ NaGsView::NaGsView(CWnd* pWnd, NaGsDisplayContext* ctx) : m_ptrWnd(pWnd), m_theC
 
 	m_nRange = 500;
 
-	m_bkRed = 0.01;
-	m_bkGreen = 0.31;
-	m_bkBlue = 0.18;
+	m_bkRed = 134 / 255.0;
+	m_bkGreen = 193 / 255.0;
+	m_bkBlue = 239 / 255.0;
 
 	m_displayMode = GLSHADED;
 
@@ -127,33 +127,23 @@ void NaGsView::ReSize(int cx, int cy)
 	::glMatrixMode(GL_PROJECTION);
 	::glLoadIdentity();
 
-	/*
-	// Ortho Viewing
-    if (w <= h) 
-		::glOrtho (-m_nRange-m_xTrans, m_nRange-m_xTrans, -(m_nRange*h/w)-m_yTrans,
-		(m_nRange*h/w)-m_yTrans, -(m_nRange*5000.0f)-m_zTrans, (m_nRange*5000.0f)-m_zTrans);
-	else 
-		::glOrtho (-(m_nRange*w/h)-m_xTrans, (m_nRange*w/h)-m_xTrans, -m_nRange-m_yTrans,
-		m_nRange-m_yTrans, -m_nRange*5000.0f, m_nRange*5000.0f);
-	*/
-
 	if(m_myProjType == GLORTHOGRAPHIC)//직교 투영
     {
 		if(w <= h)
 			glOrtho(-m_nRange-m_xTrans, m_nRange-m_xTrans, -(m_nRange*h/w)-m_yTrans,
-				(m_nRange*h/w)-m_yTrans, -(m_nRange*50000.0f)-m_zTrans, (m_nRange*50000.0f)-m_zTrans);
+				(m_nRange*h/w)-m_yTrans, -(m_nRange*5000.0f)-m_zTrans, (m_nRange*5000.0f)-m_zTrans);
 		else
 			glOrtho(-(m_nRange*w/h)-m_xTrans, (m_nRange*w/h)-m_xTrans, -m_nRange-m_yTrans,
-				m_nRange-m_yTrans, -m_nRange*50000.0f, m_nRange*50000.0f);
+				m_nRange-m_yTrans, -m_nRange*5000.0f, m_nRange*5000.0f);
 
     }
 
     else if(m_myProjType == GLPERSPECTIVE)//투시 투영
     {
 		if(w <= h)
-			gluPerspective(30, (GLdouble)h/(GLdouble)w, 1, m_nRange*50000.0f);
+			gluPerspective(30, (GLdouble)h/(GLdouble)w, 1, m_nRange*5000.0f);
 		else
-			gluPerspective(30, (GLdouble)w/(GLdouble)h, 1, m_nRange*50000.0f);
+			gluPerspective(30, (GLdouble)w/(GLdouble)h, 1, m_nRange*5000.0f);
 		glTranslatef(0, 0, -m_nRange*4);
     }
 
@@ -677,7 +667,7 @@ void NaGsView::ZoomWindow(CRect zcRect)
 	m_myCamera->StrafeRight(-dx);
 	m_myCamera->MoveForwards(-dy);
 
-	wglMakeCurrent(NULL,NULL);
+	wglMakeCurrent(m_hDC,NULL);
 
 	ReSize(rcWidth, rcHeight);
 
@@ -771,7 +761,7 @@ void NaGsView::PointToScreen(const NaGePoint3D& P, int& x, int& y)
 	wy = sround(wy);
 	x = (int)wx; y = (int)wy;
 	glPopMatrix();
-	::wglMakeCurrent(NULL,NULL);
+	::wglMakeCurrent(m_hDC,NULL);
 }
 
 void NaGsView::ScreenToPoint(const int& x, const int& y, NaGePoint3D&  P)
@@ -794,7 +784,7 @@ void NaGsView::ScreenToPoint(const int& x, const int& y, NaGePoint3D&  P)
 				&wx, &wy, &wz);
 	P.SetParam(wx, wy, wz);
 	glPopMatrix();
-	::wglMakeCurrent(NULL,NULL);
+	::wglMakeCurrent(m_hDC,NULL);
 }
 
 void NaGsView::FitView()
@@ -915,7 +905,15 @@ void NaGsView::SweepSelect(const CRect& swRect)
 {
 	m_theContext->SweepSelect(this, swRect);
 }
+//
+void NaGsView::SelectTriangle(NaGePoint3D& pt)
+{
+	m_theContext->SelectTriangle(this, pt);
+}
 
+//픽킹용 함수
+//픽킹을 위한 버퍼의 크기인데 넉넉히 줘도 된다. 모자라면 안된다.
+//픽킹으로 사용되는 입력은 마우스의 좌표이다.
 int NaGsView::ProcessSelection(const int& xPos, const int& yPos , const int& sensitivity)
 {
 	int id = 0;
@@ -928,22 +926,23 @@ int NaGsView::ProcessSelection(const int& xPos, const int& yPos , const int& sen
 	// Hit counter and viewport storeage
 	GLint hits, viewport[4];
 
-	// Setup selection buffer
+	//Picking에 사용될 버퍼를 설정한다.
 	glSelectBuffer(512, selectBuff);
 	
-	// Get the viewport
+	//변환에 필요한 정보인 viewport정보를 얻어온다.
 	glGetIntegerv(GL_VIEWPORT, viewport);
 
-	// Switch to projection and save the matrix
+	// 현재의 프로젝션 메트릭스 저장.
+	// 지금부터 설정되는 메트릭스의 순서에 유의해야 한다. 기본이 Modelview인데 새로 프로젝션을 설정하는데
+	// 이후에 생긴 변환이 현재 사용하는 변환에 영향을 주지 않도록 push matrix를 하는것이다.
 	glMatrixMode(GL_PROJECTION);
+	//저장
 	glPushMatrix();
 
-	// Change render mode
+	//여기서 부터는 랜더링이 화면에 되지 않는다
+	//컴퓨터가 마우스가 어디서 걸리는지 찾기 위해서 다시 혼자 그려보는 그런 단계가 시작된다.
 	glRenderMode(GL_SELECT);
 
-	// Establish new clipping volume to be unit cube around
-	// mouse cursor point (xPos, yPos) and extending n pixels
-	// in the vertical and horzontal direction
 	int n = sensitivity;
 	glLoadIdentity();
 	gluPickMatrix(xPos, viewport[3] - yPos, n, n, viewport);
@@ -956,23 +955,32 @@ int NaGsView::ProcessSelection(const int& xPos, const int& yPos , const int& sen
 
 	// Ortho Viewing
     if (w <= h) 
-		glOrtho (-m_nRange-m_xTrans, m_nRange-m_xTrans, -(m_nRange*h/w)-m_yTrans,
-		(m_nRange*h/w)-m_yTrans, -(m_nRange*5000.0f)-m_zTrans, (m_nRange*5000.0f)-m_zTrans);
+		glOrtho (-m_nRange-m_xTrans, 
+				m_nRange-m_xTrans, 
+				-(m_nRange*h/w)-m_yTrans,
+				(m_nRange*h/w)-m_yTrans, 
+				-(m_nRange*5000.0f)-m_zTrans, 
+				(m_nRange*5000.0f)-m_zTrans);
 	else 
-		glOrtho (-(m_nRange*w/h)-m_xTrans, (m_nRange*w/h)-m_xTrans, -m_nRange-m_yTrans,
-		m_nRange-m_yTrans, -m_nRange*5000.0f, m_nRange*5000.0f);
+		glOrtho (-(m_nRange*w/h)-m_xTrans,
+				(m_nRange*w/h)-m_xTrans, 
+				-m_nRange-m_yTrans,
+				m_nRange-m_yTrans, 
+				-m_nRange*5000.0f, 
+				m_nRange*5000.0f);
 
-	// Draw the scene
+	// 드로잉 수행
 	RenderScene(GL_SELECT);
 
-	// Collect the hits
+	// Picknig을 종료하면서 스택을 얻어온다. 즉, 녀석에게 니가 아는걸 알려달라고 하는 것과 같다.
 	hits = glRenderMode(GL_RENDER);
 
-	// Restore the projection matrix
+	// 앞에서 저장한 프로젝션 메트릭스를 복구하기 위해 프로젝션으로 변경
 	glMatrixMode(GL_PROJECTION);
+	// 복구
 	glPopMatrix();
 
-	// Go back to modelview for normal rendering
+	// 다시 그림을 그리기 위해서 모델뷰로 변경한다. 이제부터는 다시 화면에 그려진다.
 	glMatrixMode(GL_MODELVIEW);
 
 	// If a single hit occured, m_display the info.

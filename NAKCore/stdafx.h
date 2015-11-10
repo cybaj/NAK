@@ -41,8 +41,14 @@
 
 #endif // _WIN64
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 //OpenGL
 #include <gl\gl.h>
 #include <gl\glu.h>
 
 #include "NaGsView.h"
+#include "NaDbTexture.h"
+

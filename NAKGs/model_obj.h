@@ -191,7 +191,8 @@ inline const int *ModelOBJ::getIndexBuffer() const
 { return &m_indexBuffer[0]; }
 
 inline int ModelOBJ::getIndexSize() const
-{ return static_cast<int>(sizeof(int)); }
+//{ return static_cast<int>(sizeof(int)); }
+{return static_cast<int>(m_vertexBuffer.size());}
 
 inline const ModelOBJ::Material &ModelOBJ::getMaterial(int i) const
 { return m_materials[i]; }

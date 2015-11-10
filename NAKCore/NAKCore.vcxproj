@@ -108,7 +108,7 @@
       <OutputFile>..\Support\$(ProjectName).ocx</OutputFile>
       <RegisterOutput>true</RegisterOutput>
       <AdditionalDependencies>opengl32.lib;glu32.lib;NAKGe.lib;NAKGs.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\obj\32\NAKGe\Debug;..\obj\32\NAKGs\Debug;..\OpenGL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\obj\32\NAKGe\Debug;..\obj\32\NAKGs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
