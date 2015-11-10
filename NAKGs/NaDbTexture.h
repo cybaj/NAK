@@ -41,7 +41,7 @@ class TextureManager;
 class NAKGS_API NaDbTexture : public NaDbObject
 {
 public:
-	NaDbTexture(const NaGeSurface*, const char* filename);
+	NaDbTexture(const NaGeSurface*, const char* filename, double dBrightness, double dContrast, double dGamma, BOOL bInvert);
 	virtual ~NaDbTexture();
 	virtual NaDbObject* Copy();
 	virtual void DefineDisplay();
@@ -57,6 +57,13 @@ public:
 	//color Map
 	void GetColorMap(string& fname) {fname = m_textureName;}
 	void GetBumpMap(string& fname) { fname = m_bumpName; }
+	void AdjustColors(double dBrightness, double dContrast, double dGamma, BOOL bInvert)
+	{
+		m_dBrightness = dBrightness;
+		m_dContrast = dContrast;
+		m_dGamma = dGamma;
+		m_bInvert = bInvert;
+	}
 private:
 	void ComputePoints();
 	void ComputeWFPoints();
@@ -96,6 +103,10 @@ private:
 	ModelOBJ	m_model;
 	std::string m_textureName;
 	std::string m_bumpName;
+	double		m_dGamma;
+	double		m_dBrightness;
+	double		m_dContrast;
+	BOOL		m_bInvert;
 };
 
 #endif /* _GLTexture_H */

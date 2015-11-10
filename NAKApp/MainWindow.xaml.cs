@@ -36,6 +36,12 @@ namespace NAKApp
             _sliderRed.Value = (short)(_view3d.EffectRed);
             _sliderGreen.Value = (short)(_view3d.EffectGreen);
             _sliderBlue.Value = (short)(_view3d.EffectBlue);
+
+//            _view3d.EffectInvert = false;
+            
+            _sliderGamma.Value = (short)_view3d.EffectGamma;
+            _sliderContrast.Value = (short)_view3d.EffectContrast;
+            _sliderBrightness.Value = (short)_view3d.EffectBrightness;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -78,5 +84,31 @@ namespace NAKApp
         {
 
         }
+
+        private void _chkInvert_Checked(object sender, RoutedEventArgs e)
+        {
+            _view3d.EffectInvert = true;
+        }
+        
+        private void _chkInvert_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _view3d.EffectInvert = false;
+        }
+
+        private void _sliderGamma_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _view3d.EffectGamma = (short)(_sliderGamma.Value);
+        }
+
+        private void _sliderContrast_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _view3d.EffectContrast = (short)(_sliderContrast.Value);
+        }
+
+        private void _sliderBrightness_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _view3d.EffectBrightness = (short)(_sliderBrightness.Value);
+        }
+
     }
 }

@@ -29,7 +29,7 @@ extern HDC					g_hDC;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-NaDbTexture::NaDbTexture(const NaGeSurface* s, const char* filename)
+NaDbTexture::NaDbTexture(const NaGeSurface* s, const char* filename, double dBrightness, double dContrast, double dGamma, BOOL bInvert)
 {
 	USES_CONVERSION;
 
@@ -60,6 +60,8 @@ NaDbTexture::NaDbTexture(const NaGeSurface* s, const char* filename)
 	pointList = new CListOfPoint3D;
 	normalList = new CListOfPoint3D;
 	bpointList = new CListOfPoint3D;
+
+	AdjustColors(dBrightness, dContrast, dGamma, FALSE);
 
 	m_path = filename;
 
@@ -425,6 +427,10 @@ GLuint NaDbTexture::LoadTexture(const char *pszFilename)
 	{
 		FIBITMAP* temp = imagen;
 		imagen = FreeImage_ConvertTo32Bits(imagen);
+		if (m_dGamma>0.0)
+			//FreeImage_AdjustGamma(imagen, m_dGamma);
+			FreeImage_AdjustColors(imagen, m_dBrightness, m_dContrast, m_dGamma, m_bInvert);
+
 		FreeImage_Unload(temp);
 
 		int w = FreeImage_GetWidth(imagen);

@@ -48,6 +48,10 @@ BEGIN_DISPATCH_MAP(CNAKCoreCtrl, COleControl)
 	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectGreen", dispidEffectGreen, m_EffectGreen, OnEffectGreenChanged, VT_I2)
 	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectBlue", dispidEffectBlue, m_EffectBlue, OnEffectBlueChanged, VT_I2)
 	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "UVImage", dispidUVImage, m_UVImage, OnUVImageChanged, VT_BSTR)
+	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectGamma", dispidEffectGamma, m_EffectGamma, OnEffectGammaChanged, VT_I2)
+	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectContrast", dispidEffectContrast, m_EffectContrast, OnEffectContrastChanged, VT_I2)
+	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectBrightness", dispidEffectBrightness, m_EffectBrightness, OnEffectBrightnessChanged, VT_I2)
+	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectInvert", dispidEffectInvert, m_EffectInvert, OnEffectInvertChanged, VT_BOOL)
 END_DISPATCH_MAP()
 
 // Event map
@@ -215,6 +219,11 @@ int CNAKCoreCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_EffectRed = red * 255;
 	m_EffectGreen = green * 255;
 	m_EffectBlue = blue * 255;
+
+	m_EffectGamma = 0;
+	m_EffectContrast = 0;
+	m_EffectBrightness = 0;
+//	m_EffectInvert = FALSE;
 
 	return 0;
 }
@@ -467,7 +476,8 @@ LONG CNAKCoreCtrl::OpenObject(LPCTSTR strFilename)
 
 	std::string colorMap;
 	NaGeObjTexture us;
-	NaDbTexture* pTexture = new NaDbTexture(&us, W2A(strFilename) );
+	NaDbTexture* pTexture = new NaDbTexture(&us, W2A(strFilename), m_EffectBrightness / 255.0, m_EffectContrast / 255.0, m_EffectGamma / 255.0, m_EffectInvert);
+	//pTexture->AdjustColors(m_EffectBrightness/255.0, m_EffectContrast/ 255.0, m_EffectGamma/ 255.0, m_EffectInvert);
 	pTexture->GetColorMap(colorMap);
 	m_dContext->Display(pTexture);
 
@@ -522,6 +532,46 @@ void CNAKCoreCtrl::OnEffectBlueChanged()
 
 
 void CNAKCoreCtrl::OnUVImageChanged()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+
+	SetModifiedFlag();
+}
+
+
+void CNAKCoreCtrl::OnEffectGammaChanged()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+
+	SetModifiedFlag();
+}
+
+
+void CNAKCoreCtrl::OnEffectContrastChanged()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+
+	SetModifiedFlag();
+}
+
+
+void CNAKCoreCtrl::OnEffectBrightnessChanged()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your property handler code here
+
+	SetModifiedFlag();
+}
+
+
+void CNAKCoreCtrl::OnEffectInvertChanged()
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 

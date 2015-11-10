@@ -50,6 +50,10 @@ private:
 
 public:
 	enum LineStyle {
+		dispidEffectInvert = 9,
+		dispidEffectBrightness = 8,
+		dispidEffectContrast = 7,
+		dispidEffectGamma = 6,
 		dispidUVImage = 5,
 		dispidEffectBlue = 4,
 		dispidEffectGreen = 3,
@@ -108,5 +112,14 @@ protected:
 	CString m_UVImage;
 public:
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+protected:
+	void OnEffectGammaChanged();
+	SHORT m_EffectGamma;
+	void OnEffectContrastChanged();
+	SHORT m_EffectContrast;
+	void OnEffectBrightnessChanged();
+	SHORT m_EffectBrightness;
+	void OnEffectInvertChanged();
+	VARIANT_BOOL m_EffectInvert;
 };
 

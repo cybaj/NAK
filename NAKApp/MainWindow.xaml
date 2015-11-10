@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NAKApp"
         mc:Ignorable="d"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        Title="MainWindow" Height="428" Width="606.6" Loaded="Window_Loaded">
+        Title="MainWindow" Height="559" Width="719.6" Loaded="Window_Loaded">
     <Window.Resources>
         <Storyboard x:Key="OnMouseEnter1"/>
     </Window.Resources>
@@ -16,7 +16,7 @@
             <RowDefinition Height="99*"/>
         </Grid.RowDefinitions>
         <Button x:Name="button" Content="Obj 파일열기" HorizontalAlignment="Left" Width="149" RenderTransformOrigin="0.495,0.424" ToolTip="obj 파일을 열기 합니다" Click="button_Click" d:LayoutOverrides="HorizontalAlignment" VerticalAlignment="Top"/>
-        <StackPanel Margin="5,51,0,102" HorizontalAlignment="Left" Width="138">
+        <StackPanel Margin="5,51,0,199" HorizontalAlignment="Left" Width="138">
             <Label x:Name="_red" Content="Red"/>
             <Slider x:Name="_sliderRed" Height="18" RenderTransformOrigin="0.508,2.169" Maximum="255" ValueChanged="_sliderRed_ValueChanged"/>
             <Label x:Name="_green" Content="Green"/>
@@ -31,5 +31,14 @@
             <WindowsFormsHost x:Name="_hostMain" Margin="1"/>
         </Grid>
         <Label x:Name="label" Content="Background color" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top" Width="149" Height="27"/>
+        <StackPanel HorizontalAlignment="Left" Height="163" Margin="0,198,0,0" VerticalAlignment="Top" Width="149" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
+            <CheckBox x:Name="_chkInvert" Content="Invert" Checked="_chkInvert_Checked" Unchecked="_chkInvert_Unchecked"/>
+            <Label x:Name="label1" Content="Gamma"/>
+            <Slider x:Name="_sliderGamma" ValueChanged="_sliderGamma_ValueChanged" Maximum="255"/>
+            <Label x:Name="label2" Content="Contrast"/>
+            <Slider x:Name="_sliderContrast" ValueChanged="_sliderContrast_ValueChanged" Maximum="255"/>
+            <Label x:Name="label3" Content="Brightness"/>
+            <Slider x:Name="_sliderBrightness" ValueChanged="_sliderBrightness_ValueChanged" Maximum="255"/>
+        </StackPanel>
     </Grid>
 </Window>
