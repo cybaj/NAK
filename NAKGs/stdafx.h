@@ -25,3 +25,4 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "FreeImage.h"
+#include "json.h"

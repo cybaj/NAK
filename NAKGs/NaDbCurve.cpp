@@ -47,6 +47,11 @@ NaDbObject* NaDbCurve::Copy()
 	return (NaDbObject*)this;
 }
 
+bool NaDbCurve::SaveObject(FILE* fptr)
+{
+	return false;
+}
+
 NaGeGeometry* NaDbCurve::Geometry() const
 {
 	NaGeCurve* crv = pCurve->Copy();

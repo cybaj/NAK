@@ -44,6 +44,11 @@ NaDbObject* NaDbGrid::Copy()
 	return (NaDbObject*)this;
 }
 
+bool NaDbGrid::SaveObject(FILE* fptr)
+{
+	return false;
+}
+
 void NaDbGrid::SetPlane(const NaGePlane& plane)
 { 
     itsPlane = plane; 

@@ -42,6 +42,11 @@ NaDbObject* NaDbText::Copy()
 	return (NaDbObject*)this;
 }
 
+bool NaDbText::SaveObject(FILE* fptr)
+{
+	return false;
+}
+
 void NaDbText::DrawString()
 {
 	glPushAttrib(GL_LIST_BIT);

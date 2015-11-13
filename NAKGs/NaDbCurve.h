@@ -41,6 +41,7 @@ class NAKGS_API NaDbCurve : public NaDbObject
 	NaDbCurve(const NaGeCurve*, const GsLineStyle& = LINE_SOLID);
 	virtual ~NaDbCurve();
 	virtual NaDbObject* Copy();
+	virtual bool SaveObject(FILE* fptr);
 	virtual void DefineDisplay();
 	virtual void Display(const GsDisplayMode& = GLWIREFRAME);
 	virtual void Hilight(const GsDisplayMode&);
@@ -49,6 +50,7 @@ class NAKGS_API NaDbCurve : public NaDbObject
 	void SetSmooth(const double&);
 	void SetCurve(const NaGeCurve*);
 	virtual NaGeGeometry* Geometry() const;
+
     private:
 	void ComputePoints();
 	void ComputeBoundLimits();

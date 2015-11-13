@@ -6,6 +6,7 @@
 #include "NAKCorePropPage.h"
 #include "afxdialogex.h"
 
+
 #include "NaDbCurve.h"
 #include "NaDbPoint.h"
 #include "NaDbText.h"
@@ -52,6 +53,7 @@ BEGIN_DISPATCH_MAP(CNAKCoreCtrl, COleControl)
 	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectContrast", dispidEffectContrast, m_EffectContrast, OnEffectContrastChanged, VT_I2)
 	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectBrightness", dispidEffectBrightness, m_EffectBrightness, OnEffectBrightnessChanged, VT_I2)
 	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectInvert", dispidEffectInvert, m_EffectInvert, OnEffectInvertChanged, VT_BOOL)
+	DISP_FUNCTION_ID(CNAKCoreCtrl, "SaveObject", dispidSaveObject, SaveObject, VT_EMPTY, VTS_BSTR)
 END_DISPATCH_MAP()
 
 // Event map
@@ -500,6 +502,15 @@ LONG CNAKCoreCtrl::OpenObject(LPCTSTR strFilename)
 	return 0;
 }
 
+void CNAKCoreCtrl::SaveObject(LPCTSTR filename)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your dispatch handler code here
+	m_myView->EnableRC(TRUE);
+	m_dContext->SaveObject(filename);
+	m_myView->EnableRC(FALSE);
+}
 
 void CNAKCoreCtrl::OnEffectRedChanged()
 {
@@ -579,3 +590,4 @@ void CNAKCoreCtrl::OnEffectInvertChanged()
 
 	SetModifiedFlag();
 }
+

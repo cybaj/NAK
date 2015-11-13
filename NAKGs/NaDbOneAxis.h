@@ -25,6 +25,7 @@ public:
 	NaDbOneAxis(const NaGeOneAxis& Ax, const int& length = 100, const int& arrow = 10);
 	virtual ~NaDbOneAxis();
 	virtual NaDbObject* Copy();
+	virtual bool SaveObject(FILE* fptr);
 	virtual void DefineDisplay();
 	virtual void Display(const GsDisplayMode& = GLWIREFRAME);
 	virtual void Hilight(const GsDisplayMode&);

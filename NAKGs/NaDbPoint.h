@@ -25,6 +25,7 @@ public:
 	NaDbPoint(const NaGePoint3D&, const GsPointMarker& = MARKER_POINT);
 	virtual ~NaDbPoint();
 	virtual NaDbObject* Copy();
+	virtual bool SaveObject(FILE* fptr);
 	virtual void DefineDisplay();
 	virtual void Display(const GsDisplayMode& = GLWIREFRAME);
 	virtual void Hilight(const GsDisplayMode&);

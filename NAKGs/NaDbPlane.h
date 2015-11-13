@@ -27,6 +27,7 @@ public:
 	NaDbPlane(const NaGePlane&, const double& = 200, const double& = 200);
 	virtual ~NaDbPlane();
 	virtual NaDbObject* Copy();
+	virtual bool SaveObject(FILE* fptr);
 	virtual void DefineDisplay();
 	virtual void Display(const GsDisplayMode& = GLWIREFRAME);
 	virtual void Hilight(const GsDisplayMode&);

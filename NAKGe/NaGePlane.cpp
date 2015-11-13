@@ -93,9 +93,6 @@ NaGePoint3D NaGePlane::PointAtPara(const double uPar, const double vPar)
 {
 	NaGeVector3D V;
 	V = itsLocation.GetOrigin() + itsLocation.GetXDirection() * uPar + itsLocation.GetYDirection() * vPar;
-	/*CString str;
-	str.Format("YDirection %0.3lf, %0.3lf, %0.3lf",itsLocation.GetYDirection().GetX(),itsLocation.GetYDirection().GetY(),itsLocation.GetYDirection().GetZ());
-	MessageBox(0, str, "From Plane", MB_OK);*/
 	return V.Point();
 }
 

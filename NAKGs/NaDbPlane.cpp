@@ -40,6 +40,11 @@ NaDbObject* NaDbPlane::Copy()
 	return (NaDbObject*)this;
 }
 
+bool NaDbPlane::SaveObject(FILE* fptr)
+{
+	return false;
+}
+
 NaGeGeometry* NaDbPlane::Geometry() const
 {
     NaGeVector3D Dir = itsPlane.GetDirection();

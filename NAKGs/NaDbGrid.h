@@ -31,6 +31,7 @@ public:
 	double GetSize() const { return itsSize; }
 	double GetStep() const { return itsStep; }
 	virtual NaDbObject* Copy();
+	virtual bool SaveObject(FILE* fptr);
 	virtual void DefineDisplay();
 	virtual void Display(const GsDisplayMode& = GLWIREFRAME);
 	virtual void Hilight(const GsDisplayMode&) {;}

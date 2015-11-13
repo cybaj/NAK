@@ -197,8 +197,6 @@ void NaGsDisplayContext::Render(const GsDisplayMode& mode)
 		if(pDbObj)
 		{
 			glLoadName(pDbObj->GetObjID());
-//!
-//pDbObj->SetColor(m_nRed, m_nGreen, m_nBlue);
 			pDbObj->Display(mode);
 		}
 	}
@@ -209,6 +207,38 @@ void NaGsDisplayContext::Render(const GsDisplayMode& mode)
 		pDbObj = listIter.Current();
 		if(pDbObj)
 			pDbObj->Hilight(mode);
+	}
+}
+
+void NaGsDisplayContext::SaveObject(LPCTSTR filename)
+{
+	if (IsEmpty())
+		return;
+
+	NaDbObject* pDbObj;
+
+	try
+	{
+		CStdioFile file;
+		if (file.Open(filename, CFile::modeWrite | CFile::modeCreate | CFile::typeText))
+		{
+			CListIteratorOfListOfNaDbObject listIter(m_display);
+			for (listIter.Init(); listIter.More(); listIter.Next())
+			{
+				pDbObj = listIter.Current();
+				if (pDbObj)
+				{
+					pDbObj->SaveObject(file.m_pStream);
+				}
+			}
+			file.Close();
+		}
+	}
+	catch (CFileException* e)
+	{
+		TCHAR lpszError[1024];
+		e->GetErrorMessage(lpszError, sizeof(lpszError));
+		AfxMessageBox(lpszError);
 	}
 }
 

@@ -51,6 +51,11 @@ NaDbObject* NaDbTrihedron::Copy()
 	return (NaDbObject*)this;
 }
 
+bool NaDbTrihedron::SaveObject(FILE* fptr)
+{
+	return false;
+}
+
 void NaDbTrihedron::DefineDisplay()
 {
     glCallList(triList);

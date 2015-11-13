@@ -50,6 +50,7 @@ private:
 
 public:
 	enum LineStyle {
+		dispidSaveObject = 10L,
 		dispidEffectInvert = 9,
 		dispidEffectBrightness = 8,
 		dispidEffectContrast = 7,
@@ -121,5 +122,6 @@ protected:
 	SHORT m_EffectBrightness;
 	void OnEffectInvertChanged();
 	VARIANT_BOOL m_EffectInvert;
+	void SaveObject(LPCTSTR filename);
 };
 

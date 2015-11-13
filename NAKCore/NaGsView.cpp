@@ -435,7 +435,6 @@ void NaGsView::RenderScene(GLenum mode)
 
 	//컨텍스트에 내용들을 랜더함
 	m_theContext->Render(m_displayMode);
-	
 	glPopMatrix();
 
 	glFlush();

@@ -110,5 +110,24 @@ namespace NAKApp
             _view3d.EffectBrightness = (short)(_sliderBrightness.Value);
         }
 
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            if (_UVImage.Source == null)
+            {
+                System.Windows.Forms.MessageBox.Show("열려진 Obj파일이 없습니다.\n열기 버튼을 클릭해서 Obj 파일을 여십시오.");
+                return;
+            }
+
+            //대화상자를 통해서 obj 파일을 읽어옴
+            SaveFileDialog fileDialog = new System.Windows.Forms.SaveFileDialog();
+            fileDialog.Filter = "Json Files|*.json";
+            fileDialog.Title = "저장할 Data 파일을 지정하세요.";
+            DialogResult result = fileDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string fname = fileDialog.FileName;
+                _view3d.SaveObject(fname);
+            }
+        }
     }
 }

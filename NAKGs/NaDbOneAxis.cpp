@@ -33,6 +33,11 @@ NaDbObject* NaDbOneAxis::Copy()
 	return (NaDbObject*)this;
 }
 
+bool NaDbOneAxis::SaveObject(FILE* fptr)
+{
+	return false;
+}
+
 NaGeGeometry* NaDbOneAxis::Geometry() const
 {
 	NaGeOneAxis* Ax = new NaGeOneAxis(itsAxis.GetPosition(), itsAxis.GetDirection());

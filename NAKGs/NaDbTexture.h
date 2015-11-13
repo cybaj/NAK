@@ -44,6 +44,7 @@ public:
 	NaDbTexture(const NaGeSurface*, const char* filename, double dBrightness, double dContrast, double dGamma, BOOL bInvert);
 	virtual ~NaDbTexture();
 	virtual NaDbObject* Copy();
+	virtual bool SaveObject(FILE* fptr);
 	virtual void DefineDisplay();
 	virtual void Display(const GsDisplayMode& = GLWIREFRAME);
 	virtual void Hilight(const GsDisplayMode&);

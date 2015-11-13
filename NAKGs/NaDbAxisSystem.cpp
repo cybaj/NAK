@@ -35,6 +35,10 @@ NaDbObject* NaDbAxisSystem::Copy()
 	return (NaDbObject*)this;
 }
 
+bool NaDbAxisSystem::SaveObject(FILE* fptr)
+{
+	return false;
+}
 
 NaGeGeometry* NaDbAxisSystem::Geometry() const
 {

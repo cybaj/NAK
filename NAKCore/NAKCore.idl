@@ -31,7 +31,8 @@ library NAKCoreLib
 	methods:
 
 			[id(DISPID_ABOUTBOX)] void AboutBox();
-			[id(1)] LONG OpenObject(BSTR strFilename);
+			[id(1), helpstring("Obj 파일을 오픈합니다.")] LONG OpenObject(BSTR strFilename);
+			[id(10), helpstring("json 파일을 생성합니다.")] void SaveObject(BSTR strFilename);
 	};
 
 	//  Event dispatch interface for CNAKCoreCtrl

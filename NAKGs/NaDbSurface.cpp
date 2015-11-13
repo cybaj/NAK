@@ -90,6 +90,11 @@ NaDbObject* NaDbSurface::Copy()
 	return (NaDbObject*)this;
 }
 
+bool NaDbSurface::SaveObject(FILE* fptr)
+{
+	return false;
+}
+
 void NaDbSurface::DefineDisplay()
 {
     GLfloat bgcol[4];

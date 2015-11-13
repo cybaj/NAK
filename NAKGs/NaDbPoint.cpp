@@ -31,6 +31,12 @@ NaDbObject* NaDbPoint::Copy()
 	return (NaDbObject*)this;
 }
 
+bool NaDbPoint::SaveObject(FILE* fptr)
+{
+	return false;
+}
+
+
 NaGeGeometry* NaDbPoint::Geometry() const
 {
 	NaGePoint3D* pnt = new NaGePoint3D(itsPoint.GetX(), itsPoint.GetY(), itsPoint.GetZ());

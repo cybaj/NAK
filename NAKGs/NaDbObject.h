@@ -45,6 +45,7 @@ public:
 	virtual NaGeGeometry* Geometry() const { return 0; }
 	virtual void MakeHidden(const bool& flag) { m_bHide = flag; }
 	virtual bool IsHidden() const { return m_bHide; }
+	virtual bool SaveObject(FILE* fptr) = 0;
 
 	unsigned long int GetObjID() const { return glObjID; }
 	void SetDisplayMode(const GsDisplayMode& );

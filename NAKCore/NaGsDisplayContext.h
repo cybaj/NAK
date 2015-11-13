@@ -53,6 +53,8 @@ public:
 	void SetSensitivity(const int& s) { m_mouseSensitivity = s; }
 	//texture effect
 	void SelectTriangle(NaGsView* aView, NaGePoint3D& pt);
+	//file io
+	void SaveObject(LPCTSTR filename);
 private:
 	void AddToSelection( NaDbObject* pDbObj);
 	void RemoveSelection( NaDbObject* pDbObj);

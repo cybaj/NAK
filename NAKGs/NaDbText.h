@@ -19,17 +19,18 @@ class NaGePoint3D;
 
 enum TextAlign { CENTER = 0, LEFT, RIGHT };
 
-class NaDbText : public NaDbObject  
+class NAKGS_API NaDbText : public NaDbObject
 {
 public:
-	NAKGS_API NaDbText(const string&, const NaGePoint3D&, const char *tf = "MS Sans Serif", int ht = 16,
+	 NaDbText(const string&, const NaGePoint3D&, const char *tf = "MS Sans Serif", int ht = 16,
 		            int wt = 0, DWORD it = 0, const TextAlign& = LEFT);
-	NAKGS_API virtual ~NaDbText();
-	NAKGS_API void DrawString();
-	NAKGS_API virtual NaDbObject* Copy();
-	NAKGS_API virtual void DefineDisplay();
-	NAKGS_API virtual void Display(const GsDisplayMode& = GLWIREFRAME);
-	NAKGS_API virtual void Hilight(const GsDisplayMode&);
+	virtual ~NaDbText();
+	void DrawString();
+	virtual NaDbObject* Copy();
+	virtual bool SaveObject(FILE* fptr);
+	virtual void DefineDisplay();
+	virtual void Display(const GsDisplayMode& = GLWIREFRAME);
+	virtual void Hilight(const GsDisplayMode&);
 private:
 	void ComputeBoundLimits();
 private:
