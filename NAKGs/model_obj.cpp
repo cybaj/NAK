@@ -494,6 +494,47 @@ int ModelOBJ::addVertex(int hash, const Vertex *pVertex)
     return index;
 }
 
+int ModelOBJ::_addVertex(int hash, const Vertex *pVertex)
+{
+	int index = -1;
+	std::map<int, std::vector<int> >::const_iterator iter = l_vertexCache.find(hash);
+
+	if (iter == l_vertexCache.end())
+	{
+		// Vertex hash doesn't exist in the cache.
+		index = static_cast<int>(l_vertexBuffer.size());
+		l_vertexBuffer.push_back(*pVertex);
+		l_vertexCache.insert(std::make_pair(hash, std::vector<int>(1, index)));
+	}
+	else
+	{
+		// One or more vertices have been hashed to this entry in the cache.
+		const std::vector<int> &vertices = iter->second;
+		const Vertex *pCachedVertex = 0;
+		bool found = false;
+
+		for (std::vector<int>::const_iterator i = vertices.begin(); i != vertices.end(); ++i)
+		{
+			index = *i;
+			pCachedVertex = &l_vertexBuffer[index];
+
+			if (memcmp(pCachedVertex, pVertex, sizeof(Vertex)) == 0)
+			{
+				found = true;
+				break;
+			}
+		}
+
+		if (!found)
+		{
+			index = static_cast<int>(l_vertexBuffer.size());
+			l_vertexBuffer.push_back(*pVertex);
+			l_vertexCache[hash].push_back(index);
+		}
+	}
+	return index;
+}
+
 void ModelOBJ::buildMeshes()
 {
     // Group the model's triangles based on material type.
@@ -1283,4 +1324,113 @@ bool ModelOBJ::importMaterials(const char *pszFilename)
 
     fclose(pFile);
     return true;
+}
+
+
+bool ModelOBJ::subdivisionLoop()
+{
+	//triangle ÀÇ °³¼ö
+	ModelOBJ::Mesh *pMesh = 0;
+	for (int i = 0; i < m_numberOfMeshes; ++i)
+	{
+		const ModelOBJ::Material *pMaterial = m_meshes[i].pMaterial;
+		int newStartIndex = m_meshes[i].startIndex;
+		int newTriangleCount = 0;
+		int sindex = m_meshes[i].startIndex;
+		int tindex = m_meshes[i].triangleCount;
+		for (int j = 0; j < tindex; j++)
+		{
+			ModelOBJ::Vertex v11 = m_vertexBuffer[m_indexBuffer[sindex + j * 3 + 0]];
+			ModelOBJ::Vertex v22 = m_vertexBuffer[m_indexBuffer[sindex + j * 3 + 1]];
+			ModelOBJ::Vertex v33 = m_vertexBuffer[m_indexBuffer[sindex + j * 3 + 2]];
+
+			ModelOBJ::Vertex v1v2;
+			v1v2.position[0] = (v11.position[0] + v22.position[0]) / 2.0;
+			v1v2.position[1] = (v11.position[1] + v22.position[1]) / 2.0;
+			v1v2.position[2] = (v11.position[2] + v22.position[2]) / 2.0;
+			v1v2.normal[0] = (v11.normal[0] + v22.normal[0]) / 2.0;
+			v1v2.normal[1] = (v11.normal[1] + v22.normal[1]) / 2.0;
+			v1v2.normal[2] = (v11.normal[2] + v22.normal[2]) / 2.0;
+			v1v2.texCoord[0] = (v11.texCoord[0] + v22.texCoord[0]) / 2.0;
+			v1v2.texCoord[1] = (v11.texCoord[1] + v22.texCoord[1]) / 2.0;
+			v1v2.tangent[0] = (v11.tangent[0] + v22.tangent[0]) / 2.0;
+			v1v2.tangent[1] = (v11.tangent[1] + v22.tangent[1]) / 2.0;
+			v1v2.tangent[2] = (v11.tangent[2] + v22.tangent[2]) / 2.0;
+			v1v2.tangent[3] = (v11.tangent[3] + v22.tangent[3]) / 2.0;
+			v1v2.bitangent[0] = (v11.bitangent[0] + v22.bitangent[0]) / 2.0;
+			v1v2.bitangent[1] = (v11.bitangent[1] + v22.bitangent[1]) / 2.0;
+			v1v2.bitangent[2] = (v11.bitangent[2] + v22.bitangent[2]) / 2.0;
+
+			ModelOBJ::Vertex v2v3;
+			v2v3.position[0] = (v22.position[0] + v33.position[0]) / 2.0;
+			v2v3.position[1] = (v22.position[1] + v33.position[1]) / 2.0;
+			v2v3.position[2] = (v22.position[2] + v33.position[2]) / 2.0;
+			v2v3.normal[0] = (v22.normal[0] + v33.normal[0]) / 2.0;
+			v2v3.normal[1] = (v22.normal[1] + v33.normal[1]) / 2.0;
+			v2v3.normal[2] = (v22.normal[2] + v33.normal[2]) / 2.0;
+			v2v3.texCoord[0] = (v22.texCoord[0] + v33.texCoord[0]) / 2.0;
+			v2v3.texCoord[1] = (v22.texCoord[1] + v33.texCoord[1]) / 2.0;
+			v2v3.tangent[0] = (v22.tangent[0] + v33.tangent[0]) / 2.0;
+			v2v3.tangent[1] = (v22.tangent[1] + v33.tangent[1]) / 2.0;
+			v2v3.tangent[2] = (v22.tangent[2] + v33.tangent[2]) / 2.0;
+			v2v3.tangent[3] = (v22.tangent[3] + v33.tangent[3]) / 2.0;
+			v2v3.bitangent[0] = (v22.bitangent[0] + v33.bitangent[0]) / 2.0;
+			v2v3.bitangent[1] = (v22.bitangent[1] + v33.bitangent[1]) / 2.0;
+			v2v3.bitangent[2] = (v22.bitangent[2] + v33.bitangent[2]) / 2.0;
+
+			ModelOBJ::Vertex v3v1;
+			v3v1.position[0] = (v33.position[0] + v11.position[0]) / 2.0;
+			v3v1.position[1] = (v33.position[1] + v11.position[1]) / 2.0;
+			v3v1.position[2] = (v33.position[2] + v11.position[2]) / 2.0;
+			v3v1.normal[0] = (v33.normal[0] + v11.normal[0]) / 2.0;
+			v3v1.normal[1] = (v33.normal[1] + v11.normal[1]) / 2.0;
+			v3v1.normal[2] = (v33.normal[2] + v11.normal[2]) / 2.0;
+			v3v1.texCoord[0] = (v33.texCoord[0] + v11.texCoord[0]) / 2.0;
+			v3v1.texCoord[1] = (v33.texCoord[1] + v11.texCoord[1]) / 2.0;
+			v3v1.tangent[0] = (v33.tangent[0] + v11.tangent[0]) / 2.0;
+			v3v1.tangent[1] = (v33.tangent[1] + v11.tangent[1]) / 2.0;
+			v3v1.tangent[2] = (v33.tangent[2] + v11.tangent[2]) / 2.0;
+			v3v1.tangent[3] = (v33.tangent[3] + v11.tangent[3]) / 2.0;
+			v3v1.bitangent[0] = (v33.bitangent[0] + v11.bitangent[0]) / 2.0;
+			v3v1.bitangent[1] = (v33.bitangent[1] + v11.bitangent[1]) / 2.0;
+			v3v1.bitangent[2] = (v33.bitangent[2] + v11.bitangent[2]) / 2.0;
+
+			l_vertexBuffer.push_back(v11);//0
+			l_vertexBuffer.push_back(v1v2);//1
+			l_vertexBuffer.push_back(v22);//2
+			l_vertexBuffer.push_back(v2v3);//3
+			l_vertexBuffer.push_back(v33);//4
+			l_vertexBuffer.push_back(v3v1);//5
+
+			l_indexBuffer.push_back(j * 6 + 0);
+			l_indexBuffer.push_back(j * 6 + 1);
+			l_indexBuffer.push_back(j * 6 + 5);
+			newTriangleCount++;
+
+			l_indexBuffer.push_back(j * 6 + 1);
+			l_indexBuffer.push_back(j * 6 + 2);
+			l_indexBuffer.push_back(j * 6 + 3);
+			newTriangleCount++;
+
+			l_indexBuffer.push_back(j * 6 + 3);
+			l_indexBuffer.push_back(j * 6 + 4);
+			l_indexBuffer.push_back(j * 6 + 5);
+			newTriangleCount++;
+
+			l_indexBuffer.push_back(j * 6 + 1);
+			l_indexBuffer.push_back(j * 6 + 3);
+			l_indexBuffer.push_back(j * 6 + 5);
+			newTriangleCount++;
+
+		}
+		m_meshes[i].startIndex = newStartIndex;
+		m_meshes[i].triangleCount = newTriangleCount;
+
+		m_vertexBuffer.clear();
+		m_indexBuffer.clear();
+
+		m_vertexBuffer = l_vertexBuffer;
+		m_indexBuffer = l_indexBuffer;
+	}
+	return false;
 }

@@ -65,6 +65,8 @@ public:
 		m_dGamma = dGamma;
 		m_bInvert = bInvert;
 	}
+	//sub division loop
+	int SubDivisionLoop();
 private:
 	void ComputePoints();
 	void ComputeWFPoints();

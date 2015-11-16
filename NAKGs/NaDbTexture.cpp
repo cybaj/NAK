@@ -551,6 +551,13 @@ void NaDbTexture::LoadModel(const char *pszFilename)
 	SetCursor(LoadCursor(0, IDC_ARROW));
 }
 
+// Siggraph 94 Charles loop
+int NaDbTexture::SubDivisionLoop()
+{
+	m_model.subdivisionLoop();
+	return 0;
+}
+
 NaDbObject* NaDbTexture::Copy()
 {
 	AddRef();
@@ -747,7 +754,7 @@ void NaDbTexture::DefineDisplay()
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,specref);
     glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,128);
 
-    glShadeModel(GL_SMOOTH);
+//!    glShadeModel(GL_SMOOTH);
 
     glEnable(GL_AUTO_NORMAL);
     glEnable(GL_NORMALIZE);

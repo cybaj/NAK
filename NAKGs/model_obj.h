@@ -112,21 +112,16 @@ public:
     bool hasPositions() const;
     bool hasTangents() const;
     bool hasTextureCoords() const;
+	//!
+	bool subdivisionLoop();
 
 private:
-    void addTrianglePos(int index, int material,
-        int v0, int v1, int v2);
-    void addTrianglePosNormal(int index, int material,
-        int v0, int v1, int v2,
-        int vn0, int vn1, int vn2);
-    void addTrianglePosTexCoord(int index, int material,
-        int v0, int v1, int v2,
-        int vt0, int vt1, int vt2);
-    void addTrianglePosTexCoordNormal(int index, int material,
-        int v0, int v1, int v2,
-        int vt0, int vt1, int vt2,
-        int vn0, int vn1, int vn2);
+    void addTrianglePos(int index, int material, int v0, int v1, int v2);
+    void addTrianglePosNormal(int index, int material, int v0, int v1, int v2, int vn0, int vn1, int vn2);
+    void addTrianglePosTexCoord(int index, int material,int v0, int v1, int v2, int vt0, int vt1, int vt2);
+    void addTrianglePosTexCoordNormal(int index, int material, int v0, int v1, int v2,int vt0, int vt1, int vt2,int vn0, int vn1, int vn2);
     int addVertex(int hash, const Vertex *pVertex);
+	int _addVertex(int hash, const Vertex *pVertex);
     void bounds(float center[3], float &width, float &height,
         float &length, float &radius) const;
     void buildMeshes();
@@ -168,6 +163,21 @@ private:
 
     std::map<std::string, int> m_materialCache;
     std::map<int, std::vector<int> > m_vertexCache;
+
+	//subdivision
+
+	std::vector<ModelOBJ::Mesh> l_meshes;
+	std::vector<ModelOBJ::Material> l_materials;
+	std::vector<ModelOBJ::Vertex> l_vertexBuffer;
+	std::vector<int> l_indexBuffer;
+	std::vector<int> l_attributeBuffer;
+	std::vector<float> l_vertexCoords;
+	std::vector<float> l_textureCoords;
+	std::vector<float> l_normals;
+
+	std::map<std::string, int> l_materialCache;
+	std::map<int, std::vector<int> > l_vertexCache;
+
 };
 
 //-----------------------------------------------------------------------------

@@ -54,6 +54,7 @@ BEGIN_DISPATCH_MAP(CNAKCoreCtrl, COleControl)
 	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectBrightness", dispidEffectBrightness, m_EffectBrightness, OnEffectBrightnessChanged, VT_I2)
 	DISP_PROPERTY_NOTIFY_ID(CNAKCoreCtrl, "EffectInvert", dispidEffectInvert, m_EffectInvert, OnEffectInvertChanged, VT_BOOL)
 	DISP_FUNCTION_ID(CNAKCoreCtrl, "SaveObject", dispidSaveObject, SaveObject, VT_EMPTY, VTS_BSTR)
+	DISP_FUNCTION_ID(CNAKCoreCtrl, "SubdivisionLoop", dispidSubdivisionLoop, SubdivisionLoop, VT_EMPTY, VTS_NONE)
 END_DISPATCH_MAP()
 
 // Event map
@@ -591,3 +592,14 @@ void CNAKCoreCtrl::OnEffectInvertChanged()
 	SetModifiedFlag();
 }
 
+
+
+void CNAKCoreCtrl::SubdivisionLoop()
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	// TODO: Add your dispatch handler code here
+	m_myView->EnableRC(TRUE);
+	m_dContext->SubdivisionLoop();
+	m_myView->EnableRC(FALSE);
+}

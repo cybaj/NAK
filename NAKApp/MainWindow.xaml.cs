@@ -129,5 +129,10 @@ namespace NAKApp
                 _view3d.SaveObject(fname);
             }
         }
+
+        private void _btnSubdiv_Click(object sender, RoutedEventArgs e)
+        {
+            _view3d.SubdivisionLoop();
+        }
     }
 }

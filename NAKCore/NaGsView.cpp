@@ -413,7 +413,7 @@ void NaGsView::RenderScene(GLenum mode)
 	}
 	else
 	{
-		glDisable (GL_LINE_SMOOTH);
+//!		glDisable (GL_LINE_SMOOTH);
 		glLineWidth (1);
 		glDisable (GL_BLEND);
 	}

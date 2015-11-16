@@ -50,6 +50,7 @@ private:
 
 public:
 	enum LineStyle {
+		dispidSubdivisionLoop = 11L,
 		dispidSaveObject = 10L,
 		dispidEffectInvert = 9,
 		dispidEffectBrightness = 8,
@@ -123,5 +124,6 @@ protected:
 	void OnEffectInvertChanged();
 	VARIANT_BOOL m_EffectInvert;
 	void SaveObject(LPCTSTR filename);
+	void SubdivisionLoop();
 };
 

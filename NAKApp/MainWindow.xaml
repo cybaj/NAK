@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NAKApp"
         mc:Ignorable="d"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        Title="MainWindow" Height="559" Width="719.6" Loaded="Window_Loaded">
+        Title="MainWindow" Height="598.2" Width="719.6" Loaded="Window_Loaded">
     <Window.Resources>
         <Storyboard x:Key="OnMouseEnter1"/>
     </Window.Resources>
@@ -41,5 +41,6 @@
             <Slider x:Name="_sliderBrightness" ValueChanged="_sliderBrightness_ValueChanged" Maximum="255"/>
         </StackPanel>
         <Button x:Name="button1" Content="Data 저장" HorizontalAlignment="Left" Margin="0,366,0,0" VerticalAlignment="Top" Width="149" Click="button1_Click"/>
+        <Button x:Name="_btnSubdiv" Content="Mesh 분할" HorizontalAlignment="Left" Margin="0,388,0,0" VerticalAlignment="Top" Width="149" Click="_btnSubdiv_Click"/>
     </Grid>
 </Window>

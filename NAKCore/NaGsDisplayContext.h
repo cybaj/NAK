@@ -55,6 +55,7 @@ public:
 	void SelectTriangle(NaGsView* aView, NaGePoint3D& pt);
 	//file io
 	void SaveObject(LPCTSTR filename);
+	void SubdivisionLoop();
 private:
 	void AddToSelection( NaDbObject* pDbObj);
 	void RemoveSelection( NaDbObject* pDbObj);

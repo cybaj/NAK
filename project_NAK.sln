@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{51A9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{2339E5B1-6B04-4405-A880-EA71E67403A7}"
 	ProjectSection(SolutionItems) = preProject
-		Support\data\js\three.js = Support\data\js\three.js
+		Support\js\three.js = Support\js\three.js
 	EndProjectSection
 EndProject
 Global

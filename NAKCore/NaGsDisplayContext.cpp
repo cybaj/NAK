@@ -244,6 +244,20 @@ void NaGsDisplayContext::SaveObject(LPCTSTR filename)
 	}
 }
 
+void NaGsDisplayContext::SubdivisionLoop()
+{
+	NaDbObject* pDbObj = 0;
+	CListIteratorOfListOfNaDbObject listIter(m_display);
+	for (listIter.Init(); listIter.More(); listIter.Next())
+	{
+		pDbObj = listIter.Current();
+		if (pDbObj->GLObjType() == DbObjectType::GLTEXTURE)
+		{
+			((NaDbTexture*)pDbObj)->SubDivisionLoop();
+		}
+	}
+}
+
 bool NaGsDisplayContext::Select(NaGsView* aView, const int& x, const int& y)
 {
 	bool res = false;
