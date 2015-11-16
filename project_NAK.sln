@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{39B99F68-9FBB-41E3-834B-6812C7C8DD6F}"
 	ProjectSection(SolutionItems) = preProject
 		Support\FreeImage.dll = Support\FreeImage.dll
+		Support\webviewer.html = Support\webviewer.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{02C4E0AC-3117-4F5B-9C95-CDA56A82D311}"
@@ -27,6 +28,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{51A9
 	ProjectSection(SolutionItems) = preProject
 		Support\Shaders\blinn_phong.glsl = Support\Shaders\blinn_phong.glsl
 		Support\Shaders\normal_mapping.glsl = Support\Shaders\normal_mapping.glsl
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{2339E5B1-6B04-4405-A880-EA71E67403A7}"
+	ProjectSection(SolutionItems) = preProject
+		Support\data\js\three.js = Support\data\js\three.js
 	EndProjectSection
 EndProject
 Global
@@ -88,5 +94,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{02C4E0AC-3117-4F5B-9C95-CDA56A82D311} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
 		{51A90FFC-634A-4DB7-B352-2A6BD14B2B28} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
+		{2339E5B1-6B04-4405-A880-EA71E67403A7} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
 	EndGlobalSection
 EndGlobal

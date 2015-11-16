@@ -232,6 +232,8 @@ void NaGsDisplayContext::SaveObject(LPCTSTR filename)
 				}
 			}
 			file.Close();
+
+			AfxMessageBox(_T("파일 저장이 완료되었습니다."));
 		}
 	}
 	catch (CFileException* e)
