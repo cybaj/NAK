@@ -256,6 +256,7 @@ void NaGsDisplayContext::SubdivisionLoop()
 			((NaDbTexture*)pDbObj)->SubDivisionLoop();
 		}
 	}
+	AfxMessageBox(_T("Triangle분할이 완료되었습니다."));
 }
 
 bool NaGsDisplayContext::Select(NaGsView* aView, const int& x, const int& y)

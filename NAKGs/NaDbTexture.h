@@ -45,6 +45,11 @@ public:
 	virtual ~NaDbTexture();
 	virtual NaDbObject* Copy();
 	virtual bool SaveObject(FILE* fptr);
+	//save
+	bool SaveObject01(FILE* fptr);
+	bool SaveObject02(FILE* fptr);
+	bool SaveObject03(FILE* fptr);
+
 	virtual void DefineDisplay();
 	virtual void Display(const GsDisplayMode& = GLWIREFRAME);
 	virtual void Hilight(const GsDisplayMode&);

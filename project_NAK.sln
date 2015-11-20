@@ -14,7 +14,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{39B99F68-9FBB-41E3-834B-6812C7C8DD6F}"
 	ProjectSection(SolutionItems) = preProject
 		Support\FreeImage.dll = Support\FreeImage.dll
-		Support\webviewer.html = Support\webviewer.html
+		Support\webviewer_face_color.html = Support\webviewer_face_color.html
+		Support\webviewer_vertex_color.html = Support\webviewer_vertex_color.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{02C4E0AC-3117-4F5B-9C95-CDA56A82D311}"
@@ -32,7 +33,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{51A9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{2339E5B1-6B04-4405-A880-EA71E67403A7}"
 	ProjectSection(SolutionItems) = preProject
+		Support\js\OrbitControls.js = Support\js\OrbitControls.js
+		Support\js\Stats.js = Support\js\Stats.js
 		Support\js\three.js = Support\js\three.js
+		Support\js\THREEx.FullScreen.js = Support\js\THREEx.FullScreen.js
+		Support\js\THREEx.KeyboardState.js = Support\js\THREEx.KeyboardState.js
+		Support\js\THREEx.WindowResize.js = Support\js\THREEx.WindowResize.js
 	EndProjectSection
 EndProject
 Global

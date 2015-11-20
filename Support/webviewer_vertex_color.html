@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<script type="text/javascript" src="./js/three.js"></script>
+<script type="text/javascript" src="./js/Stats.js"></script>
+<script type="text/javascript" src="./js/OrbitControls.js"></script>
+<script type="text/javascript" src="./js/THREEx.KeyboardState.js"></script>
+<script type="text/javascript" src="./js/THREEx.FullScreen.js"></script>
+<script type="text/javascript" src="./js/THREEx.WindowResize.js"></script>
+<html>
+    <head>
+        <style>
+
+          .dropzone {
+            border: 2px solid #000000;
+            padding: 10px;
+            margin-left:25px;
+            margin-right:25px;
+            margin-top:25px;
+            margin-bottom:25px;      
+            background-color:#5babef;
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+             border-radius: 15px;
+        }
+
+          body {
+            border: 2px solid #000000;
+            padding: 10px;
+            margin-left:25px;
+            margin-right:25px;
+            margin-top:25px;
+            margin-bottom:25px;      
+            background-color:#c7d7e5;       
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+             border-radius: 15px;
+        }
+
+          .gldiv {
+                margin: 0 auto;
+                padding: 10px;
+                margin-left:25px;
+                margin-right:25px;
+                margin-top:25px;
+                margin-bottom:25px;      
+                border: 2px solid #000000;
+                text-align: left;
+                background-color:#5babef;    
+                -webkit-border-radius: 15px;
+                -moz-border-radius: 15px;
+                 border-radius: 15px;
+            }
+
+        </style>
+    </head>
+
+<body>
+
+    <div class="dropzone">
+       <br>
+       <div id="dropzone">Drop .json file here...</div>
+       <br>
+   </div>
+
+    <!--div id="GLDiv" style="width:1160px; background:#0B0B3B"/-->
+    <div class="gldiv" id="GLDiv" />
+
+	<script type="text/javascript">
+
+	    //MAIN
+	    var _camera, _scene, _renderer, _projector;
+		var _keyboard = new THREEx.KeyboardState();
+	    var _entities = [];
+
+	    initUI();
+	    initGL();
+	    animate();
+
+	    function initUI()
+	    {
+	        // Setup the dnd listeners.
+	        var dropZone = document.getElementById('dropzone');
+	        dropZone.addEventListener('dragover', onFileDragOver, false);
+	        dropZone.addEventListener('drop', onFileDrop, false);
+	    }
+
+	    function onFileDragOver(evt) {
+	        evt.stopPropagation();
+	        evt.preventDefault();
+	        // Explicitly show this is a copy
+	        evt.dataTransfer.dropEffect = 'copy';
+	    }
+	   
+	    function onFileDrop(evt) {
+
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            var file = evt.dataTransfer.files[0]; 
+
+            var splits = file.name.split('.');
+
+            if (splits[splits.length - 1] == 'json') {
+
+                var reader = new FileReader();
+
+                //reader.onerror = errorHandler;
+                //reader.onprogress = updateProgress;
+                //reader.onabort = 
+                //reader.onloadstart = 
+                //reader.onload = 
+
+                reader.readAsBinaryString(file);
+
+                reader.onload = function (event) {
+
+                    var meshEntityList = JSON.parse(event.target.result);
+
+                    createScene(meshEntityList);
+                };
+
+                reader.onerror = function (event) {
+                    alert('Cannot read file!');
+                };
+
+                reader.readAsText(file);
+            }
+        }
+
+	    function handleDragOver(evt) {
+	        evt.stopPropagation();
+	        evt.preventDefault();
+
+	        // Explicitly show this is a copy
+	        evt.dataTransfer.dropEffect = 'copy';
+	    }
+
+	    function ConvertClr(clr) {
+	        var bytes = [];
+
+	        bytes[0] = (clr >>> 24) & 0xFF; //R
+	        bytes[1] = (clr >>> 16) & 0xFF; //G
+	        bytes[2] = (clr >>> 8) & 0xFF;  //B
+	        bytes[3] = (clr >>> 0) & 0xFF;  //A
+
+	        return bytes[2] | (bytes[1] << 8) | (bytes[0] << 16);
+	    }
+
+	    function clearScene()
+	    {
+	        for (var i = 0; i < _entities.length; i++) {
+	            _scene.remove(_entities[i]);
+	        }
+
+	        _entities = [];
+	    }
+
+		//json 데이터를 읽어서 scene를 구성합니다.
+	    function createScene(meshDataList){
+
+	        clearScene();
+
+	        _camera.fov = 40;
+	        _camera.position.x = 0;
+	        _camera.position.y = 0;
+	        _camera.position.z = 30;
+
+	        var center = [0.0, 0.0, 0.0];
+			       
+			var len = meshDataList.length;
+
+	        for (var meshIdx = 0; meshIdx < len; meshIdx++) {
+
+	            var meshData = meshDataList[meshIdx];
+
+	            var geometry = new THREE.Geometry();
+
+	            var vertexArray = [];
+			
+	            //uncompress vertices array
+	            for (var i = 0; i < meshData.VertexIndices.length; i += 1) {
+
+	                var idx = 3 * meshData.VertexIndices[i];
+
+	                vertexArray[i] = new THREE.Vector3(
+                        meshData.VertexCoords[idx],
+                        meshData.VertexCoords[idx + 1],
+                        meshData.VertexCoords[idx + 2]);
+	            }
+
+	            var normalArray = [];
+				var colorArray = [];
+				
+	            //uncompress normals array
+	            for (var i = 0; i < meshData.NormalIndices.length; i += 1) {
+
+	                var idx = 3 * meshData.NormalIndices[i];
+
+	                normalArray[i] = new THREE.Vector3(
+                        meshData.Normals[idx],
+                        meshData.Normals[idx + 1],
+                        meshData.Normals[idx + 2]);
+	            }
+
+	            //Generate Faces
+	            for (var i = 0; i < vertexArray.length; i += 3) 
+				{
+	                geometry.vertices.push(vertexArray[i]);
+	                geometry.vertices.push(vertexArray[i + 1]);
+	                geometry.vertices.push(vertexArray[i + 2]);
+
+	                var face = new THREE.Face3(i, i + 1, i + 2)
+					//face.materialIndex = meshData.ColorIndices[i];				
+	                geometry.faces.push(face);
+					
+					var rgb1 = ConvertClr(meshData.Colors[meshData.ColorIndices[i]]);
+					var rgb2 = ConvertClr(meshData.Colors[meshData.ColorIndices[i+1]]);
+					var rgb3 = ConvertClr(meshData.Colors[meshData.ColorIndices[i+2]]);
+					face.vertexColors.push(new THREE.Color(rgb1));
+					face.vertexColors.push(new THREE.Color(rgb2));
+					face.vertexColors.push(new THREE.Color(rgb3));
+					
+	                face.vertexNormals.push(normalArray[i]);
+	                face.vertexNormals.push(normalArray[i + 1]);
+	                face.vertexNormals.push(normalArray[i + 2]);
+	            }
+
+	            center[0] += meshData.Center[0];
+	            center[1] += meshData.Center[1];
+	            center[2] += meshData.Center[2];
+
+				//색상정보를 구해온다.
+				// this material causes a mesh to use colors assigned to faces
+				var material_4 = new THREE.MeshBasicMaterial( 
+				{ color: 0xffffff, vertexColors: THREE.VertexColors } );
+	
+				var materials = [];
+				for( var i=0; i < meshData.Colors.length; i+= 1)
+				{
+					var material = new THREE.MeshBasicMaterial(
+						{
+							color : meshData.Colors[i],
+							shading: THREE.FlatShading,
+							overdraw: true
+						}
+					);
+					materials.push(material);
+				}	
+				geometry.materials = materials;
+				
+				//============
+	            var mesh = new THREE.Mesh(geometry, material_4);//
+				//geometry.__dirtyColors = true;
+
+	            mesh.doubleSided = false;
+	            mesh.geometry.dynamic = true;
+	            mesh.geometry.__dirtyVertices = true;
+	            mesh.geometry.__dirtyNormals = true;
+
+	            var entity = new THREE.Object3D();
+	            entity.add(mesh);
+	            _entities.push(entity);
+	            _scene.add(entity);
+	        }
+	
+	        center[0] = center[0] / len;
+	        center[1] = center[1] / len;
+	        center[2] = center[2] / len;
+
+	        for (var i = 0; i < _entities.length; i++) {
+	            _entities[i].applyMatrix(new THREE.Matrix4().makeTranslation(
+                   -center[0],
+                   -center[1],
+                   -center[2]));
+	        }
+	    };
+
+	    function hasWebGL() {
+	        try {
+	            var canvas = document.createElement('canvas');
+	            var ret =
+        !!(window.WebGLRenderingContext &&
+            (canvas.getContext('webgl') ||
+                canvas.getContext('experimental-webgl'))
+            );
+	            return ret;
+	        }
+	        catch (e) {
+	            return false;
+	        };
+	    }
+
+	    function initGL() {
+
+	        var animateWithWebGL = hasWebGL();
+
+	        var container = document.getElementById("GLDiv");
+
+	        _scene = new THREE.Scene();
+
+			// CAMERA
+			var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+			var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 200000;
+	        _camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+	        _scene.add(_camera);
+	        _camera.position.set(0,150,400);
+			_camera.lookAt(_scene.position);
+
+	        // create lights
+	        var light1 = new THREE.PointLight(0xFFFFFF);
+	        var light2 = new THREE.PointLight(0xFFFFFF);
+	        var light3 = new THREE.PointLight(0xFFFFFF);
+	        var light4 = new THREE.PointLight(0xFFFFFF);
+
+	        light1.position.x = 100;
+	        light1.position.y = 50;
+	        light1.position.z = 200;
+
+	        light2.position.x = -100;
+	        light2.position.y = 150;
+	        light2.position.z = -200;
+
+	        light3.position.x = 100;
+	        light3.position.y = -150;
+	        light3.position.z = -100;
+
+	        light4.position.x = -100;
+	        light4.position.y = -150;
+	        light4.position.z = 100;
+
+	        _scene.add(light1);
+	        _scene.add(light2);
+	        _scene.add(light3);
+	        _scene.add(light4);
+
+			//RENDERER			
+	        _renderer = new THREE.WebGLRenderer();  
+	        _renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	        _projector = new THREE.Projector();
+
+			container.appendChild(_renderer.domElement);
+			
+			//EVENT
+			THREEx.WindowResize(_renderer, _camera);
+			THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
+	
+            //CONTROLS
+			controls = new THREE.OrbitControls( _camera, _renderer.domElement );
+			// STATS
+			_stats = new Stats();
+			_stats.domElement.style.position = 'absolute';
+			_stats.domElement.style.bottom = '0px';
+			_stats.domElement.style.zIndex = 100;
+			container.appendChild( _stats.domElement );
+			
+	    }
+
+	    function animate() {
+	        requestAnimationFrame(animate);
+	        render();
+			update();
+	    }
+
+		function update()
+		{
+			if ( _keyboard.pressed("z") ) 
+			{ 
+				// do something
+			}
+			controls.update();
+			_stats.update();
+		}
+		
+	    function render() {
+	        _renderer.render(_scene, _camera);
+	    }
+
+	</script>
+
+</body>
+</html>

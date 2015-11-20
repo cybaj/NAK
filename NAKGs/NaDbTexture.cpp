@@ -566,6 +566,12 @@ NaDbObject* NaDbTexture::Copy()
 
 bool NaDbTexture::SaveObject(FILE* fptr)
 {
+	return SaveObject03(fptr);
+}
+
+//triangle 한개당 json 객체생성
+bool NaDbTexture::SaveObject01(FILE* fptr)
+{
 	//todo:
 	const ModelOBJ::Mesh *pMesh = 0;
 	const ModelOBJ::Material *pMaterial = 0;
@@ -575,6 +581,178 @@ bool NaDbTexture::SaveObject(FILE* fptr)
 
 	Json::StyledWriter writer;
 	Json::Value* pvalue = NULL;
+
+	pVertices = m_model.getVertexBuffer();
+	const int* pindex = m_model.getIndexBuffer();
+	int indexSize = m_model.getIndexSize();
+
+	Json::Value jMesh;
+
+	char triangleName[60];
+
+	for (int i = 0; i < m_model.getNumberOfMeshes(); ++i)
+	{
+		pMesh = &m_model.getMesh(i);
+		pMaterial = pMesh->pMaterial;
+		int sindex = pMesh->startIndex;
+		int tindex = pMesh->triangleCount;
+
+		if (pMaterial->bumpMapFilename.empty())
+		{
+			// 칼라 맵 바이드.
+			texture = g_nullTexture;
+			if (g_enableTextures)
+			{
+				iter = g_modelTextures.find(pMaterial->colorMapFilename);
+
+				if (iter != g_modelTextures.end())
+					texture = iter->second;
+			}
+		}
+		else
+		{
+		// 노말매핑
+		glUseProgram(g_normalMappingShader);
+		// 노말매핑 바인드
+		iter = g_modelTextures.find(pMaterial->bumpMapFilename);
+		if (iter != g_modelTextures.end())
+		{
+		texture = iter->second;
+		}
+		// 컬러맵 바인드
+		texture = g_nullTexture;
+		if (g_enableTextures)
+		{
+			iter = g_modelTextures.find(pMaterial->colorMapFilename);
+			if (iter != g_modelTextures.end())
+			{
+				texture = iter->second;
+			}
+		}
+	}
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	//opengl의 메모리에서 rgb값을 얻어온다.
+	GLint textureWidth, textureHeight, internalFormat;
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPONENTS, &internalFormat); // get internal format type of GL texture
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &textureWidth);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &textureHeight);
+	GLubyte *pixels = (GLubyte *)malloc(textureWidth*textureHeight * 4);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_BYTE, pixels);
+	if (pixels == NULL)
+	continue;
+
+	for (int j = 0; j < tindex; j++)
+	{
+	ModelOBJ::Vertex v1 = pVertices[pindex[sindex + j * 3 + 0]];
+	ModelOBJ::Vertex v2 = pVertices[pindex[sindex + j * 3 + 1]];
+	ModelOBJ::Vertex v3 = pVertices[pindex[sindex + j * 3 + 2]];
+	//삼각형의 무게중심
+	double gravity[3];
+	gravity[0] = (v1.position[0] + v2.position[0] + v3.position[0]) / 3.0;
+	gravity[1] = (v1.position[1] + v2.position[1] + v3.position[1]) / 3.0;
+	gravity[2] = (v1.position[2] + v2.position[2] + v3.position[2]) / 3.0;
+	//무게중심의 UV
+	double dU = (v1.texCoord[0] + v2.texCoord[0] + v3.texCoord[0]) / 3.0;
+	double dV = (v1.texCoord[1] + v2.texCoord[1] + v3.texCoord[1]) / 3.0;
+
+	//face
+	Json::Value jface;
+	jface["FacetCount"] = 1;
+	jface["VertexCount"] = 3;
+	//VertexCoords
+	Json::Value jvt;
+	jvt.append(v1.position[0]);
+	jvt.append(v1.position[1]);
+	jvt.append(v1.position[2]);
+	jvt.append(v2.position[0]);
+	jvt.append(v2.position[1]);
+	jvt.append(v2.position[2]);
+	jvt.append(v3.position[0]);
+	jvt.append(v3.position[1]);
+	jvt.append(v3.position[2]);
+	//Normals
+	Json::Value jnr;
+	jnr.append(v1.normal[0]);
+	jnr.append(v1.normal[1]);
+	jnr.append(v1.normal[2]);
+	jnr.append(v2.normal[0]);
+	jnr.append(v2.normal[1]);
+	jnr.append(v2.normal[2]);
+	jnr.append(v3.normal[0]);
+	jnr.append(v3.normal[1]);
+	jnr.append(v3.normal[2]);
+	//VertexIndices
+	Json::Value jvi;
+	jvi.append(0);
+	jvi.append(1);
+	jvi.append(2);
+	//NormaIndices
+	Json::Value jni;
+	jni.append(0);
+	jni.append(1);
+	jni.append(2);
+	//Center
+	Json::Value jgravity;
+	jgravity.append(gravity[0]);
+	jgravity.append(gravity[1]);
+	jgravity.append(gravity[2]);
+	//rgb 값을 검색
+	int x = (int)(dU * textureWidth);
+	int y = (int)(dV * textureHeight);
+	int startAddressOfPixel = ((y*textureWidth) + x) * 4;
+	int red = pixels[startAddressOfPixel + 0];
+	int green = pixels[startAddressOfPixel + 1];
+	int blue = pixels[startAddressOfPixel + 2];
+	int alpha = pixels[startAddressOfPixel + 3];
+
+	//LONG rgba = MAKELONG(MAKEWORD(red, green), MAKEWORD(blue, alpha));
+	LONG rgba = MAKELONG(MAKEWORD(alpha, blue), MAKEWORD(green, red));
+
+	//rgb
+	Json::Value jrgb;
+	jrgb.append(rgba);
+	jrgb.append(green);
+	jrgb.append(blue);
+	jrgb.append(alpha);
+
+	jface["VertexCoords"] = jvt;
+	jface["VertexIndices"] = jvi;
+	jface["Normals"] = jnr;
+	jface["NormalIndices"] = jni;
+	jface["Center"] = jgravity;
+	jface["Color"] = jrgb;
+	sprintf(triangleName, "face%06d", j);
+	jface["Id"] = triangleName;
+	jMesh.append(jface);
+	}
+
+	//free
+	if(pixels) free(pixels);
+
+}
+std::string strJson = writer.write(jMesh);
+size_t fsize = fwrite(strJson.c_str(), 1, strJson.length(), fptr);
+return fsize?true:false;
+}
+
+//Mesh의 중심 triangle 당 중심점 색상 1 구해서 json 출력
+bool NaDbTexture::SaveObject02(FILE* fptr)
+{
+	//todo:
+	const ModelOBJ::Mesh *pMesh = 0;
+	const ModelOBJ::Material *pMaterial = 0;
+	const ModelOBJ::Vertex *pVertices = 0;
+	ModelTextures::const_iterator iter;
+	GLuint texture = 0;
+
+	Json::StyledWriter writer;
+	Json::Value* pvalue = NULL;
+
+	float cx, cy, cz;
+	m_model.getCenter(cx, cy, cz);
 
 	pVertices = m_model.getVertexBuffer();
 	const int* pindex = m_model.getIndexBuffer();
@@ -638,26 +816,36 @@ bool NaDbTexture::SaveObject(FILE* fptr)
 		if (pixels == NULL)
 			continue;
 
-		for (int j = 0; j < tindex; j++)
-		{
-			ModelOBJ::Vertex v1 = pVertices[pindex[sindex + j * 3 + 0]];
-			ModelOBJ::Vertex v2 = pVertices[pindex[sindex + j * 3 + 1]];
-			ModelOBJ::Vertex v3 = pVertices[pindex[sindex + j * 3 + 2]];
-			//삼각형의 무게중심
-			double gravity[3];
-			gravity[0] = (v1.position[0] + v2.position[0] + v3.position[0]) / 3.0;
-			gravity[1] = (v1.position[1] + v2.position[1] + v3.position[1]) / 3.0;
-			gravity[2] = (v1.position[2] + v2.position[2] + v3.position[2]) / 3.0;
-			//무게중심의 UV
-			double dU = (v1.texCoord[0] + v2.texCoord[0] + v3.texCoord[0]) / 3.0;
-			double dV = (v1.texCoord[1] + v2.texCoord[1] + v3.texCoord[1]) / 3.0;
+		//face
+		Json::Value jTriangles;
+		//VertexCoords
+		Json::Value jvt;
+		//Normals
+		Json::Value jnr;
+		//VertexIndices
+		Json::Value jvi;
+		//NormaIndices
+		Json::Value jni;
+		//rgb
+		Json::Value jrgbs, jrgbi;
 
-			//face
-			Json::Value jface;
-			jface["FacetCount"] = 1;			
-			jface["VertexCount"] = 3;
+		jTriangles["FacetCount"] = tindex;
+		jTriangles["VertexCount"] = tindex * 3;
+		sprintf(triangleName, "triangle%06d", i);
+		jTriangles["Id"] = triangleName;
+
+		//Center
+		Json::Value jgravity;
+		jgravity.append(cx);
+		jgravity.append(cy);
+		jgravity.append(cz);
+
+		for (int j = sindex; j < tindex; j++)
+		{
+			ModelOBJ::Vertex v1 = pVertices[pindex[j * 3 + 0]];
+			ModelOBJ::Vertex v2 = pVertices[pindex[j * 3 + 1]];
+			ModelOBJ::Vertex v3 = pVertices[pindex[j * 3 + 2]];
 			//VertexCoords
-			Json::Value jvt;
 			jvt.append(v1.position[0]);
 			jvt.append(v1.position[1]);
 			jvt.append(v1.position[2]);
@@ -668,7 +856,6 @@ bool NaDbTexture::SaveObject(FILE* fptr)
 			jvt.append(v3.position[1]);
 			jvt.append(v3.position[2]);
 			//Normals
-			Json::Value jnr;
 			jnr.append(v1.normal[0]);
 			jnr.append(v1.normal[1]);
 			jnr.append(v1.normal[2]);
@@ -679,20 +866,22 @@ bool NaDbTexture::SaveObject(FILE* fptr)
 			jnr.append(v3.normal[1]);
 			jnr.append(v3.normal[2]);
 			//VertexIndices
-			Json::Value jvi;
-			jvi.append(0);
-			jvi.append(1);
-			jvi.append(2);
+			jvi.append(j * 3 + 0);
+			jvi.append(j * 3 + 1);
+			jvi.append(j * 3 + 2);
 			//NormaIndices
-			Json::Value jni;
-			jni.append(0);
-			jni.append(1);
-			jni.append(2);
-			//Center
-			Json::Value jgravity;
-			jgravity.append(gravity[0]);
-			jgravity.append(gravity[1]);
-			jgravity.append(gravity[2]);
+			jni.append(j * 3 + 0);
+			jni.append(j * 3 + 1);
+			jni.append(j * 3 + 2);
+			//triangle의 대표색을 찾는다.
+			//삼각형의 무게중심
+			double gravity[3];
+			gravity[0] = (v1.position[0] + v2.position[0] + v3.position[0]) / 3.0;
+			gravity[1] = (v1.position[1] + v2.position[1] + v3.position[1]) / 3.0;
+			gravity[2] = (v1.position[2] + v2.position[2] + v3.position[2]) / 3.0;
+			//무게중심의 UV
+			double dU = (v1.texCoord[0] + v2.texCoord[0] + v3.texCoord[0]) / 3.0;
+			double dV = (v1.texCoord[1] + v2.texCoord[1] + v3.texCoord[1]) / 3.0;
 			//rgb 값을 검색
 			int x = (int)(dU * textureWidth);
 			int y = (int)(dV * textureHeight);
@@ -701,35 +890,278 @@ bool NaDbTexture::SaveObject(FILE* fptr)
 			int green = pixels[startAddressOfPixel + 1];
 			int blue = pixels[startAddressOfPixel + 2];
 			int alpha = pixels[startAddressOfPixel + 3];
-
 			//LONG rgba = MAKELONG(MAKEWORD(red, green), MAKEWORD(blue, alpha));
+			int fd = 0;  bool isfind = false;
 			LONG rgba = MAKELONG(MAKEWORD(alpha, blue), MAKEWORD(green, red));
-			
-			//rgb
-			Json::Value jrgb;
-			jrgb.append(rgba);
-			jrgb.append(green);
-			jrgb.append(blue);
-			jrgb.append(alpha);
-
-			jface["VertexCoords"] = jvt;
-			jface["VertexIndices"] = jvi;
-			jface["Normals"] = jnr;
-			jface["NormalIndices"] = jni;
-			jface["Center"] = jgravity;
-			jface["Color"] = jrgb;
-			sprintf(triangleName, "face%06d", j);
-			jface["Id"] = triangleName;
-			jMesh.append(jface);
+			for (fd = 0; fd < jrgbs.size(); fd++)
+			{
+				//색상조회
+				if (jrgbs[fd] == rgba)
+				{
+					jrgbi.append(fd);
+					isfind = true;
+				}
+			}
+			if (!isfind)
+			{
+				jrgbs.append(rgba);
+				jrgbi.append(fd);
+			}
 		}
+		jTriangles["VertexCoords"] = jvt;
+		jTriangles["VertexIndices"] = jvi;
+		jTriangles["Normals"] = jnr;
+		jTriangles["NormalIndices"] = jni;
+		jTriangles["Center"] = jgravity;
+		jTriangles["Colors"] = jrgbs;
+		jTriangles["ColorIndices"] = jrgbi;
+
+		jMesh.append(jTriangles);
 
 		//free
-		if(pixels) free(pixels);
-
+		if (pixels) free(pixels);
 	}
 	std::string strJson = writer.write(jMesh);
 	size_t fsize = fwrite(strJson.c_str(), 1, strJson.length(), fptr);
-	return fsize?true:false;
+	return fsize ? true : false;
+}
+
+//Mesh의 vertex 당 색상 1 구해서 json 출력
+bool NaDbTexture::SaveObject03(FILE* fptr)
+{
+	//todo:
+	const ModelOBJ::Mesh *pMesh = 0;
+	const ModelOBJ::Material *pMaterial = 0;
+	const ModelOBJ::Vertex *pVertices = 0;
+	ModelTextures::const_iterator iter;
+	GLuint texture = 0;
+
+	Json::StyledWriter writer;
+	Json::Value* pvalue = NULL;
+
+	float cx, cy, cz;
+	m_model.getCenter(cx, cy, cz);
+
+	pVertices = m_model.getVertexBuffer();
+	const int* pindex = m_model.getIndexBuffer();
+	int indexSize = m_model.getIndexSize();
+
+	Json::Value jMesh;
+
+	char triangleName[60];
+
+	for (int i = 0; i < m_model.getNumberOfMeshes(); ++i)
+	{
+		pMesh = &m_model.getMesh(i);
+		pMaterial = pMesh->pMaterial;
+		int sindex = pMesh->startIndex;
+		int tindex = pMesh->triangleCount;
+
+		if (pMaterial->bumpMapFilename.empty())
+		{
+			// 칼라 맵 바이드.
+			texture = g_nullTexture;
+			if (g_enableTextures)
+			{
+				iter = g_modelTextures.find(pMaterial->colorMapFilename);
+
+				if (iter != g_modelTextures.end())
+					texture = iter->second;
+			}
+		}
+		else
+		{
+			// 노말매핑 
+			glUseProgram(g_normalMappingShader);
+			// 노말매핑 바인드
+			iter = g_modelTextures.find(pMaterial->bumpMapFilename);
+			if (iter != g_modelTextures.end())
+			{
+				texture = iter->second;
+			}
+			// 컬러맵 바인드
+			texture = g_nullTexture;
+			if (g_enableTextures)
+			{
+				iter = g_modelTextures.find(pMaterial->colorMapFilename);
+				if (iter != g_modelTextures.end())
+				{
+					texture = iter->second;
+				}
+			}
+		}
+
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		//opengl의 메모리에서 rgb값을 얻어온다.
+		GLint textureWidth, textureHeight, internalFormat;
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPONENTS, &internalFormat); // get internal format type of GL texture
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &textureWidth);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &textureHeight);
+		GLubyte *pixels = (GLubyte *)malloc(textureWidth*textureHeight * 4);
+		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_BYTE, pixels);
+		if (pixels == NULL)
+			continue;
+
+		//face
+		Json::Value jTriangles;
+		//VertexCoords
+		Json::Value jvt;
+		//Normals
+		Json::Value jnr;
+		//VertexIndices
+		Json::Value jvi;
+		//NormaIndices
+		Json::Value jni;
+		//rgb
+		Json::Value jrgbs, jrgbi;
+
+		jTriangles["FacetCount"] = tindex;
+		jTriangles["VertexCount"] = tindex * 3;
+		sprintf(triangleName, "triangle%06d", i);
+		jTriangles["Id"] = triangleName;
+
+		//Center
+		Json::Value jgravity;
+		jgravity.append(cx);
+		jgravity.append(cy);
+		jgravity.append(cz);
+
+		for (int j = sindex; j < tindex; j++)
+		{
+			ModelOBJ::Vertex v1 = pVertices[pindex[j * 3 + 0]];
+			ModelOBJ::Vertex v2 = pVertices[pindex[j * 3 + 1]];
+			ModelOBJ::Vertex v3 = pVertices[pindex[j * 3 + 2]];
+			//VertexCoords
+			jvt.append(v1.position[0]);
+			jvt.append(v1.position[1]);
+			jvt.append(v1.position[2]);
+			jvt.append(v2.position[0]);
+			jvt.append(v2.position[1]);
+			jvt.append(v2.position[2]);
+			jvt.append(v3.position[0]);
+			jvt.append(v3.position[1]);
+			jvt.append(v3.position[2]);
+			//Normals
+			jnr.append(v1.normal[0]);
+			jnr.append(v1.normal[1]);
+			jnr.append(v1.normal[2]);
+			jnr.append(v2.normal[0]);
+			jnr.append(v2.normal[1]);
+			jnr.append(v2.normal[2]);
+			jnr.append(v3.normal[0]);
+			jnr.append(v3.normal[1]);
+			jnr.append(v3.normal[2]);
+			//VertexIndices
+			jvi.append(j * 3 + 0);
+			jvi.append(j * 3 + 1);
+			jvi.append(j * 3 + 2);
+			//NormaIndices
+			jni.append(j * 3 + 0);
+			jni.append(j * 3 + 1);
+			jni.append(j * 3 + 2);
+			//해당 버택스의 색을 찾는다.
+			//rgb 값을 검색
+			int cx1 = (int)(v1.texCoord[0] * textureWidth);
+			int cy1 = (int)(v1.texCoord[1] * textureHeight);
+			int cx2 = (int)(v2.texCoord[0] * textureWidth);
+			int cy2 = (int)(v2.texCoord[1] * textureHeight);
+			int cx3 = (int)(v3.texCoord[0] * textureWidth);
+			int cy3 = (int)(v3.texCoord[1] * textureHeight);
+
+			int startAddressOfPixel1 = ((cy1*textureWidth) + cx1) * 4;
+			int startAddressOfPixel2 = ((cy2*textureWidth) + cx2) * 4;
+			int startAddressOfPixel3 = ((cy3*textureWidth) + cx3) * 4;
+
+			int red1 = pixels[startAddressOfPixel1 + 0];
+			int green1 = pixels[startAddressOfPixel1 + 1];
+			int blue1 = pixels[startAddressOfPixel1 + 2];
+			int alpha1 = pixels[startAddressOfPixel1 + 3];
+
+			int red2 = pixels[startAddressOfPixel2 + 0];
+			int green2 = pixels[startAddressOfPixel2 + 1];
+			int blue2 = pixels[startAddressOfPixel2 + 2];
+			int alpha2 = pixels[startAddressOfPixel2 + 3];
+
+			int red3 = pixels[startAddressOfPixel3 + 0];
+			int green3 = pixels[startAddressOfPixel3 + 1];
+			int blue3 = pixels[startAddressOfPixel3 + 2];
+			int alpha3 = pixels[startAddressOfPixel3 + 3];
+
+
+			LONG rgba1 = MAKELONG(MAKEWORD(alpha1, blue1), MAKEWORD(green1, red1));
+			LONG rgba2 = MAKELONG(MAKEWORD(alpha2, blue2), MAKEWORD(green2, red2));
+			LONG rgba3 = MAKELONG(MAKEWORD(alpha3, blue3), MAKEWORD(green3, red3));
+
+			int fd = 0;  bool isfind = false;
+			//v1 색상등록
+			for (fd = 0; fd < jrgbs.size(); fd++)
+			{
+				//색상조회
+				if (jrgbs[fd] == rgba1)
+				{
+					jrgbi.append(fd);
+					isfind = true;
+				}
+			}
+			if (!isfind)
+			{
+				jrgbs.append(rgba1);
+				jrgbi.append(fd);
+			}
+
+			fd = 0;isfind = false;
+			//v2 색상등록
+			for (fd = 0; fd < jrgbs.size(); fd++)
+			{
+				//색상조회
+				if (jrgbs[fd] == rgba2)
+				{
+					jrgbi.append(fd);
+					isfind = true;
+				}
+			}
+			if (!isfind)
+			{
+				jrgbs.append(rgba2);
+				jrgbi.append(fd);
+			}
+
+			fd = 0; isfind = false;
+			//v3 색상등록
+			for (fd = 0; fd < jrgbs.size(); fd++)
+			{
+				//색상조회
+				if (jrgbs[fd] == rgba3)
+				{
+					jrgbi.append(fd);
+					isfind = true;
+				}
+			}
+			if (!isfind)
+			{
+				jrgbs.append(rgba3);
+				jrgbi.append(fd);
+			}
+
+		}
+		jTriangles["VertexCoords"] = jvt;
+		jTriangles["VertexIndices"] = jvi;
+		jTriangles["Normals"] = jnr;
+		jTriangles["NormalIndices"] = jni;
+		jTriangles["Center"] = jgravity;
+		jTriangles["Colors"] = jrgbs;
+		jTriangles["ColorIndices"] = jrgbi;
+
+		jMesh.append(jTriangles);
+
+		//free
+		if (pixels) free(pixels);
+	}
+	std::string strJson = writer.write(jMesh);
+	size_t fsize = fwrite(strJson.c_str(), 1, strJson.length(), fptr);
+	return fsize ? true : false;
 }
 
 void NaDbTexture::DefineDisplay()
