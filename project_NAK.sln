@@ -14,8 +14,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{39B99F68-9FBB-41E3-834B-6812C7C8DD6F}"
 	ProjectSection(SolutionItems) = preProject
 		Support\FreeImage.dll = Support\FreeImage.dll
-		Support\webviewer_face_color.html = Support\webviewer_face_color.html
-		Support\webviewer_vertex_color.html = Support\webviewer_vertex_color.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{02C4E0AC-3117-4F5B-9C95-CDA56A82D311}"
@@ -31,14 +29,457 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{51A9
 		Support\Shaders\normal_mapping.glsl = Support\Shaders\normal_mapping.glsl
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{2339E5B1-6B04-4405-A880-EA71E67403A7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NAKjs", "NAKjs", "{D244F3C5-06FF-43E9-80D3-17ABC598E991}"
 	ProjectSection(SolutionItems) = preProject
-		Support\js\OrbitControls.js = Support\js\OrbitControls.js
-		Support\js\Stats.js = Support\js\Stats.js
-		Support\js\three.js = Support\js\three.js
-		Support\js\THREEx.FullScreen.js = Support\js\THREEx.FullScreen.js
-		Support\js\THREEx.KeyboardState.js = Support\js\THREEx.KeyboardState.js
-		Support\js\THREEx.WindowResize.js = Support\js\THREEx.WindowResize.js
+		Support\NAKjs\favicon.ico = Support\NAKjs\favicon.ico
+		Support\NAKjs\HTML5LaunchHelper.exe = Support\NAKjs\HTML5LaunchHelper.exe
+		Support\NAKjs\NAK - editor.url = Support\NAKjs\NAK - editor.url
+		Support\NAKjs\NAKStarter.bat = Support\NAKjs\NAKStarter.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{8CDEA6FE-90C0-4684-ABF8-3F9D1BFA4049}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\build\three.js = Support\NAKjs\build\three.js
+		Support\NAKjs\build\three.min.js = Support\NAKjs\build\three.min.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{586E59BF-87BC-42A9-A40D-3E4B0E859442}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "editor", "editor", "{733226AF-F97D-4010-BF42-7DF0045BAF6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{07BEE680-5B2C-4A8F-8E6D-FE2BD3708749}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\css\dark.css = Support\NAKjs\editor\css\dark.css
+		Support\NAKjs\editor\css\light.css = Support\NAKjs\editor\css\light.css
+		Support\NAKjs\editor\css\main.css = Support\NAKjs\editor\css\main.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{4178839A-955C-4A7A-A0A5-4B6D2301729C}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\examples\arkanoid.app.json = Support\NAKjs\editor\examples\arkanoid.app.json
+		Support\NAKjs\editor\examples\camera.app.json = Support\NAKjs\editor\examples\camera.app.json
+		Support\NAKjs\editor\examples\particles.app.json = Support\NAKjs\editor\examples\particles.app.json
+		Support\NAKjs\editor\examples\pong.app.json = Support\NAKjs\editor\examples\pong.app.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{CDFC8568-CE17-43AD-A27D-4D0DB5CB6031}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\js\Config.js = Support\NAKjs\editor\js\Config.js
+		Support\NAKjs\editor\js\Editor.js = Support\NAKjs\editor\js\Editor.js
+		Support\NAKjs\editor\js\History.js = Support\NAKjs\editor\js\History.js
+		Support\NAKjs\editor\js\Loader.js = Support\NAKjs\editor\js\Loader.js
+		Support\NAKjs\editor\js\Menubar.Add.js = Support\NAKjs\editor\js\Menubar.Add.js
+		Support\NAKjs\editor\js\Menubar.Edit.js = Support\NAKjs\editor\js\Menubar.Edit.js
+		Support\NAKjs\editor\js\Menubar.Examples.js = Support\NAKjs\editor\js\Menubar.Examples.js
+		Support\NAKjs\editor\js\Menubar.File.js = Support\NAKjs\editor\js\Menubar.File.js
+		Support\NAKjs\editor\js\Menubar.Help.js = Support\NAKjs\editor\js\Menubar.Help.js
+		Support\NAKjs\editor\js\Menubar.js = Support\NAKjs\editor\js\Menubar.js
+		Support\NAKjs\editor\js\Menubar.NAK.js = Support\NAKjs\editor\js\Menubar.NAK.js
+		Support\NAKjs\editor\js\Menubar.Play.js = Support\NAKjs\editor\js\Menubar.Play.js
+		Support\NAKjs\editor\js\Menubar.Status.js = Support\NAKjs\editor\js\Menubar.Status.js
+		Support\NAKjs\editor\js\Menubar.View.js = Support\NAKjs\editor\js\Menubar.View.js
+		Support\NAKjs\editor\js\Player.js = Support\NAKjs\editor\js\Player.js
+		Support\NAKjs\editor\js\Script.js = Support\NAKjs\editor\js\Script.js
+		Support\NAKjs\editor\js\Sidebar.Animation.js = Support\NAKjs\editor\js\Sidebar.Animation.js
+		Support\NAKjs\editor\js\Sidebar.Corrosion.js = Support\NAKjs\editor\js\Sidebar.Corrosion.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.BoxGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.BoxGeometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.BufferGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.BufferGeometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.CircleGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.CircleGeometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.CylinderGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.CylinderGeometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.Geometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.Geometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.IcosahedronGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.IcosahedronGeometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.Modifiers.js = Support\NAKjs\editor\js\Sidebar.Geometry.Modifiers.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.PlaneGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.PlaneGeometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.SphereGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.SphereGeometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.TeapotBufferGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.TeapotBufferGeometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.TorusGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.TorusGeometry.js
+		Support\NAKjs\editor\js\Sidebar.Geometry.TorusKnotGeometry.js = Support\NAKjs\editor\js\Sidebar.Geometry.TorusKnotGeometry.js
+		Support\NAKjs\editor\js\Sidebar.js = Support\NAKjs\editor\js\Sidebar.js
+		Support\NAKjs\editor\js\Sidebar.Material.js = Support\NAKjs\editor\js\Sidebar.Material.js
+		Support\NAKjs\editor\js\Sidebar.NakAlgorithm.js = Support\NAKjs\editor\js\Sidebar.NakAlgorithm.js
+		Support\NAKjs\editor\js\Sidebar.Object3D.js = Support\NAKjs\editor\js\Sidebar.Object3D.js
+		Support\NAKjs\editor\js\Sidebar.Project.js = Support\NAKjs\editor\js\Sidebar.Project.js
+		Support\NAKjs\editor\js\Sidebar.Scene.js = Support\NAKjs\editor\js\Sidebar.Scene.js
+		Support\NAKjs\editor\js\Sidebar.Script.js = Support\NAKjs\editor\js\Sidebar.Script.js
+		Support\NAKjs\editor\js\Storage.js = Support\NAKjs\editor\js\Storage.js
+		Support\NAKjs\editor\js\Toolbar.js = Support\NAKjs\editor\js\Toolbar.js
+		Support\NAKjs\editor\js\Viewport.Info.js = Support\NAKjs\editor\js\Viewport.Info.js
+		Support\NAKjs\editor\js\Viewport.js = Support\NAKjs\editor\js\Viewport.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{E025682A-BF0B-47E1-A8FA-34DF06D85351}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\js\libs\app.js = Support\NAKjs\editor\js\libs\app.js
+		Support\NAKjs\editor\js\libs\esprima.js = Support\NAKjs\editor\js\libs\esprima.js
+		Support\NAKjs\editor\js\libs\glslprep.min.js = Support\NAKjs\editor\js\libs\glslprep.min.js
+		Support\NAKjs\editor\js\libs\jsonlint.js = Support\NAKjs\editor\js\libs\jsonlint.js
+		Support\NAKjs\editor\js\libs\signals.min.js = Support\NAKjs\editor\js\libs\signals.min.js
+		Support\NAKjs\editor\js\libs\sortable.min.js = Support\NAKjs\editor\js\libs\sortable.min.js
+		Support\NAKjs\editor\js\libs\ui.js = Support\NAKjs\editor\js\libs\ui.js
+		Support\NAKjs\editor\js\libs\ui.three.js = Support\NAKjs\editor\js\libs\ui.three.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "acorn", "acorn", "{F552DF19-448E-4279-BFEE-34081E3DC84C}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\js\libs\acorn\acorn.js = Support\NAKjs\editor\js\libs\acorn\acorn.js
+		Support\NAKjs\editor\js\libs\acorn\acorn_loose.js = Support\NAKjs\editor\js\libs\acorn\acorn_loose.js
+		Support\NAKjs\editor\js\libs\acorn\walk.js = Support\NAKjs\editor\js\libs\acorn\walk.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "codemirror", "codemirror", "{AD396ACC-55EC-4694-ADC4-9EA85E57CF4A}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\js\libs\codemirror\codemirror.css = Support\NAKjs\editor\js\libs\codemirror\codemirror.css
+		Support\NAKjs\editor\js\libs\codemirror\codemirror.js = Support\NAKjs\editor\js\libs\codemirror\codemirror.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ternjs", "ternjs", "{8F021C9F-2F6F-4B9C-A3C3-54608C573D99}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\js\libs\ternjs\comment.js = Support\NAKjs\editor\js\libs\ternjs\comment.js
+		Support\NAKjs\editor\js\libs\ternjs\def.js = Support\NAKjs\editor\js\libs\ternjs\def.js
+		Support\NAKjs\editor\js\libs\ternjs\doc_comment.js = Support\NAKjs\editor\js\libs\ternjs\doc_comment.js
+		Support\NAKjs\editor\js\libs\ternjs\infer.js = Support\NAKjs\editor\js\libs\ternjs\infer.js
+		Support\NAKjs\editor\js\libs\ternjs\polyfill.js = Support\NAKjs\editor\js\libs\ternjs\polyfill.js
+		Support\NAKjs\editor\js\libs\ternjs\signal.js = Support\NAKjs\editor\js\libs\ternjs\signal.js
+		Support\NAKjs\editor\js\libs\ternjs\tern.js = Support\NAKjs\editor\js\libs\ternjs\tern.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tern-threejs", "tern-threejs", "{863763A0-9BCC-45B4-A41A-1EDD17EC413E}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\js\libs\tern-threejs\threejs.js = Support\NAKjs\editor\js\libs\tern-threejs\threejs.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "addon", "addon", "{9A4F1E12-431D-4596-AA4E-BB0F51A10E0F}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\js\libs\codemirror\addon\dialog.css = Support\NAKjs\editor\js\libs\codemirror\addon\dialog.css
+		Support\NAKjs\editor\js\libs\codemirror\addon\dialog.js = Support\NAKjs\editor\js\libs\codemirror\addon\dialog.js
+		Support\NAKjs\editor\js\libs\codemirror\addon\show-hint.css = Support\NAKjs\editor\js\libs\codemirror\addon\show-hint.css
+		Support\NAKjs\editor\js\libs\codemirror\addon\show-hint.js = Support\NAKjs\editor\js\libs\codemirror\addon\show-hint.js
+		Support\NAKjs\editor\js\libs\codemirror\addon\tern.css = Support\NAKjs\editor\js\libs\codemirror\addon\tern.css
+		Support\NAKjs\editor\js\libs\codemirror\addon\tern.js = Support\NAKjs\editor\js\libs\codemirror\addon\tern.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mode", "mode", "{D3346BE1-EBDD-44FC-804D-71D0C36CEFD7}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\js\libs\codemirror\mode\glsl.js = Support\NAKjs\editor\js\libs\codemirror\mode\glsl.js
+		Support\NAKjs\editor\js\libs\codemirror\mode\javascript.js = Support\NAKjs\editor\js\libs\codemirror\mode\javascript.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "theme", "theme", "{87B6EEE9-3C4D-4CBB-9B6C-933759E18A98}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\js\libs\codemirror\theme\monokai.css = Support\NAKjs\editor\js\libs\codemirror\theme\monokai.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{AFB61247-632F-4372-A144-6B6F238F526B}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\files\inconsolata.woff = Support\NAKjs\examples\files\inconsolata.woff
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fonts", "fonts", "{A104ECA4-6370-4776-B59B-B0E26104BD83}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\fonts\gentilis_bold.typeface.js = Support\NAKjs\examples\fonts\gentilis_bold.typeface.js
+		Support\NAKjs\examples\fonts\gentilis_regular.typeface.js = Support\NAKjs\examples\fonts\gentilis_regular.typeface.js
+		Support\NAKjs\examples\fonts\helvetiker_bold.typeface.js = Support\NAKjs\examples\fonts\helvetiker_bold.typeface.js
+		Support\NAKjs\examples\fonts\helvetiker_regular.typeface.js = Support\NAKjs\examples\fonts\helvetiker_regular.typeface.js
+		Support\NAKjs\examples\fonts\LICENSE = Support\NAKjs\examples\fonts\LICENSE
+		Support\NAKjs\examples\fonts\optimer_bold.typeface.js = Support\NAKjs\examples\fonts\optimer_bold.typeface.js
+		Support\NAKjs\examples\fonts\optimer_regular.typeface.js = Support\NAKjs\examples\fonts\optimer_regular.typeface.js
+		Support\NAKjs\examples\fonts\README = Support\NAKjs\examples\fonts\README
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{CDF27929-9C5E-4505-AA77-21338548C7AC}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\AnimationClipCreator.js = Support\NAKjs\examples\js\AnimationClipCreator.js
+		Support\NAKjs\examples\js\BlendCharacter.js = Support\NAKjs\examples\js\BlendCharacter.js
+		Support\NAKjs\examples\js\BlendCharacterGui.js = Support\NAKjs\examples\js\BlendCharacterGui.js
+		Support\NAKjs\examples\js\BufferGeometryUtils.js = Support\NAKjs\examples\js\BufferGeometryUtils.js
+		Support\NAKjs\examples\js\Car.js = Support\NAKjs\examples\js\Car.js
+		Support\NAKjs\examples\js\Cloth.js = Support\NAKjs\examples\js\Cloth.js
+		Support\NAKjs\examples\js\CurveExtras.js = Support\NAKjs\examples\js\CurveExtras.js
+		Support\NAKjs\examples\js\Detector.js = Support\NAKjs\examples\js\Detector.js
+		Support\NAKjs\examples\js\GPUParticleSystem.js = Support\NAKjs\examples\js\GPUParticleSystem.js
+		Support\NAKjs\examples\js\Gyroscope.js = Support\NAKjs\examples\js\Gyroscope.js
+		Support\NAKjs\examples\js\ImprovedNoise.js = Support\NAKjs\examples\js\ImprovedNoise.js
+		Support\NAKjs\examples\js\MarchingCubes.js = Support\NAKjs\examples\js\MarchingCubes.js
+		Support\NAKjs\examples\js\MD2Character.js = Support\NAKjs\examples\js\MD2Character.js
+		Support\NAKjs\examples\js\MD2CharacterComplex.js = Support\NAKjs\examples\js\MD2CharacterComplex.js
+		Support\NAKjs\examples\js\Mirror.js = Support\NAKjs\examples\js\Mirror.js
+		Support\NAKjs\examples\js\MorphAnimation.js = Support\NAKjs\examples\js\MorphAnimation.js
+		Support\NAKjs\examples\js\MorphAnimMesh.js = Support\NAKjs\examples\js\MorphAnimMesh.js
+		Support\NAKjs\examples\js\Ocean.js = Support\NAKjs\examples\js\Ocean.js
+		Support\NAKjs\examples\js\Octree.js = Support\NAKjs\examples\js\Octree.js
+		Support\NAKjs\examples\js\ParametricGeometries.js = Support\NAKjs\examples\js\ParametricGeometries.js
+		Support\NAKjs\examples\js\PRNG.js = Support\NAKjs\examples\js\PRNG.js
+		Support\NAKjs\examples\js\ShaderGodRays.js = Support\NAKjs\examples\js\ShaderGodRays.js
+		Support\NAKjs\examples\js\ShaderSkin.js = Support\NAKjs\examples\js\ShaderSkin.js
+		Support\NAKjs\examples\js\ShaderTerrain.js = Support\NAKjs\examples\js\ShaderTerrain.js
+		Support\NAKjs\examples\js\ShaderToon.js = Support\NAKjs\examples\js\ShaderToon.js
+		Support\NAKjs\examples\js\SimplexNoise.js = Support\NAKjs\examples\js\SimplexNoise.js
+		Support\NAKjs\examples\js\SimulationRenderer.js = Support\NAKjs\examples\js\SimulationRenderer.js
+		Support\NAKjs\examples\js\SkyShader.js = Support\NAKjs\examples\js\SkyShader.js
+		Support\NAKjs\examples\js\TypedArrayUtils.js = Support\NAKjs\examples\js\TypedArrayUtils.js
+		Support\NAKjs\examples\js\UCSCharacter.js = Support\NAKjs\examples\js\UCSCharacter.js
+		Support\NAKjs\examples\js\WaterShader.js = Support\NAKjs\examples\js\WaterShader.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scenes", "scenes", "{185CA566-2C18-4E83-AF3B-A2F9D5CC8A32}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\scenes\robo_pigeon.js = Support\NAKjs\examples\scenes\robo_pigeon.js
+		Support\NAKjs\examples\scenes\robo_pigeon.pack = Support\NAKjs\examples\scenes\robo_pigeon.pack
+		Support\NAKjs\examples\scenes\test_scene.js = Support\NAKjs\examples\scenes\test_scene.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "droid", "droid", "{EE3BE8BD-F9B6-4B2F-8FFA-4044B0254479}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\fonts\droid\droid_sans_bold.typeface.js = Support\NAKjs\examples\fonts\droid\droid_sans_bold.typeface.js
+		Support\NAKjs\examples\fonts\droid\droid_sans_mono_regular.typeface.js = Support\NAKjs\examples\fonts\droid\droid_sans_mono_regular.typeface.js
+		Support\NAKjs\examples\fonts\droid\droid_sans_regular.typeface.js = Support\NAKjs\examples\fonts\droid\droid_sans_regular.typeface.js
+		Support\NAKjs\examples\fonts\droid\droid_serif_bold.typeface.js = Support\NAKjs\examples\fonts\droid\droid_serif_bold.typeface.js
+		Support\NAKjs\examples\fonts\droid\droid_serif_regular.typeface.js = Support\NAKjs\examples\fonts\droid\droid_serif_regular.typeface.js
+		Support\NAKjs\examples\fonts\droid\NOTICE = Support\NAKjs\examples\fonts\droid\NOTICE
+		Support\NAKjs\examples\fonts\droid\README.txt = Support\NAKjs\examples\fonts\droid\README.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cameras", "cameras", "{F0A89274-CEAA-4210-A1A7-A9FE7085B696}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\cameras\CombinedCamera.js = Support\NAKjs\examples\js\cameras\CombinedCamera.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "controls", "controls", "{7B1251AD-F956-423E-9EC2-FE1653976E37}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\controls\DeviceOrientationControls.js = Support\NAKjs\examples\js\controls\DeviceOrientationControls.js
+		Support\NAKjs\examples\js\controls\DragControls.js = Support\NAKjs\examples\js\controls\DragControls.js
+		Support\NAKjs\examples\js\controls\EditorControls.js = Support\NAKjs\examples\js\controls\EditorControls.js
+		Support\NAKjs\examples\js\controls\FirstPersonControls.js = Support\NAKjs\examples\js\controls\FirstPersonControls.js
+		Support\NAKjs\examples\js\controls\FlyControls.js = Support\NAKjs\examples\js\controls\FlyControls.js
+		Support\NAKjs\examples\js\controls\MouseControls.js = Support\NAKjs\examples\js\controls\MouseControls.js
+		Support\NAKjs\examples\js\controls\OrbitControls.js = Support\NAKjs\examples\js\controls\OrbitControls.js
+		Support\NAKjs\examples\js\controls\OrthographicTrackballControls.js = Support\NAKjs\examples\js\controls\OrthographicTrackballControls.js
+		Support\NAKjs\examples\js\controls\PointerLockControls.js = Support\NAKjs\examples\js\controls\PointerLockControls.js
+		Support\NAKjs\examples\js\controls\TrackballControls.js = Support\NAKjs\examples\js\controls\TrackballControls.js
+		Support\NAKjs\examples\js\controls\TransformControls.js = Support\NAKjs\examples\js\controls\TransformControls.js
+		Support\NAKjs\examples\js\controls\VRControls.js = Support\NAKjs\examples\js\controls\VRControls.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "crossfade", "crossfade", "{0E9663FC-4167-486D-8FB7-542CBB8ACE4B}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\crossfade\gui.js = Support\NAKjs\examples\js\crossfade\gui.js
+		Support\NAKjs\examples\js\crossfade\scenes.js = Support\NAKjs\examples\js\crossfade\scenes.js
+		Support\NAKjs\examples\js\crossfade\transition.js = Support\NAKjs\examples\js\crossfade\transition.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "curves", "curves", "{4B2E55F9-ADFD-408B-A8D4-597D592C9FC9}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\curves\NURBSCurve.js = Support\NAKjs\examples\js\curves\NURBSCurve.js
+		Support\NAKjs\examples\js\curves\NURBSSurface.js = Support\NAKjs\examples\js\curves\NURBSSurface.js
+		Support\NAKjs\examples\js\curves\NURBSUtils.js = Support\NAKjs\examples\js\curves\NURBSUtils.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "effects", "effects", "{B80CD46A-E650-4533-A63E-3AC4AFA65A85}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\effects\AnaglyphEffect.js = Support\NAKjs\examples\js\effects\AnaglyphEffect.js
+		Support\NAKjs\examples\js\effects\AsciiEffect.js = Support\NAKjs\examples\js\effects\AsciiEffect.js
+		Support\NAKjs\examples\js\effects\ParallaxBarrierEffect.js = Support\NAKjs\examples\js\effects\ParallaxBarrierEffect.js
+		Support\NAKjs\examples\js\effects\StereoEffect.js = Support\NAKjs\examples\js\effects\StereoEffect.js
+		Support\NAKjs\examples\js\effects\VREffect.js = Support\NAKjs\examples\js\effects\VREffect.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "exporters", "exporters", "{5C0CAACB-651C-4AD2-A432-4DA5D1218B97}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\exporters\OBJExporter.js = Support\NAKjs\examples\js\exporters\OBJExporter.js
+		Support\NAKjs\examples\js\exporters\STLBinaryExporter.js = Support\NAKjs\examples\js\exporters\STLBinaryExporter.js
+		Support\NAKjs\examples\js\exporters\STLExporter.js = Support\NAKjs\examples\js\exporters\STLExporter.js
+		Support\NAKjs\examples\js\exporters\TypedGeometryExporter.js = Support\NAKjs\examples\js\exporters\TypedGeometryExporter.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "geometries", "geometries", "{C0FC2974-E812-4788-92F1-EDC526938168}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\geometries\ConvexGeometry.js = Support\NAKjs\examples\js\geometries\ConvexGeometry.js
+		Support\NAKjs\examples\js\geometries\DecalGeometry.js = Support\NAKjs\examples\js\geometries\DecalGeometry.js
+		Support\NAKjs\examples\js\geometries\hilbert2D.js = Support\NAKjs\examples\js\geometries\hilbert2D.js
+		Support\NAKjs\examples\js\geometries\hilbert3D.js = Support\NAKjs\examples\js\geometries\hilbert3D.js
+		Support\NAKjs\examples\js\geometries\TeapotBufferGeometry.js = Support\NAKjs\examples\js\geometries\TeapotBufferGeometry.js
+		Support\NAKjs\examples\js\geometries\TextGeometry.js = Support\NAKjs\examples\js\geometries\TextGeometry.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{2D3C9810-C9A7-4B3F-9BD7-A30175445CB9}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\libs\dat.gui.min.js = Support\NAKjs\examples\js\libs\dat.gui.min.js
+		Support\NAKjs\examples\js\libs\jszip.min.js = Support\NAKjs\examples\js\libs\jszip.min.js
+		Support\NAKjs\examples\js\libs\msgpack-js.js = Support\NAKjs\examples\js\libs\msgpack-js.js
+		Support\NAKjs\examples\js\libs\pnltri.min.js = Support\NAKjs\examples\js\libs\pnltri.min.js
+		Support\NAKjs\examples\js\libs\require.js = Support\NAKjs\examples\js\libs\require.js
+		Support\NAKjs\examples\js\libs\stats.min.js = Support\NAKjs\examples\js\libs\stats.min.js
+		Support\NAKjs\examples\js\libs\system.min.js = Support\NAKjs\examples\js\libs\system.min.js
+		Support\NAKjs\examples\js\libs\tween.min.js = Support\NAKjs\examples\js\libs\tween.min.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "loaders", "loaders", "{3BFBD635-1C22-4F06-8DA1-AEA25F19CC35}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\loaders\AMFLoader.js = Support\NAKjs\examples\js\loaders\AMFLoader.js
+		Support\NAKjs\examples\js\loaders\AssimpJSONLoader.js = Support\NAKjs\examples\js\loaders\AssimpJSONLoader.js
+		Support\NAKjs\examples\js\loaders\AWDLoader.js = Support\NAKjs\examples\js\loaders\AWDLoader.js
+		Support\NAKjs\examples\js\loaders\BabylonLoader.js = Support\NAKjs\examples\js\loaders\BabylonLoader.js
+		Support\NAKjs\examples\js\loaders\BinaryLoader.js = Support\NAKjs\examples\js\loaders\BinaryLoader.js
+		Support\NAKjs\examples\js\loaders\ColladaLoader.js = Support\NAKjs\examples\js\loaders\ColladaLoader.js
+		Support\NAKjs\examples\js\loaders\ColladaLoader2.js = Support\NAKjs\examples\js\loaders\ColladaLoader2.js
+		Support\NAKjs\examples\js\loaders\DDSLoader.js = Support\NAKjs\examples\js\loaders\DDSLoader.js
+		Support\NAKjs\examples\js\loaders\KMZLoader.js = Support\NAKjs\examples\js\loaders\KMZLoader.js
+		Support\NAKjs\examples\js\loaders\MD2Loader.js = Support\NAKjs\examples\js\loaders\MD2Loader.js
+		Support\NAKjs\examples\js\loaders\MTLLoader.js = Support\NAKjs\examples\js\loaders\MTLLoader.js
+		Support\NAKjs\examples\js\loaders\OBJLoader.js = Support\NAKjs\examples\js\loaders\OBJLoader.js
+		Support\NAKjs\examples\js\loaders\OBJMTLLoader.js = Support\NAKjs\examples\js\loaders\OBJMTLLoader.js
+		Support\NAKjs\examples\js\loaders\PDBLoader.js = Support\NAKjs\examples\js\loaders\PDBLoader.js
+		Support\NAKjs\examples\js\loaders\PLYLoader.js = Support\NAKjs\examples\js\loaders\PLYLoader.js
+		Support\NAKjs\examples\js\loaders\PVRLoader.js = Support\NAKjs\examples\js\loaders\PVRLoader.js
+		Support\NAKjs\examples\js\loaders\RGBELoader.js = Support\NAKjs\examples\js\loaders\RGBELoader.js
+		Support\NAKjs\examples\js\loaders\STLLoader.js = Support\NAKjs\examples\js\loaders\STLLoader.js
+		Support\NAKjs\examples\js\loaders\SVGLoader.js = Support\NAKjs\examples\js\loaders\SVGLoader.js
+		Support\NAKjs\examples\js\loaders\TGALoader.js = Support\NAKjs\examples\js\loaders\TGALoader.js
+		Support\NAKjs\examples\js\loaders\UTF8Loader.js = Support\NAKjs\examples\js\loaders\UTF8Loader.js
+		Support\NAKjs\examples\js\loaders\VRMLLoader.js = Support\NAKjs\examples\js\loaders\VRMLLoader.js
+		Support\NAKjs\examples\js\loaders\VTKLoader.js = Support\NAKjs\examples\js\loaders\VTKLoader.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "math", "math", "{31053361-E0A9-4A0C-AA0D-A06E780A2198}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\math\ColorConverter.js = Support\NAKjs\examples\js\math\ColorConverter.js
+		Support\NAKjs\examples\js\math\Lut.js = Support\NAKjs\examples\js\math\Lut.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modifiers", "modifiers", "{5805F886-5479-4E24-9C31-BB6953B380BD}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\modifiers\ExplodeModifier.js = Support\NAKjs\examples\js\modifiers\ExplodeModifier.js
+		Support\NAKjs\examples\js\modifiers\SubdivisionModifier.js = Support\NAKjs\examples\js\modifiers\SubdivisionModifier.js
+		Support\NAKjs\examples\js\modifiers\TessellateModifier.js = Support\NAKjs\examples\js\modifiers\TessellateModifier.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "objects", "objects", "{45D12C6B-CA6B-434A-B306-C05809C2D44E}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\objects\ShadowMesh.js = Support\NAKjs\examples\js\objects\ShadowMesh.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postprocessing", "postprocessing", "{0E4C454B-6D50-473E-9A66-950798C8AC17}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\postprocessing\AdaptiveToneMappingPass.js = Support\NAKjs\examples\js\postprocessing\AdaptiveToneMappingPass.js
+		Support\NAKjs\examples\js\postprocessing\BloomPass.js = Support\NAKjs\examples\js\postprocessing\BloomPass.js
+		Support\NAKjs\examples\js\postprocessing\BokehPass.js = Support\NAKjs\examples\js\postprocessing\BokehPass.js
+		Support\NAKjs\examples\js\postprocessing\DotScreenPass.js = Support\NAKjs\examples\js\postprocessing\DotScreenPass.js
+		Support\NAKjs\examples\js\postprocessing\EffectComposer.js = Support\NAKjs\examples\js\postprocessing\EffectComposer.js
+		Support\NAKjs\examples\js\postprocessing\FilmPass.js = Support\NAKjs\examples\js\postprocessing\FilmPass.js
+		Support\NAKjs\examples\js\postprocessing\GlitchPass.js = Support\NAKjs\examples\js\postprocessing\GlitchPass.js
+		Support\NAKjs\examples\js\postprocessing\MaskPass.js = Support\NAKjs\examples\js\postprocessing\MaskPass.js
+		Support\NAKjs\examples\js\postprocessing\RenderPass.js = Support\NAKjs\examples\js\postprocessing\RenderPass.js
+		Support\NAKjs\examples\js\postprocessing\SavePass.js = Support\NAKjs\examples\js\postprocessing\SavePass.js
+		Support\NAKjs\examples\js\postprocessing\ShaderPass.js = Support\NAKjs\examples\js\postprocessing\ShaderPass.js
+		Support\NAKjs\examples\js\postprocessing\TexturePass.js = Support\NAKjs\examples\js\postprocessing\TexturePass.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "renderers", "renderers", "{3B67263D-B8DE-4748-9970-0743EA847244}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\renderers\CanvasRenderer.js = Support\NAKjs\examples\js\renderers\CanvasRenderer.js
+		Support\NAKjs\examples\js\renderers\CSS2DRenderer.js = Support\NAKjs\examples\js\renderers\CSS2DRenderer.js
+		Support\NAKjs\examples\js\renderers\CSS3DRenderer.js = Support\NAKjs\examples\js\renderers\CSS3DRenderer.js
+		Support\NAKjs\examples\js\renderers\CSS3DStereoRenderer.js = Support\NAKjs\examples\js\renderers\CSS3DStereoRenderer.js
+		Support\NAKjs\examples\js\renderers\Projector.js = Support\NAKjs\examples\js\renderers\Projector.js
+		Support\NAKjs\examples\js\renderers\RaytracingRenderer.js = Support\NAKjs\examples\js\renderers\RaytracingRenderer.js
+		Support\NAKjs\examples\js\renderers\SoftwareRenderer.js = Support\NAKjs\examples\js\renderers\SoftwareRenderer.js
+		Support\NAKjs\examples\js\renderers\SVGRenderer.js = Support\NAKjs\examples\js\renderers\SVGRenderer.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shaders", "shaders", "{7960EE8B-2834-4C2E-AE34-B22A61884893}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\shaders\BasicShader.js = Support\NAKjs\examples\js\shaders\BasicShader.js
+		Support\NAKjs\examples\js\shaders\BleachBypassShader.js = Support\NAKjs\examples\js\shaders\BleachBypassShader.js
+		Support\NAKjs\examples\js\shaders\BlendShader.js = Support\NAKjs\examples\js\shaders\BlendShader.js
+		Support\NAKjs\examples\js\shaders\BokehShader.js = Support\NAKjs\examples\js\shaders\BokehShader.js
+		Support\NAKjs\examples\js\shaders\BokehShader2.js = Support\NAKjs\examples\js\shaders\BokehShader2.js
+		Support\NAKjs\examples\js\shaders\BrightnessContrastShader.js = Support\NAKjs\examples\js\shaders\BrightnessContrastShader.js
+		Support\NAKjs\examples\js\shaders\ColorCorrectionShader.js = Support\NAKjs\examples\js\shaders\ColorCorrectionShader.js
+		Support\NAKjs\examples\js\shaders\ColorifyShader.js = Support\NAKjs\examples\js\shaders\ColorifyShader.js
+		Support\NAKjs\examples\js\shaders\ConvolutionShader.js = Support\NAKjs\examples\js\shaders\ConvolutionShader.js
+		Support\NAKjs\examples\js\shaders\CopyShader.js = Support\NAKjs\examples\js\shaders\CopyShader.js
+		Support\NAKjs\examples\js\shaders\DigitalGlitch.js = Support\NAKjs\examples\js\shaders\DigitalGlitch.js
+		Support\NAKjs\examples\js\shaders\DOFMipMapShader.js = Support\NAKjs\examples\js\shaders\DOFMipMapShader.js
+		Support\NAKjs\examples\js\shaders\DotScreenShader.js = Support\NAKjs\examples\js\shaders\DotScreenShader.js
+		Support\NAKjs\examples\js\shaders\EdgeShader.js = Support\NAKjs\examples\js\shaders\EdgeShader.js
+		Support\NAKjs\examples\js\shaders\EdgeShader2.js = Support\NAKjs\examples\js\shaders\EdgeShader2.js
+		Support\NAKjs\examples\js\shaders\FilmShader.js = Support\NAKjs\examples\js\shaders\FilmShader.js
+		Support\NAKjs\examples\js\shaders\FocusShader.js = Support\NAKjs\examples\js\shaders\FocusShader.js
+		Support\NAKjs\examples\js\shaders\FresnelShader.js = Support\NAKjs\examples\js\shaders\FresnelShader.js
+		Support\NAKjs\examples\js\shaders\FXAAShader.js = Support\NAKjs\examples\js\shaders\FXAAShader.js
+		Support\NAKjs\examples\js\shaders\GammaCorrectionShader.js = Support\NAKjs\examples\js\shaders\GammaCorrectionShader.js
+		Support\NAKjs\examples\js\shaders\HorizontalBlurShader.js = Support\NAKjs\examples\js\shaders\HorizontalBlurShader.js
+		Support\NAKjs\examples\js\shaders\HorizontalTiltShiftShader.js = Support\NAKjs\examples\js\shaders\HorizontalTiltShiftShader.js
+		Support\NAKjs\examples\js\shaders\HueSaturationShader.js = Support\NAKjs\examples\js\shaders\HueSaturationShader.js
+		Support\NAKjs\examples\js\shaders\KaleidoShader.js = Support\NAKjs\examples\js\shaders\KaleidoShader.js
+		Support\NAKjs\examples\js\shaders\LuminosityShader.js = Support\NAKjs\examples\js\shaders\LuminosityShader.js
+		Support\NAKjs\examples\js\shaders\MirrorShader.js = Support\NAKjs\examples\js\shaders\MirrorShader.js
+		Support\NAKjs\examples\js\shaders\NormalMapShader.js = Support\NAKjs\examples\js\shaders\NormalMapShader.js
+		Support\NAKjs\examples\js\shaders\OceanShaders.js = Support\NAKjs\examples\js\shaders\OceanShaders.js
+		Support\NAKjs\examples\js\shaders\ParallaxShader.js = Support\NAKjs\examples\js\shaders\ParallaxShader.js
+		Support\NAKjs\examples\js\shaders\RGBShiftShader.js = Support\NAKjs\examples\js\shaders\RGBShiftShader.js
+		Support\NAKjs\examples\js\shaders\SepiaShader.js = Support\NAKjs\examples\js\shaders\SepiaShader.js
+		Support\NAKjs\examples\js\shaders\SSAOShader.js = Support\NAKjs\examples\js\shaders\SSAOShader.js
+		Support\NAKjs\examples\js\shaders\TechnicolorShader.js = Support\NAKjs\examples\js\shaders\TechnicolorShader.js
+		Support\NAKjs\examples\js\shaders\ToneMapShader.js = Support\NAKjs\examples\js\shaders\ToneMapShader.js
+		Support\NAKjs\examples\js\shaders\TriangleBlurShader.js = Support\NAKjs\examples\js\shaders\TriangleBlurShader.js
+		Support\NAKjs\examples\js\shaders\UnpackDepthRGBAShader.js = Support\NAKjs\examples\js\shaders\UnpackDepthRGBAShader.js
+		Support\NAKjs\examples\js\shaders\VerticalBlurShader.js = Support\NAKjs\examples\js\shaders\VerticalBlurShader.js
+		Support\NAKjs\examples\js\shaders\VerticalTiltShiftShader.js = Support\NAKjs\examples\js\shaders\VerticalTiltShiftShader.js
+		Support\NAKjs\examples\js\shaders\VignetteShader.js = Support\NAKjs\examples\js\shaders\VignetteShader.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{E76B22BD-8DEE-44FC-A091-69DCDBADBBF8}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\utils\FontUtils.js = Support\NAKjs\examples\js\utils\FontUtils.js
+		Support\NAKjs\examples\js\utils\GeometryUtils.js = Support\NAKjs\examples\js\utils\GeometryUtils.js
+		Support\NAKjs\examples\js\utils\ImageUtils.js = Support\NAKjs\examples\js\utils\ImageUtils.js
+		Support\NAKjs\examples\js\utils\ShadowMapViewer.js = Support\NAKjs\examples\js\utils\ShadowMapViewer.js
+		Support\NAKjs\examples\js\utils\UVsDebug.js = Support\NAKjs\examples\js\utils\UVsDebug.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "collada", "collada", "{24C3B33A-7FDA-4020-BD5A-55EC4AA2779C}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\loaders\collada\Animation.js = Support\NAKjs\examples\js\loaders\collada\Animation.js
+		Support\NAKjs\examples\js\loaders\collada\AnimationHandler.js = Support\NAKjs\examples\js\loaders\collada\AnimationHandler.js
+		Support\NAKjs\examples\js\loaders\collada\KeyFrameAnimation.js = Support\NAKjs\examples\js\loaders\collada\KeyFrameAnimation.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ctm", "ctm", "{FB42C272-ADBC-4278-9B11-84E33ECDF48B}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\loaders\ctm\ctm.js = Support\NAKjs\examples\js\loaders\ctm\ctm.js
+		Support\NAKjs\examples\js\loaders\ctm\CTMLoader.js = Support\NAKjs\examples\js\loaders\ctm\CTMLoader.js
+		Support\NAKjs\examples\js\loaders\ctm\CTMWorker.js = Support\NAKjs\examples\js\loaders\ctm\CTMWorker.js
+		Support\NAKjs\examples\js\loaders\ctm\lzma.js = Support\NAKjs\examples\js\loaders\ctm\lzma.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deprecated", "deprecated", "{4D9917A6-FCD8-41BD-9DED-00A023CB780D}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\loaders\deprecated\SceneLoader.js = Support\NAKjs\examples\js\loaders\deprecated\SceneLoader.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gltf", "gltf", "{AD621F35-4A25-4A7E-ABFE-B5A9CDA39B18}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\loaders\gltf\glTF-parser.js = Support\NAKjs\examples\js\loaders\gltf\glTF-parser.js
+		Support\NAKjs\examples\js\loaders\gltf\glTFAnimation.js = Support\NAKjs\examples\js\loaders\gltf\glTFAnimation.js
+		Support\NAKjs\examples\js\loaders\gltf\glTFLoader.js = Support\NAKjs\examples\js\loaders\gltf\glTFLoader.js
+		Support\NAKjs\examples\js\loaders\gltf\glTFLoaderUtils.js = Support\NAKjs\examples\js\loaders\gltf\glTFLoaderUtils.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sea3d", "sea3d", "{EC3B8A7D-B3BC-40F5-B79C-F70F541B20DF}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\loaders\sea3d\SEA3D.js = Support\NAKjs\examples\js\loaders\sea3d\SEA3D.js
+		Support\NAKjs\examples\js\loaders\sea3d\SEA3DDeflate.js = Support\NAKjs\examples\js\loaders\sea3d\SEA3DDeflate.js
+		Support\NAKjs\examples\js\loaders\sea3d\SEA3DLoader.js = Support\NAKjs\examples\js\loaders\sea3d\SEA3DLoader.js
+		Support\NAKjs\examples\js\loaders\sea3d\SEA3DLZMA.js = Support\NAKjs\examples\js\loaders\sea3d\SEA3DLZMA.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "license", "license", "{36E94F91-66E3-4466-914C-B234F1574F2A}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\examples\js\loaders\ctm\license\js-lzma.txt = Support\NAKjs\examples\js\loaders\ctm\license\js-lzma.txt
+		Support\NAKjs\examples\js\loaders\ctm\license\js-openctm.txt = Support\NAKjs\examples\js\loaders\ctm\license\js-openctm.txt
+		Support\NAKjs\examples\js\loaders\ctm\license\OpenCTM.txt = Support\NAKjs\examples\js\loaders\ctm\license\OpenCTM.txt
 	EndProjectSection
 EndProject
 Global
@@ -100,6 +541,47 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{02C4E0AC-3117-4F5B-9C95-CDA56A82D311} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
 		{51A90FFC-634A-4DB7-B352-2A6BD14B2B28} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
-		{2339E5B1-6B04-4405-A880-EA71E67403A7} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
+		{D244F3C5-06FF-43E9-80D3-17ABC598E991} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
+		{8CDEA6FE-90C0-4684-ABF8-3F9D1BFA4049} = {D244F3C5-06FF-43E9-80D3-17ABC598E991}
+		{586E59BF-87BC-42A9-A40D-3E4B0E859442} = {D244F3C5-06FF-43E9-80D3-17ABC598E991}
+		{733226AF-F97D-4010-BF42-7DF0045BAF6E} = {D244F3C5-06FF-43E9-80D3-17ABC598E991}
+		{07BEE680-5B2C-4A8F-8E6D-FE2BD3708749} = {733226AF-F97D-4010-BF42-7DF0045BAF6E}
+		{4178839A-955C-4A7A-A0A5-4B6D2301729C} = {733226AF-F97D-4010-BF42-7DF0045BAF6E}
+		{CDFC8568-CE17-43AD-A27D-4D0DB5CB6031} = {733226AF-F97D-4010-BF42-7DF0045BAF6E}
+		{E025682A-BF0B-47E1-A8FA-34DF06D85351} = {CDFC8568-CE17-43AD-A27D-4D0DB5CB6031}
+		{F552DF19-448E-4279-BFEE-34081E3DC84C} = {E025682A-BF0B-47E1-A8FA-34DF06D85351}
+		{AD396ACC-55EC-4694-ADC4-9EA85E57CF4A} = {E025682A-BF0B-47E1-A8FA-34DF06D85351}
+		{8F021C9F-2F6F-4B9C-A3C3-54608C573D99} = {E025682A-BF0B-47E1-A8FA-34DF06D85351}
+		{863763A0-9BCC-45B4-A41A-1EDD17EC413E} = {E025682A-BF0B-47E1-A8FA-34DF06D85351}
+		{9A4F1E12-431D-4596-AA4E-BB0F51A10E0F} = {AD396ACC-55EC-4694-ADC4-9EA85E57CF4A}
+		{D3346BE1-EBDD-44FC-804D-71D0C36CEFD7} = {AD396ACC-55EC-4694-ADC4-9EA85E57CF4A}
+		{87B6EEE9-3C4D-4CBB-9B6C-933759E18A98} = {AD396ACC-55EC-4694-ADC4-9EA85E57CF4A}
+		{AFB61247-632F-4372-A144-6B6F238F526B} = {586E59BF-87BC-42A9-A40D-3E4B0E859442}
+		{A104ECA4-6370-4776-B59B-B0E26104BD83} = {586E59BF-87BC-42A9-A40D-3E4B0E859442}
+		{CDF27929-9C5E-4505-AA77-21338548C7AC} = {586E59BF-87BC-42A9-A40D-3E4B0E859442}
+		{185CA566-2C18-4E83-AF3B-A2F9D5CC8A32} = {586E59BF-87BC-42A9-A40D-3E4B0E859442}
+		{EE3BE8BD-F9B6-4B2F-8FFA-4044B0254479} = {A104ECA4-6370-4776-B59B-B0E26104BD83}
+		{F0A89274-CEAA-4210-A1A7-A9FE7085B696} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{7B1251AD-F956-423E-9EC2-FE1653976E37} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{0E9663FC-4167-486D-8FB7-542CBB8ACE4B} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{4B2E55F9-ADFD-408B-A8D4-597D592C9FC9} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{B80CD46A-E650-4533-A63E-3AC4AFA65A85} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{5C0CAACB-651C-4AD2-A432-4DA5D1218B97} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{C0FC2974-E812-4788-92F1-EDC526938168} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{2D3C9810-C9A7-4B3F-9BD7-A30175445CB9} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{3BFBD635-1C22-4F06-8DA1-AEA25F19CC35} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{31053361-E0A9-4A0C-AA0D-A06E780A2198} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{5805F886-5479-4E24-9C31-BB6953B380BD} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{45D12C6B-CA6B-434A-B306-C05809C2D44E} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{0E4C454B-6D50-473E-9A66-950798C8AC17} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{3B67263D-B8DE-4748-9970-0743EA847244} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{7960EE8B-2834-4C2E-AE34-B22A61884893} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{E76B22BD-8DEE-44FC-A091-69DCDBADBBF8} = {CDF27929-9C5E-4505-AA77-21338548C7AC}
+		{24C3B33A-7FDA-4020-BD5A-55EC4AA2779C} = {3BFBD635-1C22-4F06-8DA1-AEA25F19CC35}
+		{FB42C272-ADBC-4278-9B11-84E33ECDF48B} = {3BFBD635-1C22-4F06-8DA1-AEA25F19CC35}
+		{4D9917A6-FCD8-41BD-9DED-00A023CB780D} = {3BFBD635-1C22-4F06-8DA1-AEA25F19CC35}
+		{AD621F35-4A25-4A7E-ABFE-B5A9CDA39B18} = {3BFBD635-1C22-4F06-8DA1-AEA25F19CC35}
+		{EC3B8A7D-B3BC-40F5-B79C-F70F541B20DF} = {3BFBD635-1C22-4F06-8DA1-AEA25F19CC35}
+		{36E94F91-66E3-4466-914C-B234F1574F2A} = {FB42C272-ADBC-4278-9B11-84E33ECDF48B}
 	EndGlobalSection
 EndGlobal
