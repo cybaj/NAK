@@ -37,12 +37,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NAKjs", "NAKjs", "{D244F3C5
 		Support\NAKjs\NAKStarter.bat = Support\NAKjs\NAKStarter.bat
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{8CDEA6FE-90C0-4684-ABF8-3F9D1BFA4049}"
-	ProjectSection(SolutionItems) = preProject
-		Support\NAKjs\build\three.js = Support\NAKjs\build\three.js
-		Support\NAKjs\build\three.min.js = Support\NAKjs\build\three.min.js
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{586E59BF-87BC-42A9-A40D-3E4B0E859442}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "editor", "editor", "{733226AF-F97D-4010-BF42-7DF0045BAF6E}"
@@ -485,6 +479,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "license", "license", "{36E9
 		Support\NAKjs\examples\js\loaders\ctm\license\OpenCTM.txt = Support\NAKjs\examples\js\loaders\ctm\license\OpenCTM.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{345C39C2-CED0-4455-AE73-6485F035C99A}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\build\three.js = Support\NAKjs\build\three.js
+		Support\NAKjs\build\three.min.js = Support\NAKjs\build\three.min.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -545,7 +545,6 @@ Global
 		{02C4E0AC-3117-4F5B-9C95-CDA56A82D311} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
 		{51A90FFC-634A-4DB7-B352-2A6BD14B2B28} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
 		{D244F3C5-06FF-43E9-80D3-17ABC598E991} = {39B99F68-9FBB-41E3-834B-6812C7C8DD6F}
-		{8CDEA6FE-90C0-4684-ABF8-3F9D1BFA4049} = {D244F3C5-06FF-43E9-80D3-17ABC598E991}
 		{586E59BF-87BC-42A9-A40D-3E4B0E859442} = {D244F3C5-06FF-43E9-80D3-17ABC598E991}
 		{733226AF-F97D-4010-BF42-7DF0045BAF6E} = {D244F3C5-06FF-43E9-80D3-17ABC598E991}
 		{07BEE680-5B2C-4A8F-8E6D-FE2BD3708749} = {733226AF-F97D-4010-BF42-7DF0045BAF6E}
@@ -586,5 +585,6 @@ Global
 		{AD621F35-4A25-4A7E-ABFE-B5A9CDA39B18} = {3BFBD635-1C22-4F06-8DA1-AEA25F19CC35}
 		{EC3B8A7D-B3BC-40F5-B79C-F70F541B20DF} = {3BFBD635-1C22-4F06-8DA1-AEA25F19CC35}
 		{36E94F91-66E3-4466-914C-B234F1574F2A} = {FB42C272-ADBC-4278-9B11-84E33ECDF48B}
+		{345C39C2-CED0-4455-AE73-6485F035C99A} = {D244F3C5-06FF-43E9-80D3-17ABC598E991}
 	EndGlobalSection
 EndGlobal
