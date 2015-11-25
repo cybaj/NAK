@@ -46,6 +46,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{586E59BF-87BC-42A9-A40D-3E4B0E859442}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "editor", "editor", "{733226AF-F97D-4010-BF42-7DF0045BAF6E}"
+	ProjectSection(SolutionItems) = preProject
+		Support\NAKjs\editor\index.html = Support\NAKjs\editor\index.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{07BEE680-5B2C-4A8F-8E6D-FE2BD3708749}"
 	ProjectSection(SolutionItems) = preProject

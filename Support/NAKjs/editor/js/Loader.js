@@ -225,10 +225,11 @@ var Loader = function ( editor ) {
 							materials.push(material);
 						}	
 						geometry.materials = materials;
+						geometry.computeFaceNormals();
 						//============
 						var mesh = new THREE.Mesh(geometry, material_4);//
-						//geometry.__dirtyColors = true;
-
+						mesh.name = filename + "_t";
+												
 						editor.addObject( mesh );
 						editor.select( mesh );
 					}					
@@ -336,26 +337,7 @@ var Loader = function ( editor ) {
 						
 						//============
 						var mesh = new THREE.Mesh(geometry, material_4);
-						/*
-						var normalLength = 15;
-						var fvNames = [ 'a', 'b', 'c', 'd' ];
-						for( var f = 0, fl = mesh.geometry.faces.length; f < fl; f ++ ) {
-							var face = mesh.geometry.faces[ f ];
-							if( face.vertexNormals === undefined ) {
-								continue;
-							}
-							
-							
-							for( var v = 0, vl = face.vertexNormals.length; v < vl; v ++ ) {
-								var arrow = new THREE.ArrowHelper(
-										face.vertexNormals[ v ],
-										mesh.geometry.vertices[ face[ fvNames[ v ] ] ],
-										normalLength,
-										0x000000 );
-								mesh.add( arrow );
-							}
-						}
-						*/			
+						mesh.name = filename + "_v";
 						editor.addObject( mesh );
 						editor.select( mesh );
 					}					
@@ -364,7 +346,7 @@ var Loader = function ( editor ) {
 				reader.readAsText(file);
 				break;				
 			case 'js':
-
+			case 'json':
 			case '3geo':
 			case '3mat':
 			case '3obj':

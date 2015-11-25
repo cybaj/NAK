@@ -138,8 +138,61 @@ var Viewport = function ( editor ) {
 			var intersects = getIntersects( onUpPosition, objects );
 
 			if ( intersects.length > 0 ) {
-
+				
 				var object = intersects[ 0 ].object;
+				//
+				//{{! sunghan : 선택된 면의 normal, view direction을 가시화 함
+				if(editor.selected!==null && object.type==="Mesh")
+				{				
+					var normalLength = 10;
+					var face = intersects[ 0 ].face;
+					var centroid = new THREE.Vector3();
+					var geometry = object.geometry;
+					if(geometry.vertices!==undefined)
+					{
+						centroid 
+							.add( geometry.vertices[ face.a ] )
+							.add( geometry.vertices[ face.b ] )
+							.add( geometry.vertices[ face.c ] )
+							.divideScalar( 3 );						
+					}
+					else if(geometry.attributes!==undefined)
+					{
+						centroid.set( 
+							geometry.attributes.position.array[ face.a ] ,
+							geometry.attributes.position.array[ face.b ] ,
+							geometry.attributes.position.array[ face.c ] )
+							.divideScalar( 3 );										
+					}
+					
+					// normal vector
+					var normalArrow = new THREE.ArrowHelper(
+							face.normal,
+							centroid,
+							normalLength,
+							0x3333FF );
+					normalArrow.name = "노말 방향";
+					
+					// viewport vector
+					var vector = new THREE.Vector3();
+					vector.x = centroid.x - camera.position.x;
+					vector.y = centroid.y - camera.position.y;
+					vector.z = centroid.z - camera.position.z;	
+					vector.normalize();
+					
+					var viewArrow = new THREE.ArrowHelper(
+							vector,
+							new THREE.Vector3(  centroid.x - (vector.x * normalLength),
+												centroid.y - (vector.y * normalLength),
+												centroid.z - (vector.z * normalLength)),
+							normalLength,
+							0xFF3333 );					
+					viewArrow.name = "뷰 방향";
+					
+					editor.addObject( normalArrow );
+					editor.addObject( viewArrow );
+				}
+				//}}
 
 				if ( object.userData.object !== undefined ) {
 
@@ -150,8 +203,7 @@ var Viewport = function ( editor ) {
 				} else {
 
 					editor.select( object );
-
-				}
+				}		
 
 			} else {
 
