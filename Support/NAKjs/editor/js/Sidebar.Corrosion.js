@@ -20,8 +20,9 @@ Sidebar.Corrosion = function ( editor ) {
 
 	// 유도공식
 	var objectFuncRow = new UI.Panel();
-	objectFuncRow.add( new UI.Text( '유도공식' ).setWidth( '90px' ) );
-	objectFuncRow.add( new UI.Text( 'α*R + β*G + γ*B' ).setWidth( '150px' ) );
+	var outline = new UI.Outliner(editor).setHeight( '30px' );
+	objectFuncRow.add( outline );
+	objectFuncRow.add( new UI.Text( '1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9' ).setWidth( '240px' ) );
 	container.add(objectFuncRow);
 
 	// 조건설명

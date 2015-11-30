@@ -48,7 +48,8 @@ Menubar.File = function ( editor ) {
 
 	var option = new UI.Panel();
 	option.setClass( 'option' );
-	option.setTextContent( '과기원(NAK) 파일로드' );
+	option.setTextContent( 'NAK 파일로드' );
+	option.setColor(0xff0000);
 	option.onClick( function () {
 
 		fileInput.click();
@@ -103,7 +104,7 @@ Menubar.File = function ( editor ) {
 
 	var option = new UI.Panel();
 	option.setClass( 'option' );
-	option.setTextContent( 'Object로 내보내기' );
+	option.setTextContent( 'Object 내보내기' );
 	option.onClick( function () {
 
 		var object = editor.selected;
@@ -133,7 +134,7 @@ Menubar.File = function ( editor ) {
 
 	var option = new UI.Panel();
 	option.setClass( 'option' );
-	option.setTextContent( 'Scene으로 내보내기' );
+	option.setTextContent( 'Scene 내보내기' );
 	option.onClick( function () {
 
 		var output = editor.scene.toJSON();
@@ -188,7 +189,23 @@ Menubar.File = function ( editor ) {
 	options.add( option );
 
 	//
+	
+	// Export VRML
 
+	var option = new UI.Panel();
+	option.setClass( 'option' );
+	option.setTextContent( 'WRL 내보내기' );
+	option.onClick( function () {
+
+		var exporter = new THREE.VRMLExporter();
+
+		exportString( exporter.parse( editor.scene ), 'model.wrl' );
+
+	} );
+	options.add( option );
+
+	//	
+	
 	options.add( new UI.HorizontalRule() );
 
 	// Publish
@@ -277,7 +294,7 @@ Menubar.File = function ( editor ) {
 
 
 	//
-
+	
 	var link = document.createElement( 'a' );
 	link.style.display = 'none';
 	document.body.appendChild( link ); // Firefox workaround, see #6594

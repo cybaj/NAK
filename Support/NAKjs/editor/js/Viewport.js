@@ -130,67 +130,95 @@ var Viewport = function ( editor ) {
 		return [ ( x - rect.left ) / rect.width, ( y - rect.top ) / rect.height ];
 
 	};
-
+	
+	/**
+	* addLine
+	*/
+	function addLine(group, pt1, pt2, clr)
+	{
+		var geometry = new THREE.Geometry();
+		geometry.vertices.push( pt1 );
+		geometry.vertices.push( pt2 );
+		var line = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: clr } ) );
+		line.name = "line"
+		group.children.push( line );
+	}
+	
 	function handleClick() {
 
 		if ( onDownPosition.distanceTo( onUpPosition ) == 0 ) {
 
 			var intersects = getIntersects( onUpPosition, objects );
 
-			if ( intersects.length > 0 ) {
-				
-				var object = intersects[ 0 ].object;
-				//
-				//{{! sunghan : 선택된 면의 normal, view direction을 가시화 함
-				if(editor.selected!==null && object.type==="Mesh")
-				{				
-					var normalLength = 10;
-					var face = intersects[ 0 ].face;
-					var centroid = new THREE.Vector3();
-					var geometry = object.geometry;
-					if(geometry.vertices!==undefined)
-					{
+			if ( intersects.length > 0 ) 
+			{
+				for( var i =0; i < intersects.length; i++)
+				{
+					var object = intersects[ i ].object;
+					//
+					//{{! sunghan : 선택된 면의 normal, view direction을 가시화 함
+					if(editor.selected!==null && object.type==="Mesh" && object.name !== "picker")
+					{				
+						var normalLength = 10;
+						var face = intersects[ i ].face;
+						var centroid = new THREE.Vector3();
+						var geometry = object.geometry;
+						var pt1,pt2,pt3;
+						if(geometry.vertices!==undefined)
+						{
+							pt1 = geometry.vertices[ face.a ];
+							pt2 = geometry.vertices[ face.b ];
+							pt3 = geometry.vertices[ face.c ];				
+						}
+						else if(geometry.attributes!==undefined)
+						{
+							pt1 = geometry.attributes.position.array[ face.a ];
+							pt2 = geometry.attributes.position.array[ face.b ];
+							pt3 = geometry.attributes.position.array[ face.c ];														
+						}
 						centroid 
-							.add( geometry.vertices[ face.a ] )
-							.add( geometry.vertices[ face.b ] )
-							.add( geometry.vertices[ face.c ] )
-							.divideScalar( 3 );						
+							.add( pt1 )
+							.add( pt2 )
+							.add( pt3 )
+							.divideScalar( 3 );
+							
+						// group object 생성
+						var supportObj = new THREE.Group();
+						supportObj.name = "Support";
+						
+						// triangle edge
+						addLine(supportObj,pt1,pt2,0xffffff);
+						addLine(supportObj,pt2,pt3,0xffffff); 
+						addLine(supportObj,pt3,pt1,0xffffff);
+						// normal direction
+						var normalArrow = new THREE.ArrowHelper(
+								face.normal,
+								centroid,
+								normalLength,
+								0x3333FF );
+						normalArrow.name = "Normal 방향";
+						supportObj.children.push(normalArrow);
+						// viewport direction
+						var vector = new THREE.Vector3();
+						vector.x = centroid.x - camera.position.x;
+						vector.y = centroid.y - camera.position.y;
+						vector.z = centroid.z - camera.position.z;	
+						vector.normalize();
+						supportObj.userData = [new THREE.Vector3(face.normal.x,face.normal.y,face.normal.z),
+											   new THREE.Vector3(centroid.x,centroid.y,centroid.z)];
+						var viewArrow = new THREE.ArrowHelper(
+								vector,
+								new THREE.Vector3(  centroid.x - (vector.x * normalLength),
+													centroid.y - (vector.y * normalLength),
+													centroid.z - (vector.z * normalLength)),
+								normalLength,
+								0xFF3333 );					
+						viewArrow.name = "View 방향";
+						supportObj.children.push(viewArrow);
+						
+						editor.addObject( supportObj );
+						//editor.addObject( viewArrow );
 					}
-					else if(geometry.attributes!==undefined)
-					{
-						centroid.set( 
-							geometry.attributes.position.array[ face.a ] ,
-							geometry.attributes.position.array[ face.b ] ,
-							geometry.attributes.position.array[ face.c ] )
-							.divideScalar( 3 );										
-					}
-					
-					// normal vector
-					var normalArrow = new THREE.ArrowHelper(
-							face.normal,
-							centroid,
-							normalLength,
-							0x3333FF );
-					normalArrow.name = "노말 방향";
-					
-					// viewport vector
-					var vector = new THREE.Vector3();
-					vector.x = centroid.x - camera.position.x;
-					vector.y = centroid.y - camera.position.y;
-					vector.z = centroid.z - camera.position.z;	
-					vector.normalize();
-					
-					var viewArrow = new THREE.ArrowHelper(
-							vector,
-							new THREE.Vector3(  centroid.x - (vector.x * normalLength),
-												centroid.y - (vector.y * normalLength),
-												centroid.z - (vector.z * normalLength)),
-							normalLength,
-							0xFF3333 );					
-					viewArrow.name = "뷰 방향";
-					
-					editor.addObject( normalArrow );
-					editor.addObject( viewArrow );
 				}
 				//}}
 

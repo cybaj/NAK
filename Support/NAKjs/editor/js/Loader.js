@@ -334,7 +334,7 @@ var Loader = function ( editor ) {
 							materials.push(material);
 						}	
 						geometry.materials = materials;
-						
+						geometry.computeFaceNormals();
 						//============
 						var mesh = new THREE.Mesh(geometry, material_4);
 						mesh.name = filename + "_v";

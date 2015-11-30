@@ -15,6 +15,10 @@ var Config = function () {
 		'project/renderer/shadows': true,
 		'project/vr': false,
 
+		//!
+		'ui/sidebar/nakalrorithm/collapsed': true,
+		'ui/sidebar/corrosion/collapsed': true,
+		//!
 		'ui/sidebar/animation/collapsed': true,
 		'ui/sidebar/geometry/collapsed': true,
 		'ui/sidebar/material/collapsed': true,

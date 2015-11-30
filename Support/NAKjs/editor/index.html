@@ -9,7 +9,7 @@
 		<link href="css/main.css" rel="stylesheet" />
 		<link id="theme" href="css/light.css" rel="stylesheet" />
 
-		<script src="../build/three.min.js"></script>
+		<script src="../build/three.js"></script>
 		<script src="../examples/js/libs/system.min.js"></script>
 
 		<script src="../examples/js/controls/EditorControls.js"></script>
@@ -33,7 +33,9 @@
 		<script src="../examples/js/loaders/ctm/CTMLoader.js"></script>
 		<script src="../examples/js/exporters/OBJExporter.js"></script>
 		<script src="../examples/js/exporters/STLExporter.js"></script>
-
+		<script src="../examples/js/exporters/VRMLExporter.js"></script>
+		<script src="../examples/js/modifiers/SubdivisionModifier.js"></script>
+		
 		<script src="../examples/js/loaders/deprecated/SceneLoader.js"></script>
 
 		<script src="../examples/js/renderers/Projector.js"></script>
@@ -255,7 +257,7 @@
 
 				switch ( event.keyCode ) {
 
-					case 8:
+					case 46://delete button
 						event.preventDefault(); // prevent browser back
 
 						var object = editor.selected;
